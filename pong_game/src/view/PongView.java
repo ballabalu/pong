@@ -9,11 +9,16 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import model.Pads;
+
 public class PongView extends JPanel {
 
 	private JButton redraw;
 	private JButton changeColor;
 	private MyCanvas rechti;
+	public Pads player1;
+	public Pads player2;
+	
 	
 	public PongView(){
 		init();
