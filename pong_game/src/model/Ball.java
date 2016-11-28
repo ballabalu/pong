@@ -22,4 +22,5 @@ public class Ball {
 		gr.drawImage(Toolkit.getDefaultToolkit.,x, y, comp);
 	}
 	
+	
 }
