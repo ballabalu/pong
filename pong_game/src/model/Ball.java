@@ -21,4 +21,5 @@ public class Ball {
 	public void paint(Graphics gr){
 		gr.drawImage(Toolkit.getDefaultToolkit.,x, y, comp);
 	}
+	
 }
