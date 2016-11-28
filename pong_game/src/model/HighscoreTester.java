@@ -11,11 +11,16 @@ public class HighscoreTester {
 		highscore.scoreHinzufügen("ddd", 1000);
 		highscore.scoreHinzufügen("eee", 100);
 		highscore.scoreHinzufügen("fff", 1200);
+		highscore.scoreHinzufügen("ggg", 1250);
+		highscore.scoreHinzufügen("hhh", 120);
+		highscore.scoreHinzufügen("iii", 600);
+		highscore.scoreHinzufügen("jjj", 20);
+		highscore.scoreHinzufügen("kkk", 100);
 		
 		System.out.print(highscore.getHighscoreString());
 		
 	}
-	
+	 
 	
 	/*
 	public static void main (String[] args){

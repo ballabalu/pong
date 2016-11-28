@@ -1,7 +1,7 @@
 package model;
 
 import java.util.Comparator;
-
+ 
 
 public class PlayerComparator implements Comparator<Player>{
 
