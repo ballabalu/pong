@@ -12,7 +12,7 @@ import java.util.Collections;
  
 public class Highscore {
 
-	private ArrayList<Spieler> highscore;
+	private ArrayList<Player> highscore;
 	
 	ObjectOutputStream outputStream = null;
 	ObjectInputStream inputStream = null;
@@ -20,19 +20,19 @@ public class Highscore {
 	private static final String HIGHSCORE_FILE = "pongHighscore2.txt";
 	
 	public Highscore(){
-		highscore = new ArrayList<Spieler>();
+		highscore = new ArrayList<Player>();
 	}
 	
 	
-	public ArrayList<Spieler> getHighscore(){
+	public ArrayList<Player> getHighscore(){
 		return highscore;
 	}
 	
 	public void addPlayer(String name, int score){
-		highscore.add(new Spieler(name, score));
+		highscore.add(new Player(name, score));
 	}
 	
-	public void addPlayer(Spieler player){
+	public void addPlayer(Player player){
 		highscore.add(player);
 	}
 	
@@ -41,11 +41,11 @@ public class Highscore {
 	}
 	
 	public void addPlayerAndSortHighscore(String name, int score){
-		highscore.add(new Spieler(name, score));
+		highscore.add(new Player(name, score));
 		sort();
 	}
 	
-	public void addPlayerAndSortHighscore(Spieler player){
+	public void addPlayerAndSortHighscore(Player player){
 		highscore.add(player);
 		sort();
 	}
@@ -53,7 +53,7 @@ public class Highscore {
 	@Override
 	public String toString(){
 		String highscoreString = "";
-		for (Spieler s : this.getHighscore()){
+		for (Player s : this.getHighscore()){
 			highscoreString += s.toString() + "\n";
 		}
 		return highscoreString;
@@ -62,11 +62,11 @@ public class Highscore {
 	
 	public void loadLocalHighscoreFile(){
 		System.out.println("loadScoreFile");
-		ArrayList<Spieler> loadedHighscore = null;
+		ArrayList<Player> loadedHighscore = null;
 		
 		try{
 			inputStream = new ObjectInputStream(new FileInputStream(HIGHSCORE_FILE));
-			loadedHighscore = (ArrayList<Spieler>) inputStream.readObject();
+			loadedHighscore = (ArrayList<Player>) inputStream.readObject();
 			//return loadedHighscore;
 		}catch (FileNotFoundException e){
 			System.out.println("FILE NOT FOUND: )" + e.getMessage()) ;

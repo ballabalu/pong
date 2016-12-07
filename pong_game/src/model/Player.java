@@ -2,13 +2,18 @@ package model;
   
 
 
-public class Spieler implements Comparable<Spieler> {
+public class Player implements Comparable<Player> {
  
 	private String playerName;
 	private int playerScore;
 	
+	public Player(){
+		this.playerName = "";
+		this.playerScore = 0;
+	}
 	
-	public Spieler (String playerName, int playerScore){
+	
+	public Player (String playerName, int playerScore){
 		this.playerName= playerName;
 		this.playerScore = playerScore;
 		
@@ -27,8 +32,16 @@ public class Spieler implements Comparable<Spieler> {
 		this.playerScore = score;
 	}
 	
+	public void setPlayerName(String playerName){
+		this.playerName = playerName;
+	}
 	
-	public int compare(Spieler p1, Spieler p2) {
+	public void increaseScore(){
+		this.playerScore = this.playerScore +1;
+	}
+	
+	
+	public int compare(Player p1, Player p2) {
 		int  scorePlayer1 = p1.getScore();
 		int scorePlayer2 = p2.getScore();
 		
@@ -44,7 +57,7 @@ public class Spieler implements Comparable<Spieler> {
 	}
 
 	@Override
-	public int compareTo(Spieler p2) {
+	public int compareTo(Player p2) {
 		int scorePlayer1 = this.getScore();
 		int scorePlayer2 = p2.getScore();
 		

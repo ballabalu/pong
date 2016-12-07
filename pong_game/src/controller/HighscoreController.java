@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 import model.Highscore;
 
-import model.Spieler;
+import model.Player;
 
 
 public class HighscoreController {
@@ -142,14 +142,28 @@ public class HighscoreController {
 		
 		System.out.println(highscore.toString());
 		
-		Spieler p1 = new Spieler("p1" , 9);
+		Player p1 = new Player("p1" , 9);
 		highscore.addPlayerAndSortHighscore(p1);
 		System.out.println(highscore.toString());
 		
-		Spieler p2 = new Spieler("p2" , 10);
+		Player p2 = new Player("p2" , 10);
 		p2.setScore(20);
 		p2.setScore(4);
 		highscore.addPlayerAndSortHighscore(p2);
+		System.out.println(highscore.toString());
+		
+		
+		Player p3 = new Player();
+		System.out.println(p3.toString());
+		
+		p3.increaseScore();
+		System.out.println(p3.toString());
+		
+		p3.setPlayerName("p3");
+		System.out.println(p3.toString());
+		
+		System.out.println("-----------");
+		highscore.addPlayerAndSortHighscore(p3);
 		System.out.println(highscore.toString());
 		
 		//highscore.loadLocalHighscoreFile();
