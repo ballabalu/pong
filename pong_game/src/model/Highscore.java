@@ -9,48 +9,65 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 
+
 public class Highscore {
 
-	private ArrayList<Player> playerList;
-	
-	private static final String HIGHSCORE_FILE = "pongHighscore.txt";
+	private ArrayList<Spieler> highscore;
 	
 	ObjectOutputStream outputStream = null;
 	ObjectInputStream inputStream = null;
 	
+	private static final String HIGHSCORE_FILE = "pongHighscore2.txt";
 	
 	public Highscore(){
-		playerList = new ArrayList<Player>();
-		
+		highscore = new ArrayList<Spieler>();
 	}
 	
-	public ArrayList<Player> getScores(){
-		System.out.println("getScores");
-		loadScoreFile();
-		sort();
-		return playerList;
+	
+	public ArrayList<Spieler> getHighscore(){
+		return highscore;
+	}
+	
+	public void addPlayer(String name, int score){
+		highscore.add(new Spieler(name, score));
+	}
+	
+	public void addPlayer(Spieler player){
+		highscore.add(player);
 	}
 	
 	public void sort(){
-		System.out.println("sort");
-		PlayerComparator vergleich = new PlayerComparator();
-		Collections.sort(playerList, vergleich);
-		
+		Collections.sort(this.getHighscore());
 	}
 	
-	public void scoreHinzufügen(String name, int score){
-		System.out.println("scoreHinzufügen");
-		loadScoreFile();
-		playerList.add(new Player(name, score));
-		updateScoreFile();
-		
+	public void addPlayerAndSortHighscore(String name, int score){
+		highscore.add(new Spieler(name, score));
+		sort();
 	}
 	
-	private void loadScoreFile() {
+	public void addPlayerAndSortHighscore(Spieler player){
+		highscore.add(player);
+		sort();
+	}
+	
+	@Override
+	public String toString(){
+		String highscoreString = "";
+		for (Spieler s : this.getHighscore()){
+			highscoreString += s.toString() + "\n";
+		}
+		return highscoreString;
+	}
+	
+	
+	public void loadLocalHighscoreFile(){
 		System.out.println("loadScoreFile");
+		ArrayList<Spieler> loadedHighscore = null;
+		
 		try{
 			inputStream = new ObjectInputStream(new FileInputStream(HIGHSCORE_FILE));
-			playerList = (ArrayList<Player>) inputStream.readObject();
+			loadedHighscore = (ArrayList<Spieler>) inputStream.readObject();
+			//return loadedHighscore;
 		}catch (FileNotFoundException e){
 			System.out.println("FILE NOT FOUND: )" + e.getMessage()) ;
 		}catch (IOException e){
@@ -67,17 +84,19 @@ public class Highscore {
 				System.out.println("IO - ERROR: )" + e.getMessage()) ;
 			}
 		}
-		
+		this.highscore = loadedHighscore;
 	}
-	private void updateScoreFile() {
+	
+	
+	public void updateLocalScoreFile() {
 		System.out.println("updateScoreFile");
 		try{
 			outputStream = new ObjectOutputStream(new FileOutputStream(HIGHSCORE_FILE));
-			outputStream.writeObject(playerList);
+			outputStream.writeObject(this.highscore);
 		}catch (FileNotFoundException e){
-			System.out.println("FILE NOT FOUND: )" + e.getMessage()) ;
+			System.out.println("FILE NOT FOUND: " + e.getMessage()) ;
 		}catch (IOException e){
-			System.out.println("IOException: )" + e.getMessage()) ;
+			System.out.println("IOException: " + e.getMessage()) ;
 		}finally{
 			try {
 				if(outputStream != null){
@@ -88,35 +107,6 @@ public class Highscore {
 				System.out.println("IO - ERROR: )" + e.getMessage()) ;
 			}
 		}
-		
-	}
-
-	public String getHighscoreString(){
-		System.out.println("getHighscoreString");
-		
-		
-		String highscoreString = "";
-		int maxScores = 10;
-		
-		
-		ArrayList<Player> player = null;
-		player = getScores();
-		
-		System.out.println("player = getScores(); " + player);
-		
-		int i = 0;
-		int size = player.size();
-		
-		if(size > maxScores){
-			size = maxScores;
-		}
-		
-		while (i < size){
-			System.out.println(player.get(i).getPlayerName() + " " + player.get(i).getScore());
-			highscoreString +=  (i+1) +  "." + player.get(i).getPlayerName() +  " " + player.get(i).getScore() + " Punkte ------ ";
-			i++;
-		}
-		return highscoreString;
 		
 	}
 	
