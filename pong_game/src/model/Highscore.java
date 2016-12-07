@@ -9,7 +9,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
+ 
 public class Highscore {
 
 	private ArrayList<Spieler> highscore;

@@ -1,7 +1,6 @@
 package model;
   
 
-/* Player.java playe*/
 
 public class Spieler implements Comparable<Spieler> {
  
