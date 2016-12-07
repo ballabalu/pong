@@ -9,7 +9,7 @@ import view.PongView;
 
 public class Controller {
 
-    private Pitch pitch;
+    /*private Pitch pitch;
     private PongView pongview;
     private ActionListener actionListener;
     
@@ -19,16 +19,14 @@ public class Controller {
                           
     }
     
-    public void control(){        
-        actionListener = new ActionListener() {
-              public void actionPerformed(ActionEvent actionEvent) {                  
-            	  pongview.getRechti().setColor(pitch.getColor());
-              }
-        };                
-        pongview.getBtnRedraw().addActionListener(actionListener);
-        
-        
-        
+    public void control(){                     
+    	pongview.getBtnRedraw().addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent actionEvent) {                  
+          	  pongview.getRechti().setColor(pitch.getColor());
+          	  pongview.getRechti().setSize(pitch.getWidth(), pitch.getHeight());
+            }
+    	});
+                     
         pongview.changeColor().addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent actionEvent) {                  
           	  if (pitch.getColor() == Color.blue){
@@ -38,7 +36,7 @@ public class Controller {
           	  }
             }
         }); 
-    }
+    }*/
     
 
 	

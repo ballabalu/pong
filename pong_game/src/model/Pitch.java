@@ -1,12 +1,28 @@
 package model;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Toolkit;
 
-public class Pitch {
+public class Pitch{
 
-	public static int height = 600;
-	private Color color = Color.blue;
-
+	private Color color = Color.black;
+	private int width;
+	private int height;
+	private Component comp;
+	
+	public Pitch(int width, int height, Component comp){
+		this.width = width;
+		this.height = height;
+		this.comp = comp;
+	}
+	
+	public void paint(Graphics gr){
+		System.out.println("hallo");
+		gr.drawImage(Toolkit.getDefaultToolkit().getImage("img/pitch.png"), width, height, comp);
+	}
+	
 	public Color getColor() {
 		return color;
 	}
@@ -15,4 +31,19 @@ public class Pitch {
 		this.color = color;
 	}
 	
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
 }
