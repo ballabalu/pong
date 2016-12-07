@@ -19,7 +19,6 @@ public class Pitch{
 	}
 	
 	public void paint(Graphics gr){
-		System.out.println("hallo");
 		gr.drawImage(Toolkit.getDefaultToolkit().getImage("img/pitch.png"), width, height, comp);
 	}
 	
