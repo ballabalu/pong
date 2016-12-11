@@ -31,7 +31,7 @@ public class Paddle {
 		y++;
 		// hier vielleicht auch die Zahl erhöhen für eine schnellere Bewegung
 	}
-	
+	//
 	public void paint(Graphics gr){
 		gr.fillRect(x, y, width, height);
 	}
