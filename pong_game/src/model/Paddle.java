@@ -25,12 +25,14 @@ public class Paddle {
 	}
 	
 	public void moveUp(){
-		y--;
+		//y--;
+		y -= 5;
 		//ggf. y- = 5, 7 oder 10 oder so
 	}
 	
 	public void moveDown(){
-		y++;
+		//y++;
+		y += 5;
 		// hier vielleicht auch die Zahl erhöhen für eine schnellere Bewegung
 	}
 	
@@ -39,7 +41,7 @@ public class Paddle {
 		Rectangle paddleRect = new Rectangle(this.x, this.y, this.width, this.height);
 		
 		if (paddleRect.intersects(ballRect)) {
-			
+			ball.collideWithPaddle(true);
 		}
 	}
 	

@@ -16,10 +16,7 @@ import model.Pitch;
 
 public class PongView extends JFrame implements Runnable, KeyListener{
 	
-	//Hier irgendwo muss das Paddle aufgerufen werden
 	private Paddle paddle = new Paddle(25, 180, 25, 125, Color.yellow);
-		
-	// und der Ball dann bspw. auch
 	private Ball ball = new Ball(100, 100, Color.white);
 		
 	private boolean up;
@@ -41,6 +38,8 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 		pitch.paint(gr);
 		//Ball zeichnen
 		ball.paint(gr);
+		//Paddle zeichnen
+		paddle.paint(gr);
 	}
 
 	public void init(){
@@ -75,7 +74,8 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+		up = false;
+		down = false;
 		
 	}
 

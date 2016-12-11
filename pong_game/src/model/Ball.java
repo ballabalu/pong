@@ -50,6 +50,16 @@ public class Ball {
 		y+= velocityY;
 	}
 	
+	public void collideWithPaddle(boolean collision){
+		if (collision) {
+			velocityX = velocityX * -1;
+			// wir könnten auch den y-wert ändern, wenn wir wollen
+			// velocityY = velocityY * -1;
+		} else if (collision) {
+			//NICHTS
+		}
+	}
+	
 	public void paint(Graphics gr){
 		gr.fillOval(x, y, 50, 50);
 	}
