@@ -2,6 +2,8 @@ package model;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
+import java.awt.geom.Rectangle2D;
 
 public class Paddle {
 	
@@ -31,7 +33,16 @@ public class Paddle {
 		y++;
 		// hier vielleicht auch die Zahl erhöhen für eine schnellere Bewegung
 	}
-	//
+	
+	public void checkCollisionWithBall(Ball ball){
+		Rectangle ballRect = new Rectangle(ball.getX(), ball.getY(), 50,50);
+		Rectangle paddleRect = new Rectangle(this.x, this.y, this.width, this.height);
+		
+		if (paddleRect.intersects(ballRect)) {
+			
+		}
+	}
+	
 	public void paint(Graphics gr){
 		gr.fillRect(x, y, width, height);
 	}
