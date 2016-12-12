@@ -48,7 +48,7 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 
 	public void init(){
 		PongView pong = new PongView("Pong - The Game");
-		new Thread(pong).start();
+		//new Thread(pong).start();
 		pong.setSize(900, 600);
 		pong.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pong.setLocation(50,50);

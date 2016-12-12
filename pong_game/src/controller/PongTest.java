@@ -12,24 +12,13 @@ import javax.swing.*;
 import model.Ball;
 import model.Paddle;
 import model.Pitch;
+import view.MenueView;
 import view.PongView;
 
 public class PongTest extends JFrame{
 	
-		
-
 	public static void main(String[] args){
-		PongView pong = new PongView("Pong - The Game");
-		pong.init();
-
-
-
-
-	}
-	
-	
-
-	
-
-   
+		MenueView pong = new MenueView("Pong - The Game");
+		pong.init(new Controller());
+	}  
 }
