@@ -30,6 +30,14 @@ public class Ball {
 		return y;
 	}
 	
+	public int getVelocityX(){
+		return velocityX;
+	}
+	
+	public int getVelocityY(){
+		return velocityY;
+	}
+	
 	public void moveBall(){
 		
 		//Bewegung des Balls begrenzt durch das Spielfeld auf der x-Achse
@@ -62,6 +70,7 @@ public class Ball {
 	
 	public void paint(Graphics gr){
 		gr.fillOval(x, y, 50, 50);
+		gr.setColor(color);
 	}
 
 }

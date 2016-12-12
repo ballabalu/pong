@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.geom.Rectangle2D;
 
-public class Paddle {
+public class AutoPaddle {
 	
 	
 	//Variablen
@@ -16,7 +16,7 @@ public class Paddle {
 	private Color color;
 	
 	//Konstruktor
-	public Paddle (int x, int y, int width, int height, Color color){
+	public AutoPaddle (int x, int y, int width, int height, Color color){
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -25,15 +25,11 @@ public class Paddle {
 	}
 	
 	public void moveUp(){
-		//y--;
 		y -= 5;
-		//ggf. y- = 5, 7 oder 10 oder so
 	}
 	
 	public void moveDown(){
-		//y++;
 		y += 5;
-		// hier vielleicht auch die Zahl erhöhen für eine schnellere Bewegung
 	}
 	
 	public void checkCollisionWithBall(Ball ball){
@@ -42,6 +38,30 @@ public class Paddle {
 		
 		if (paddleRect.intersects(ballRect)) {
 			ball.collideWithPaddle(true);
+		}
+	}
+	
+	
+	public void moveAutoPaddle(Ball ball){
+		
+		int midPaddle = this.y + this.height/2;
+		
+		if (ball.getVelocityX() > 0) {
+			if (midPaddle != ball.getY()) {
+				if (ball.getY() < midPaddle) {
+					moveUp();
+				} else if (ball.getY() > midPaddle) {
+					moveDown();
+				}
+			}
+		} else if (ball.getVelocityX() < 0) {
+			if (midPaddle != 302) {
+				if (midPaddle < 302) {
+					moveDown();
+				} else if (midPaddle > 302) {
+					moveUp();
+				}
+			}
 		}
 	}
 	

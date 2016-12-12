@@ -10,6 +10,7 @@ import javax.swing.*;
 
 import controller.Controller;
 import controller.PongTest;
+import model.AutoPaddle;
 import model.Ball;
 import model.Paddle;
 import model.Pitch;
@@ -18,6 +19,7 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 	
 	private Paddle paddle = new Paddle(25, 180, 25, 125, Color.yellow);
 	private Ball ball = new Ball(100, 100, Color.white);
+	private AutoPaddle autoPaddle = new AutoPaddle(725, 180, 25, 125, Color.white);
 		
 	private boolean up;
 	private boolean down;
@@ -40,6 +42,8 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 		ball.paint(gr);
 		//Paddle zeichnen
 		paddle.paint(gr);
+		//AI zeichnen
+		autoPaddle.paint(gr);
 	}
 
 	public void init(){
@@ -93,6 +97,8 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 			}
 			
 			paddle.checkCollisionWithBall(ball);
+			autoPaddle.moveAutoPaddle(ball);
+			autoPaddle.checkCollisionWithBall(ball);
 			
 			repaint();
 			try {
