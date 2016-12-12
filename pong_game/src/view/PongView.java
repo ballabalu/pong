@@ -1,71 +1,121 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 
-public class PongView extends JPanel {
+import controller.Controller;
+import controller.PongTest;
+import model.AutoPaddle;
+import model.Ball;
+import model.Paddle;
+import model.Pitch;
 
-	private JButton redraw;
-	private JButton changeColor;
-	private MyCanvas rechti;
+public class PongView extends JFrame implements Runnable, KeyListener{
 	
-	public PongView(){
-		init();
-	}
-	
-	public void init(){
-		JFrame frm = new JFrame();
-		frm.setTitle("JFrame mit setSize()");
-
-		frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		frm.setSize(800,600);
-		frm.setLocation(50,50);
-		frm.setResizable(false);
-		frm.setVisible(true);
+	private Paddle paddle = new Paddle(25, 180, 25, 125, Color.yellow);
+	private Ball ball = new Ball(100, 100, Color.white);
+	private AutoPaddle autoPaddle = new AutoPaddle(725, 180, 25, 125, Color.white);
 		
-        this.redraw = new JButton("Redraw");        
-        frm.getContentPane().add(redraw, BorderLayout.SOUTH); 
-        
-        this.changeColor = new JButton("change Color");        
-        frm.getContentPane().add(changeColor, BorderLayout.NORTH);    
-        
-        this.rechti = new MyCanvas();
-        frm.getContentPane().add(rechti);
-	}
-	
-    public JButton getBtnRedraw(){
-        return redraw;
-    }
-    
-    public JButton changeColor(){
-        return changeColor;
-    }
-	
-    public MyCanvas getRechti(){
-		return rechti;  	
-    }
-    
-	public class MyCanvas extends JComponent {
-
-		private Color color = Color.green;
-		  public void paint(Graphics g) {
-		    g.setColor(color);
-		    g.fillRect(10, 195, 90, 60);
-		  }
-		  
-		  public void setColor(Color color){
-			  this.color = color;
-			  repaint();
-		  }
-	}
+	private boolean up;
+	private boolean down;
 	
 
+	private Graphics gr;
+	private Pitch pitch = new Pitch(0, 0, this);
 	
+	public PongView(String title){
+		super(title);
+		this.setFocusable(true);
+		this.addKeyListener(this);
+	}
+	
+	public void paint(Graphics gr){
+		super.paint(gr);
+		//Spielfeld zeichnen
+		pitch.paint(gr);
+		//Ball zeichnen
+		ball.paint(gr);
+		//Paddle zeichnen
+		paddle.paint(gr);
+		//AI zeichnen
+		autoPaddle.paint(gr);
+	}
+
+	public void init(){
+		PongView pong = new PongView("Pong - The Game");
+		new Thread(pong).start();
+		pong.setSize(900, 600);
+		pong.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		pong.setLocation(50,50);
+		pong.setResizable(false);
+		pong.setVisible(true);
+
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// Pfeil nach oben = Keycode 38
+		if (e.getKeyCode() == 38) {
+			up = true;
+			down = false;
+			//Pfeil nach unten = Keycode 40
+		} else if (e.getKeyCode() == 40){
+			up = false;
+			down = true;
+		}
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		up = false;
+		down = false;
+		
+	}
+
+	@Override
+	public void run() {
+
+		while (true) {
+			
+			ball.moveBall();
+
+			if (up) {
+				paddle.moveUp();
+			} else if (down) {
+				paddle.moveDown();
+			}
+			
+			paddle.checkCollisionWithBall(ball);
+			autoPaddle.moveAutoPaddle(ball);
+			autoPaddle.checkCollisionWithBall(ball);
+			
+			repaint();
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+				System.out.println("InterruptedException in Thread");
+			}
+		}
+	}
+	
+//	public static void main(String[] args){
+
+	//	PongView pongView = new PongView("Pong - The Game - Test");
+		//new Thread(pongView).start();
+		//pongView.setSize(width, height);
+		//pongTest.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//pongTest.setVisible(true);
+	//}
+
 }
