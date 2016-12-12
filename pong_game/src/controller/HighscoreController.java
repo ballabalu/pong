@@ -166,8 +166,27 @@ public class HighscoreController {
 		highscore.addPlayerAndSortHighscore(p3);
 		System.out.println(highscore.toString());
 		
-		//highscore.loadLocalHighscoreFile();
-		//highscore.updateLocalScoreFile();
+		
+		highscore.updateLocalScoreFile();
+		
+		
+		highscore.loadLocalHighscoreFile();
+		
+		
+		System.out.println(highscore.toString());
+		
+		
+		Highscore highscore2 = new Highscore();
+		highscore2.loadLocalHighscoreFile();
+		highscore2.addPlayerAndSortHighscore("hs2-p1", 50);
+		System.out.println(highscore2.toString());
+		highscore2.updateLocalScoreFile();
+		
+
+		System.out.println("hs3------");
+		Highscore highscore3 = new Highscore();
+		highscore3.loadLocalHighscoreFile();
+		System.out.println(highscore3.toString());
 		
 		//Highscore highscoreLocal = new Highscore();
 		//highscoreLocal.loadLocalHighscoreFile();

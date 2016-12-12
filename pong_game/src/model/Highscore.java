@@ -17,7 +17,7 @@ public class Highscore {
 	ObjectOutputStream outputStream = null;
 	ObjectInputStream inputStream = null;
 	
-	private static final String HIGHSCORE_FILE = "pongHighscore2.txt";
+	private static final String HIGHSCORE_FILE = "pongHighscore.txt";
 	
 	public Highscore(){
 		highscore = new ArrayList<Player>();

@@ -1,8 +1,8 @@
 package model;
-  
 
+import java.io.Serializable;
 
-public class Player implements Comparable<Player> {
+public class Player implements Serializable, Comparable<Player> {
  
 	private String playerName;
 	private int playerScore;
