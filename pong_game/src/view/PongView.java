@@ -9,7 +9,6 @@ import java.awt.event.KeyListener;
 import javax.swing.*;
 
 import controller.Controller;
-import controller.PongTest;
 import model.AutoPaddle;
 import model.Ball;
 import model.Paddle;
