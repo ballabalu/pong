@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import model.Highscore;
 
 import model.Player;
+import view.HighscoreView;
 
 
 public class HighscoreController {
@@ -129,6 +130,10 @@ public class HighscoreController {
 	*/
 	
 	public static void main (String[] args){
+		
+		HighscoreView hsView = new HighscoreView("Highscore!");
+		hsView.init();
+		
 		Highscore highscore = new Highscore();
 		
 		highscore.addPlayer("a", 1);
