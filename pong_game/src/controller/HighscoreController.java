@@ -1,12 +1,7 @@
 package controller;
  
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-
 import model.Highscore;
-
 import model.Player;
 import view.HighscoreView;
 

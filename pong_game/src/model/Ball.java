@@ -1,23 +1,25 @@
 package model;
 
-import java.awt.Color;
+
+import java.awt.Component;
 import java.awt.Graphics;
+import java.awt.Toolkit;
 
 public class Ball {
 	
 	
 	private int x;
 	private int y;
-	private Color color;
+	private Component comp;
 	private int velocityX;
 	private int velocityY;
 	
 	
 	//Konstruktor
-	public Ball (int x, int y, Color color){
+	public Ball (int x, int y, Component comp){
 		this.x = x;
 		this.y = y;
-		this.color = color;
+		this.comp = comp;
 		this.velocityX = 5;
 		this.velocityY = 5;
 	}
@@ -69,8 +71,7 @@ public class Ball {
 	}
 	
 	public void paint(Graphics gr){
-		gr.fillOval(x, y, 50, 50);
-		gr.setColor(color);
+		gr.drawImage(Toolkit.getDefaultToolkit().getImage("img/ball.png"), x, y, comp);
 	}
 
 }
