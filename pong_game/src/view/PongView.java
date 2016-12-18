@@ -16,7 +16,7 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 	
 	private Graphics gr;
 	private Pitch pitch = new Pitch(0, 0, this);
-	private Ball ball = new Ball(100, 280, this);
+	private Ball ball = new Ball(100, 100, this);
 	private Paddle paddle = new Paddle(25, 180, 25, 125, Color.yellow);
 	private AutoPaddle autoPaddle = new AutoPaddle(725, 180, 25, 125, Color.white);
 	
@@ -97,6 +97,7 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 			autoPaddle.checkCollisionWithBall(ball);
 			
 			repaint();
+			System.out.println("repaint");
 			try {
 				//Pause der Endlosschleife
 				Thread.sleep(100);
