@@ -43,12 +43,12 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 
 	public void init(){
 		PongView pong = new PongView("Pong - The Game");
-		new Thread(pong).start();
 		pong.setSize(900, 600);
 		pong.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pong.setLocation(50,50);
 		pong.setResizable(false);
 		pong.setVisible(true);
+		new Thread(this).start();
 
 	}
 
@@ -84,6 +84,7 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 		while (true) {
 			System.out.println("run-Methode startet.");
 			ball.moveBall();
+			System.out.println("ball.moveBall();");
 
 			if (up) {
 				paddle.moveUp();
@@ -98,7 +99,7 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 			repaint();
 			try {
 				//Pause der Endlosschleife
-				Thread.sleep(20);
+				Thread.sleep(100);
 			} catch (InterruptedException e) {
 				System.out.println("InterruptedException in Thread");
 			}

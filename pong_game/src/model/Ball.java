@@ -42,18 +42,24 @@ public class Ball {
 	
 	public void moveBall(){
 		
+		System.out.println("moveBall() in Ball.java läuft.");
+		
 		//Bewegung des Balls begrenzt durch das Spielfeld auf der x-Achse
 		if (x + 50 > 900) {
 			velocityX = -5;
+			System.out.println("Ball geht nach links.");
 		} else if (x < 0){
 			velocityX = 5;
+			System.out.println("Ball geht nach rechts.");
 		}
 		
 		//Bewegung des Balls begrenzt durch das Spielfeld auf der y-Achse
 		if (y + 50 > 600) {
 			velocityY = -5;
+			System.out.println("Ball geht nach oben.");
 		} else if (y < 20){
 			velocityY = 5;
+			System.out.println("Ball geht nach unten.");
 		}
 		
 		x+= velocityX;
