@@ -14,6 +14,7 @@ import model.Pitch;
 
 public class PongView extends JFrame implements Runnable, KeyListener{
 	
+	private PongView pong;
 	private Graphics gr;
 	private Pitch pitch = new Pitch(0, 0, this);
 	private Ball ball = new Ball(100, 100, this);
@@ -29,11 +30,15 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 		this.addKeyListener(this);
 	}
 	
+	@Override
 	public void paint(Graphics gr){
+		System.out.println("REPAINT");
 		super.paint(gr);
 		//Spielfeld zeichnen
 		pitch.paint(gr);
 		//Ball zeichnen
+		System.out.println(ball.getX());
+		System.out.println(ball.getY());
 		ball.paint(gr);
 		//Paddle zeichnen
 		paddle.paint(gr);
@@ -42,13 +47,14 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 	}
 
 	public void init(){
-		PongView pong = new PongView("Pong - The Game");
+		pong = new PongView("Pong - The Game");
+		new Thread(pong).start();
 		pong.setSize(900, 600);
 		pong.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pong.setLocation(50,50);
 		pong.setResizable(false);
 		pong.setVisible(true);
-		new Thread(this).start();
+
 
 	}
 
@@ -83,7 +89,8 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 		//Endlosschleife
 		while (true) {
 			System.out.println("run-Methode startet.");
-			ball.moveBall();
+			this.ball.moveBall();
+
 			System.out.println("ball.moveBall();");
 
 			if (up) {
@@ -97,10 +104,12 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 			autoPaddle.checkCollisionWithBall(ball);
 			
 			repaint();
+
 			System.out.println("repaint");
 			try {
 				//Pause der Endlosschleife
-				Thread.sleep(100);
+				Thread.sleep(200);
+
 			} catch (InterruptedException e) {
 				System.out.println("InterruptedException in Thread");
 			}
