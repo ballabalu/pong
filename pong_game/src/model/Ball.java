@@ -41,23 +41,37 @@ public class Ball {
 	}
 	
 	public void moveBall(){
+		velocityX = 5;
+		velocityY = 5;
 		
-		//Bewegung des Balls begrenzt durch das Spielfeld auf der x-Achse
-		if (x + 50 > 900) {
-			velocityX = -5;
-		} else if (x < 0){
-			velocityX = 5;
-		}
+		x += velocityX;
+		y += velocityY;
 		
-		//Bewegung des Balls begrenzt durch das Spielfeld auf der y-Achse
-		if (y + 50 > 600) {
-			velocityY = -5;
-		} else if (y < 20){
-			velocityY = 5;
-		}
+		System.out.println(x);
+		System.out.println(y);
 		
-		x+= velocityX;
-		y+= velocityY;
+//		System.out.println("moveBall() in Ball.java läuft.");
+//		
+//		//Bewegung des Balls begrenzt durch das Spielfeld auf der x-Achse
+//		if (x + 50 > 900) {
+//			velocityX = -5;
+//			System.out.println("Ball geht nach links.");
+//		} else if (x < 0){
+//			velocityX = 5;
+//			System.out.println("Ball geht nach rechts.");
+//		}
+//		
+//		//Bewegung des Balls begrenzt durch das Spielfeld auf der y-Achse
+//		if (y + 50 > 600) {
+//			velocityY = -5;
+//			System.out.println("Ball geht nach oben.");
+//		} else if (y < 20){
+//			velocityY = 5;
+//			System.out.println("Ball geht nach unten.");
+//		}
+//		
+//		x+= velocityX;
+//		y+= velocityY;
 	}
 	
 	public void collideWithPaddle(boolean collision){
