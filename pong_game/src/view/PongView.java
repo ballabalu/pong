@@ -89,8 +89,7 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 		//Endlosschleife
 		while (true) {
 			System.out.println("run-Methode startet.");
-			this.ball.moveBall();
-
+			ball.moveBall();
 			System.out.println("ball.moveBall();");
 
 			if (up) {
