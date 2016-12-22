@@ -14,6 +14,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import model.Highscore;
+import model.NetworkConnection;
 
 public class HighscoreView  extends JFrame {
 
@@ -112,11 +113,30 @@ public class HighscoreView  extends JFrame {
 	
 	public void showHighscoreInTextarea(Highscore highscore) {
 		highscore.loadLocalHighscoreFile();
+
+		
+		
+		
+		
 		System.out.println(highscore.toString());
 		this.highscoreTextarea.setText(highscore.toString());
 		
 	}
- 
+	
+	
+	public void showDownloadedHighscoreInTextarea() {
+		NetworkConnection urlreader2 = new NetworkConnection("http://erdbeerwelt.com/mio/pongHighscore.txt");
+		try {
+			Highscore highscore = new Highscore( urlreader2.getHighscoreFromURL());
+			this.highscoreTextarea.setText(highscore.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			this.highscoreTextarea.setText("Fehler beim Laden der Highscore-Liste"  );
+		}
+	}
+	
+	
 	public void addPlayer(Highscore highscore) {
 		String playerName = this.tfName.getText();
 		this.nameLabel.setVisible(false);

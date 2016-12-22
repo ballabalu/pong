@@ -46,7 +46,7 @@ public class HighscoreController implements ActionListener{
         	
         }else if( actionCommand == "test"){
         	System.out.println("-----> Test-Button-----------");  
-        	
+        	this.highscoreView.showDownloadedHighscoreInTextarea();
          
         }
         

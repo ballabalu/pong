@@ -49,23 +49,25 @@ public class NetworkConnection {
 	     return loadedHighscore;
 	}
 	
-	
+	/*
 	
 	public static void main(String[] args) throws Exception {
 		 System.out.println("URLReader ");
 		 
-		/*URLReader urlreader = new URLReader("http://erdbeerwelt.com/mio/test.txt");
+		URLReader urlreader = new URLReader("http://erdbeerwelt.com/mio/test.txt");
 		String test1 = urlreader.getTextFromURL();
 		String inputLine;
 		System.out.println(test1);
 		
-		*/
+		
 		 
 		NetworkConnection urlreader2 = new NetworkConnection("http://erdbeerwelt.com/mio/pongHighscore.txt");
 		Highscore hs = new Highscore( urlreader2.getHighscoreFromURL());
 		
 		 System.out.println(hs.toString());
-		/*
+		 
+		 
+		
 		 System.out.println("-----------");
 		 
         URL oracle = new URL("http://erdbeerwelt.com/mio/test.txt");
@@ -76,8 +78,6 @@ public class NetworkConnection {
         while ((inputLine = in.readLine()) != null)
             System.out.println(inputLine);
         in.close();
-        
-        */
-         
-    }
+           
+    } */
 }
