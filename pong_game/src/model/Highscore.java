@@ -23,6 +23,9 @@ public class Highscore {
 		highscore = new ArrayList<Player>();
 	}
 	
+	public Highscore(ArrayList<Player> al){
+		this.highscore = al;
+	}
 	
 	public ArrayList<Player> getHighscore(){
 		return highscore;
@@ -53,8 +56,10 @@ public class Highscore {
 	@Override
 	public String toString(){
 		String highscoreString = "";
+		int i = 1;
 		for (Player s : this.getHighscore()){
-			highscoreString += s.toString() + "\n";
+			highscoreString +=  i + ". \t" + s.toString() + "\n";
+			i++;
 		}
 		return highscoreString;
 	}

@@ -1,14 +1,20 @@
 package controller;
  
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import model.Highscore;
 import model.Player;
 import view.HighscoreView;
+import view.MenueView;
+import view.PongView;
 
 
-public class HighscoreController {
+public class HighscoreController implements ActionListener{
 
-	private Highscore highscore;
+	private Highscore highscore = new Highscore();
+	private HighscoreView highscoreView;
 	
 	private static final String HIGHSCORE_FILE = "pongHighscore.txt";
 	
@@ -16,12 +22,106 @@ public class HighscoreController {
 	//ObjectInputStream inputStream = null;
 	
 	public HighscoreController(){
+		this.highscore = new Highscore();
 		
 	}
-
-	private void newHighscore() {
-		Highscore highscore = new Highscore();
+	
+	public HighscoreController( HighscoreView highscoreview){
+		this.highscore = new Highscore();
+		this.highscoreView = highscoreview;
 	}
+
+	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		String actionCommand = (String) e.getActionCommand();
+		
+        if(actionCommand == "in Highscore eintragen"){
+        	System.out.println("-----> in Highscore eintragen!-----------");  
+        	this.highscoreView.addPlayer(this.highscore);
+        }else if(actionCommand == "Highscore laden"){
+        	System.out.println("-----> Highscore laden! -----------");   
+        	this.highscoreView.showHighscoreInTextarea(this.highscore);
+        	
+        }else if( actionCommand == "test"){
+        	System.out.println("-----> Test-Button-----------");  
+        	
+        
+        }
+        
+	}
+	
+	
+public static void showHighscore (){
+		
+		HighscoreView hsView = new HighscoreView("Highscore!");
+		hsView.init(new Controller());
+		
+		Highscore highscore = new Highscore();
+		
+		highscore.addPlayer("a", 1);
+		highscore.addPlayer("b", 5);
+		highscore.addPlayer("c", 3);
+		highscore.addPlayer("d", 2);
+		
+		System.out.println(highscore.toString());
+		
+		highscore.sort();
+		
+		System.out.println(highscore.toString());
+		
+		Player p1 = new Player("p1" , 9);
+		highscore.addPlayerAndSortHighscore(p1);
+		System.out.println(highscore.toString());
+		
+		Player p2 = new Player("p2" , 10);
+		p2.setScore(20);
+		p2.setScore(4);
+		highscore.addPlayerAndSortHighscore(p2);
+		System.out.println(highscore.toString());
+		
+		
+		Player p3 = new Player();
+		System.out.println(p3.toString());
+		
+		p3.increaseScore();
+		System.out.println(p3.toString());
+		
+		p3.setPlayerName("p3");
+		System.out.println(p3.toString());
+		
+		System.out.println("-----------");
+		highscore.addPlayerAndSortHighscore(p3);
+		System.out.println(highscore.toString());
+		
+		
+		highscore.updateLocalScoreFile();
+		
+		
+		highscore.loadLocalHighscoreFile();
+		
+		
+		System.out.println(highscore.toString());
+		
+		
+		Highscore highscore2 = new Highscore();
+		highscore2.loadLocalHighscoreFile();
+		highscore2.addPlayerAndSortHighscore("hs2-p1", 50);
+		System.out.println(highscore2.toString());
+		highscore2.updateLocalScoreFile();
+		
+
+		System.out.println("hs3------");
+		Highscore highscore3 = new Highscore();
+		highscore3.loadLocalHighscoreFile();
+		System.out.println(highscore3.toString());
+		
+		//Highscore highscoreLocal = new Highscore();
+		//highscoreLocal.loadLocalHighscoreFile();
+		//System.out.println(highscoreLocal.toString());
+	}
+	
 	
 	
 	/*public ArrayList<Spieler> getScores(){
@@ -124,72 +224,7 @@ public class HighscoreController {
 	}
 	*/
 	
-	public static void main (String[] args){
-		
-		HighscoreView hsView = new HighscoreView("Highscore!");
-		hsView.init();
-		
-		Highscore highscore = new Highscore();
-		
-		highscore.addPlayer("a", 1);
-		highscore.addPlayer("b", 5);
-		highscore.addPlayer("c", 3);
-		highscore.addPlayer("d", 2);
-		
-		System.out.println(highscore.toString());
-		
-		highscore.sort();
-		
-		System.out.println(highscore.toString());
-		
-		Player p1 = new Player("p1" , 9);
-		highscore.addPlayerAndSortHighscore(p1);
-		System.out.println(highscore.toString());
-		
-		Player p2 = new Player("p2" , 10);
-		p2.setScore(20);
-		p2.setScore(4);
-		highscore.addPlayerAndSortHighscore(p2);
-		System.out.println(highscore.toString());
-		
-		
-		Player p3 = new Player();
-		System.out.println(p3.toString());
-		
-		p3.increaseScore();
-		System.out.println(p3.toString());
-		
-		p3.setPlayerName("p3");
-		System.out.println(p3.toString());
-		
-		System.out.println("-----------");
-		highscore.addPlayerAndSortHighscore(p3);
-		System.out.println(highscore.toString());
-		
-		
-		highscore.updateLocalScoreFile();
-		
-		
-		highscore.loadLocalHighscoreFile();
-		
-		
-		System.out.println(highscore.toString());
-		
-		
-		Highscore highscore2 = new Highscore();
-		highscore2.loadLocalHighscoreFile();
-		highscore2.addPlayerAndSortHighscore("hs2-p1", 50);
-		System.out.println(highscore2.toString());
-		highscore2.updateLocalScoreFile();
-		
+	
 
-		System.out.println("hs3------");
-		Highscore highscore3 = new Highscore();
-		highscore3.loadLocalHighscoreFile();
-		System.out.println(highscore3.toString());
-		
-		//Highscore highscoreLocal = new Highscore();
-		//highscoreLocal.loadLocalHighscoreFile();
-		//System.out.println(highscoreLocal.toString());
-	}
+	
 }
