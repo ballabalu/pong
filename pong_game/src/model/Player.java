@@ -53,7 +53,7 @@ public class Player implements Serializable, Comparable<Player> {
 			return 0;
 		}
 		
-		
+		 
 	}
 
 	@Override

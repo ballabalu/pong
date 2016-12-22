@@ -116,7 +116,7 @@ public class HighscoreView  extends JFrame {
 		this.highscoreTextarea.setText(highscore.toString());
 		
 	}
-
+ 
 	public void addPlayer(Highscore highscore) {
 		String playerName = this.tfName.getText();
 		this.nameLabel.setVisible(false);

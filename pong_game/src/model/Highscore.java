@@ -52,7 +52,7 @@ public class Highscore {
 		highscore.add(player);
 		sort();
 	}
-	
+	 
 	@Override
 	public String toString(){
 		String highscoreString = "";
