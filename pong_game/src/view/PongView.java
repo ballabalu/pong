@@ -107,7 +107,7 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 			System.out.println("repaint");
 			try {
 				//Pause der Endlosschleife
-				Thread.sleep(200);
+				Thread.sleep(150);
 
 			} catch (InterruptedException e) {
 				System.out.println("InterruptedException in Thread");
