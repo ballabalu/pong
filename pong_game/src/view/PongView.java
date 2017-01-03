@@ -41,8 +41,8 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 		//Spielfeld zeichnen
 		pitch.paint(gr);
 		//Ball zeichnen
-		System.out.println(ball.getX());
-		System.out.println(ball.getY());
+//		System.out.println(ball.getX());
+//		System.out.println(ball.getY());
 		ball.paint(gr);
 		//Paddle zeichnen
 		paddle.paint(gr);
@@ -92,9 +92,9 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 	public void run() {
 		//Endlosschleife
 		while (true) {
-			System.out.println("run-Methode startet.");
+//			System.out.println("run-Methode startet.");
 			ball.moveBall();
-			System.out.println("ball.moveBall();");
+//			System.out.println("ball.moveBall();");
 
 			if (up) {
 				paddle.moveUp();
@@ -108,7 +108,7 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 			
 			repaint();
 
-			System.out.println("repaint");
+//			System.out.println("repaint");
 			try {
 				//Pause der Endlosschleife
 				Thread.sleep(150);
