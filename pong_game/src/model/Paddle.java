@@ -25,13 +25,13 @@ public class Paddle {
 	
 	public void moveUp(){
 		//y--;
-		y -= 5;
+		y -= 10;
 		//ggf. y- = 5, 7 oder 10 oder so
 	}
 	
 	public void moveDown(){
 		//y++;
-		y += 5;
+		y += 10;
 		// hier vielleicht auch die Zahl erhöhen für eine schnellere Bewegung
 	}
 	

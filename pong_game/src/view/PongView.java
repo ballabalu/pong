@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import model.AutoPaddle;
 import model.Ball;
@@ -18,16 +19,19 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 	private Graphics gr;
 	private Pitch pitch = new Pitch(0, 0, this);
 	private Ball ball = new Ball(100, 100, this);
-	private Paddle paddle = new Paddle(25, 180, 25, 125, Color.yellow);
-	private AutoPaddle autoPaddle = new AutoPaddle(725, 180, 25, 125, Color.white);
+	private AutoPaddle autoPaddle = new AutoPaddle(850, 180, 25, 125, Color.LIGHT_GRAY);
+	private Paddle paddle = new Paddle(25, 180, 25, 125, Color.WHITE);
 	
 	private boolean up;
 	private boolean down;
 	
 	public PongView(String title){
 		super(title);
+		JPanel panel = new JPanel(null);
+		panel.setDoubleBuffered(true);
 		this.setFocusable(true);
 		this.addKeyListener(this);
+		setContentPane(panel);
 	}
 	
 	@Override
