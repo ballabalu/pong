@@ -2,8 +2,10 @@ package view;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -38,6 +40,10 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 	public void paint(Graphics gr){
 		System.out.println("REPAINT");
 		super.paint(gr);
+		
+		BufferedImage bufferedImage = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
+		
+		
 		//Spielfeld zeichnen
 		pitch.paint(gr);
 		//Ball zeichnen
@@ -48,6 +54,9 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 		paddle.paint(gr);
 		//AI zeichnen
 		autoPaddle.paint(gr);
+		
+		Graphics2D g2dComponent = (Graphics2D) gr;
+		g2dComponent.drawImage(bufferedImage, 0, 0, null); 
 	}
 
 	public void init(){
@@ -111,7 +120,7 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 //			System.out.println("repaint");
 			try {
 				//Pause der Endlosschleife
-				Thread.sleep(150);
+				Thread.sleep(60);
 
 			} catch (InterruptedException e) {
 				System.out.println("InterruptedException in Thread");
