@@ -29,11 +29,8 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 	
 	public PongView(String title){
 		super(title);
-		JPanel panel = new JPanel(null);
-		panel.setDoubleBuffered(true);
 		this.setFocusable(true);
 		this.addKeyListener(this);
-		setContentPane(panel);
 	}
 	
 	@Override
@@ -45,15 +42,15 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 		
 		
 		//Spielfeld zeichnen
-		pitch.paint(gr);
+		pitch.paintt(gr);
 		//Ball zeichnen
 //		System.out.println(ball.getX());
 //		System.out.println(ball.getY());
-		ball.paint(gr);
+		ball.paintt(gr);
 		//Paddle zeichnen
-		paddle.paint(gr);
+		paddle.paintt(gr);
 		//AI zeichnen
-		autoPaddle.paint(gr);
+		autoPaddle.paintt(gr);
 		
 		Graphics2D g2dComponent = (Graphics2D) gr;
 		g2dComponent.drawImage(bufferedImage, 0, 0, null); 
@@ -61,6 +58,10 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 
 	public void init(){
 		pong = new PongView("Pong - The Game");
+		JPanel panel = new JPanel(null);
+		panel.setDoubleBuffered(true);
+		pong.add(panel);
+		setContentPane(panel);
 		new Thread(pong).start();
 		pong.setSize(900, 600);
 		pong.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -120,7 +121,7 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 //			System.out.println("repaint");
 			try {
 				//Pause der Endlosschleife
-				Thread.sleep(60);
+				Thread.sleep(20);
 
 			} catch (InterruptedException e) {
 				System.out.println("InterruptedException in Thread");

@@ -73,7 +73,7 @@ public class Ball {
 		}
 	}
 	
-	public void paint(Graphics gr){
+	public void paintt(Graphics gr){
 		gr.drawImage(Toolkit.getDefaultToolkit().getImage("img/ball.png"), x, y, comp);
 	}
 

@@ -18,7 +18,7 @@ public class Pitch{
 		this.comp = comp;
 	}
 	
-	public void paint(Graphics gr){
+	public void paintt(Graphics gr){
 		gr.drawImage(Toolkit.getDefaultToolkit().getImage("img/pitch.png"), width, height, comp);
 	}
 	
