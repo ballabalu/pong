@@ -56,6 +56,7 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 		g2dComponent.drawImage(bufferedImage, 0, 0, null); 
 	}
 
+	//JPAnel hinzugefügt
 	public void init(){
 		pong = new PongView("Pong - The Game");
 		JPanel panel = new JPanel(null);

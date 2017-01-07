@@ -44,6 +44,7 @@ public class Paddle {
 		}
 	}
 	
+	//paintt
 	public void paintt(Graphics gr){
 		gr.fillRect(x, y, width, height);
 		gr.setColor(color);
