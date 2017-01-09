@@ -37,22 +37,34 @@ public class HighscoreController implements ActionListener{
 		
 		String actionCommand = (String) e.getActionCommand();
 		
-        if(actionCommand == "in Highscore eintragen"){
+        /*if(actionCommand == "in Highscore eintragen"){
         	System.out.println("-----> in Highscore eintragen!-----------");  
         	this.highscoreView.addPlayer(this.highscore);
+        	
         }else if(actionCommand == "Highscore laden"){
         	System.out.println("-----> Highscore laden! -----------");   
         	this.highscoreView.showHighscoreInTextarea(this.highscore);
         	
-        }else if( actionCommand == "test"){
+        }else 
+       
+		
+        if( actionCommand == "showDownloadedHighscoreInTextarea"){
         	System.out.println("-----> Test-Button-----------");  
-        	this.highscoreView.showDownloadedHighscoreInTextarea();
+        	this.highscoreView.showDownloadedHighscoreInTextarea(this.highscore);
+         
+        }
+        else  */
+		
+		if( actionCommand == "in Highscore eintragen -> Server"){
+        	System.out.println("-----> in Highscore eintragen -> Server-----------");  
+        	this.highscoreView.postUpdatedHighscoreToServer(this.highscore);
          
         }
         
 	}
 	
 	
+	/*
 public static void showHighscore (){
 		
 		HighscoreView hsView = new HighscoreView("Highscore!");
@@ -122,6 +134,7 @@ public static void showHighscore (){
 		//System.out.println(highscoreLocal.toString());
 	}
 	
+	*/
 	
 	
 	/*public ArrayList<Spieler> getScores(){

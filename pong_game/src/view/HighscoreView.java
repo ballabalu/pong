@@ -15,6 +15,7 @@ import javax.swing.JTextField;
 
 import model.Highscore;
 import model.NetworkConnection;
+import model.Player;
 
 public class HighscoreView  extends JFrame {
 
@@ -23,16 +24,19 @@ public class HighscoreView  extends JFrame {
 	public static HighscoreView hsView;
 	private JButton loadHighscoreButton;
 	private JButton addPlayerToHighscoreButton;
+	private JButton addPlayerToServerHighscoreButton;
 	private JButton testButton;
 	private JTextArea highscoreTextarea ;
 	private JTextField tfName;
 	private JLabel nameLabel;
+	private Player player;
 	
 	private Highscore highscore = new Highscore();
 	
 	
-	public HighscoreView(String title){
+	public HighscoreView(String title, Player player){
 		this.title = title;
+		this.player = player;
 		this.loadHighscoreButton = loadHighscoreButton;
 		this.testButton = testButton;
 		this.highscore = new Highscore();
@@ -50,7 +54,9 @@ public class HighscoreView  extends JFrame {
 		System.out.println("-- HighscoreView --");
 		
 		
-		hsView = new HighscoreView(" HIGHSCORE ");
+		
+		
+		hsView = new HighscoreView(" HIGHSCORE ", this.player);
 		hsView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		 JPanel highscorePanel = new JPanel();
@@ -70,18 +76,29 @@ public class HighscoreView  extends JFrame {
 	     tfName.setBackground(Color.YELLOW);
 	     tfName.setBounds(100, 100, 200, 40);
 	     highscorePanel.add(tfName);
-	 
+	     
+	     
+	     
+	     /*  ******** lokale Speicherung *************
+	      
 	     addPlayerToHighscoreButton = new JButton("in Highscore eintragen");
 	     addPlayerToHighscoreButton.setBounds(100, 140, 200, 40);
 	     addPlayerToHighscoreButton.addActionListener(listener);
 	     highscorePanel.add(addPlayerToHighscoreButton);
 	     
-	     
-	     
 	     loadHighscoreButton = new JButton("Highscore laden");
 	     loadHighscoreButton.setBounds(100, 340, 200, 40);
 	     loadHighscoreButton.addActionListener(listener);
 	     highscorePanel.add(loadHighscoreButton);
+	     */
+	     
+	     
+	     addPlayerToServerHighscoreButton = new JButton("in Highscore eintragen -> Server");
+	     addPlayerToServerHighscoreButton.setBounds(100, 240, 200, 40);
+	     addPlayerToServerHighscoreButton.addActionListener(listener);
+	     highscorePanel.add(addPlayerToServerHighscoreButton);
+	     
+	    
 	     
 	     
 	    // highscoreTextarea = new JTextArea(12,30);
@@ -89,13 +106,17 @@ public class HighscoreView  extends JFrame {
 	     highscoreTextarea.setLineWrap(true);
 	     highscoreTextarea.setBounds(400, 50, 300, 450);
 	     highscoreTextarea.setBorder(BorderFactory.createEtchedBorder());
+	     
+	     highscore.loadHighscoreFromServer();
+	     showDownloadedHighscoreInTextarea(highscore);
+	     
 	     highscorePanel.add(highscoreTextarea);
 	     
 
-	     testButton = new JButton("test");
+	     testButton = new JButton("showDownloadedHighscoreInTextarea");
 	     testButton.setBounds(100, 445, 200, 40);
 	     testButton.setBackground(Color.WHITE);
-	     testButton.setFont(new Font("Arial", Font.PLAIN, 18));  
+	     testButton.setFont(new Font("Arial", Font.PLAIN, 10));  
 	     testButton.addActionListener(listener);
 	  
 		highscorePanel.add(testButton);
@@ -110,33 +131,21 @@ public class HighscoreView  extends JFrame {
 	}
 	
 	
-	
+	/*
 	public void showHighscoreInTextarea(Highscore highscore) {
 		highscore.loadLocalHighscoreFile();
-
-		
-		
-		
-		
 		System.out.println(highscore.toString());
 		this.highscoreTextarea.setText(highscore.toString());
 		
 	}
+	*/
 	
 	
-	public void showDownloadedHighscoreInTextarea() {
-		NetworkConnection urlreader2 = new NetworkConnection("http://erdbeerwelt.com/mio/pongHighscore.txt");
-		try {
-			Highscore highscore = new Highscore( urlreader2.getHighscoreFromURL());
-			this.highscoreTextarea.setText(highscore.toString());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			this.highscoreTextarea.setText("Fehler beim Laden der Highscore-Liste"  );
-		}
+	public void showDownloadedHighscoreInTextarea(Highscore highscore) {
+		this.highscoreTextarea.setText(highscore.toString());
 	}
 	
-	
+	/*
 	public void addPlayer(Highscore highscore) {
 		String playerName = this.tfName.getText();
 		this.nameLabel.setVisible(false);
@@ -147,6 +156,39 @@ public class HighscoreView  extends JFrame {
 		highscore.updateLocalScoreFile();
 		showHighscoreInTextarea(highscore);
 		
+	}
+	*/
+	
+	public void postUpdatedHighscoreToServer(Highscore highscore){
+		System.out.println("postUpdatedHighscoreToServer(Highscore highscore)");
+		
+		
+		String playerName = this.tfName.getText();
+		
+		if (playerName.equals("") || playerName.equals("Name eingeben!") ){
+			System.out.println("keine eingabe: playerName: " + playerName);
+			this.tfName.setText("Name eingeben!");
+		
+		}else{
+			this.highscoreTextarea.setText("updating Highscore.....");
+			
+			System.out.println("aktuellen Highscore laden");
+			highscore.loadHighscoreFromServer();
+			
+			System.out.println("addPlayerAndSortHighscore(): " + playerName );
+			this.player.setPlayerName(playerName);
+			
+			highscore.addPlayerAndSortHighscore(player);
+			System.out.println(highscore.toString());
+			
+			
+			//System.out.println("	highscore.toJson();     ");
+			
+			//highscore.toJson();
+			
+			highscore.saveHighscoreOnServer();
+			
+		}
 	}
 	
 	

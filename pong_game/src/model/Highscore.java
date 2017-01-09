@@ -9,6 +9,8 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.json.JSONArray;
+
  
 public class Highscore {
 
@@ -41,6 +43,7 @@ public class Highscore {
 	
 	public void sort(){
 		Collections.sort(this.getHighscore());
+		System.out.println("sort(): " + this.highscore.toString());
 	}
 	
 	public void addPlayerAndSortHighscore(String name, int score){
@@ -114,7 +117,49 @@ public class Highscore {
 		}
 		
 	}
+
+	public void loadHighscoreFromServer() {
+		NetworkConnection networkConnection = new NetworkConnection("http://erdbeerwelt.com/mio/pongHighscore.txt");
+		try {
+			this.highscore = networkConnection.getHighscoreFromURL();
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+		}
+		
+	}
 	
+	public void saveHighscoreOnServer(){
+		NetworkConnection networkConnection = new NetworkConnection("http://oue.st/a/feo.php");
+		try {
+			//Highscore highscore2 = new Highscore( urlreader2.getHighscoreFromURL());
+			
+			networkConnection.sendPost(this.highscore);
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}	
+
+	}
+	
+	
+	  
+    public JSONArray toJson(){
+		JSONArray jsonArray = new JSONArray();
+		//JsonArray value = Json.createArrayBuilder();
+    	int highscoresize = this.highscore.size();
+    	
+    	for (int i= 0; i < highscoresize; i++){
+    		String player =this.highscore.get(i).getPlayerName();
+    		int punkte = this.highscore.get(i).getScore();
+    		jsonArray.put(player);
+    		
+    	}
+    	
+    	System.out.println(jsonArray);
+    	return null;
+    	
+    }
 	
 	
 	
