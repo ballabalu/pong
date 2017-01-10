@@ -184,10 +184,11 @@ public class HighscoreView  extends JFrame {
 			
 			//System.out.println("	highscore.toJson();     ");
 			
-			//highscore.toJson();
+		
 			
 			highscore.saveHighscoreOnServer();
-			
+		
+			this.highscoreTextarea.setText(highscore.toString());
 		}
 	}
 	

@@ -6,15 +6,26 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Type;
+import java.sql.Wrapper;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 
 import org.json.JSONArray;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+
  
 public class Highscore {
 
-	private ArrayList<Player> highscore;
+	ArrayList<Player> highscore;
 	
 	ObjectOutputStream outputStream = null;
 	ObjectInputStream inputStream = null;
@@ -119,46 +130,92 @@ public class Highscore {
 	}
 
 	public void loadHighscoreFromServer() {
-		NetworkConnection networkConnection = new NetworkConnection("http://erdbeerwelt.com/mio/pongHighscore.txt");
+		/*NetworkConnection networkConnection = new NetworkConnection("http://erdbeerwelt.com/mio/pongHighscore.txt");
 		try {
 			this.highscore = networkConnection.getHighscoreFromURL();
 		} catch (Exception e) {
 			
 			e.printStackTrace();
 		}
+		*/
+		getJsonAndSetAsHighscore();
 		
 	}
 	
 	public void saveHighscoreOnServer(){
-		NetworkConnection networkConnection = new NetworkConnection("http://oue.st/a/feo.php");
+		NetworkConnection networkConnection = new NetworkConnection("http://erdbeerwelt.com/mio/paf/upload.php");
 		try {
-			//Highscore highscore2 = new Highscore( urlreader2.getHighscoreFromURL());
-			
-			networkConnection.sendPost(this.highscore);
+			networkConnection.postJson3(this);
 		} catch (Exception e) {
 			e.printStackTrace();
-			
 		}	
-
 	}
 	
+	public void getJsonAndSetAsHighscore(){
+		NetworkConnection networkConnection = new NetworkConnection("http://erdbeerwelt.com/mio/paf/hs.txt");
+		try {
+			String jsonString = networkConnection.getJson();
+			//System.out.println(jsonString);
+			
+			//String test = "[{\"playerName\":\"f\",\"playerScore\":5},{\"playerName\":\"e\",\"playerScore\":2},{\"playerName\":\"a\",\"playerScore\":1},{\"playerName\":\"b\",\"playerScore\":1},{\"playerName\":\"c\",\"playerScore\":1},{\"playerName\":\"d\",\"playerScore\":1}]";
+			//System.out.println(test);
+			Gson gson = new Gson();
+			
+		    Type collectionType = new TypeToken<ArrayList<Player>>(){}.getType();
+		    ArrayList<Player> highscore = gson.fromJson(jsonString, collectionType);
+		    
+		    this.highscore = highscore;
+			//System.out.println(highscore);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+			
+	}
 	
+	class Pl{
+		String playerName;
+		int playerScore;
+	}
+	
+	public void fromJson(){
+		
+	}
+
+	
+    public static void main(String[] args) throws Exception {
+    
+    	Highscore h1 = new Highscore();
+    	h1.addPlayer("a", 1);
+    	h1.addPlayer("b", 1);
+    	h1.addPlayer("c", 1);
+    	h1.addPlayer("d", 1);
+    	h1.addPlayerAndSortHighscore("e", 2);
+    	h1.addPlayerAndSortHighscore("f", 5);
+    	System.out.println(h1);
+    	System.out.println(h1.toJson());
+    	h1.saveHighscoreOnServer();
+    	
+    	
+    	
+    	h1.getJsonAndSetAsHighscore();
+    	
+    	System.out.println("h2: " + h1.toString());
+    	
+    	h1.addPlayerAndSortHighscore("g", 2);
+    	h1.addPlayerAndSortHighscore("h", 5);
+    	h1.saveHighscoreOnServer();
+    	
+    }
+    
 	  
-    public JSONArray toJson(){
-		JSONArray jsonArray = new JSONArray();
-		//JsonArray value = Json.createArrayBuilder();
-    	int highscoresize = this.highscore.size();
-    	
-    	for (int i= 0; i < highscoresize; i++){
-    		String player =this.highscore.get(i).getPlayerName();
-    		int punkte = this.highscore.get(i).getScore();
-    		jsonArray.put(player);
-    		
-    	}
-    	
-    	System.out.println(jsonArray);
-    	return null;
-    	
+    public String toJson(){
+		Gson gson = new GsonBuilder().create();
+		JsonArray jsonArray = gson.toJsonTree(this.highscore).getAsJsonArray();
+		String jsonString = jsonArray.toString();
+		System.out.println("----->" + jsonString);
+		
+    	return jsonString;
     }
 	
 	
