@@ -59,6 +59,14 @@ public class HighscoreController implements ActionListener{
         	System.out.println("-----> in Highscore eintragen -> Server-----------");  
         	this.highscoreView.postUpdatedHighscoreToServer(this.highscore);
          
+        }else if(actionCommand == "jetzt spielen!"){
+        	PongView pong = new PongView("Pong - The Game");
+			pong.init();
+			highscoreView.dispose();
+        }else if(actionCommand == "zurück zum Menü"){
+        	MenueView pong = new MenueView("Pong - The Game");
+    		pong.init(new Controller());
+			highscoreView.dispose();
         }
         
 	}

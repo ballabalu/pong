@@ -75,7 +75,17 @@ public class Player implements Serializable, Comparable<Player> {
 	@Override
 	public String toString(){
 		String spielerString = "";
-		spielerString = this.getPlayerName() + ": \t" + this.getScore() + " Punkte! ";
+		String name = this.getPlayerName();
+		int zeichen = name.length();
+		if (zeichen >= 15){
+			name = name.substring(0, 15);
+			spielerString = name + ": \t " + this.getScore() + " Punkte ";
+		}else if (zeichen >8){
+			spielerString = name + ": \t " + this.getScore() + " Punkte ";
+		}else{
+			spielerString = name + ": \t \t " + this.getScore() + " Punkte ";
+		}
+		
 		return spielerString;
 	}
 	

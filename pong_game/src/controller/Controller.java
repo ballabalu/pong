@@ -22,7 +22,7 @@ public class Controller implements ActionListener {
         }		
         else if(e.getActionCommand() == "Highscores"){
         	System.out.println("highscore");
-        	HighscoreView highscoreView = new HighscoreView("Highscores", player);
+        	HighscoreView highscoreView = new HighscoreView("Highscores");
         	highscoreView.init(new HighscoreController(highscoreView));
         	
 			MenueView.pong.dispose();

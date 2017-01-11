@@ -1,9 +1,11 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Line2D;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -12,9 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 import model.Highscore;
-import model.NetworkConnection;
 import model.Player;
 
 public class HighscoreView  extends JFrame {
@@ -28,7 +30,7 @@ public class HighscoreView  extends JFrame {
 	private JButton testButton;
 	private JTextArea highscoreTextarea ;
 	private JTextField tfName;
-	private JLabel nameLabel;
+	private JLabel nameLabel, headerLabel;
 	private Player player;
 	
 	private Highscore highscore = new Highscore();
@@ -45,16 +47,24 @@ public class HighscoreView  extends JFrame {
 		this.nameLabel = new JLabel("Trag dich hier in die Highscore-Liste ein:");
 	}
 	
+	public HighscoreView(String title){
+		this.title = title;
+		this.player = null;
+		this.loadHighscoreButton = loadHighscoreButton;
+		this.testButton = testButton;
+		this.highscore = new Highscore();
+		this.highscoreTextarea = highscoreTextarea = new JTextArea(12,30);
+		this.tfName = new JTextField("", 15);
+		this.nameLabel = new JLabel("Trag dich hier in die Highscore-Liste ein:");
+	}
+	
 	public HighscoreView(){
 		
 	}
 	
 	public void init(ActionListener listener){
 		
-		System.out.println("-- HighscoreView --");
-		
-		
-		
+		System.out.println("-- HighscoreView  init()--");
 		
 		hsView = new HighscoreView(" HIGHSCORE ", this.player);
 		hsView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,10 +72,29 @@ public class HighscoreView  extends JFrame {
 		 JPanel highscorePanel = new JPanel();
 		 highscorePanel.setOpaque(true);
 		 highscorePanel.setBackground(Color.WHITE);
-		 highscorePanel.setLayout(null);     
+		 highscorePanel.setLayout(null);   
+		 
 	     
+		if(this.player != null){
+			panelAddPlayer(listener, highscorePanel);
+		}else{
+			panelHSView(listener, highscorePanel);
+		}
+		 
+	     
+	     hsView.setContentPane(highscorePanel);
+	     hsView.setSize(900, 600);
+	     hsView.setTitle(this.title);
+	     hsView.setLocation(50,50);
+	     hsView.setResizable(false);
+	     hsView.setVisible(true);
+	        
+	}
+
+	private void panelAddPlayer(ActionListener listener, JPanel highscorePanel) {
 		
-		 nameLabel.setFont(new Font("Arial", Font.PLAIN, 12));
+		System.out.println("panelAddPlayer");
+		nameLabel.setFont(new Font("Arial", Font.PLAIN, 12));
 		 nameLabel.setBackground((Color.blue));
 		 nameLabel.setBounds(80, 50, 200, 80);
 		 highscorePanel.add(nameLabel);
@@ -102,7 +131,7 @@ public class HighscoreView  extends JFrame {
 	     
 	     
 	    // highscoreTextarea = new JTextArea(12,30);
-	     highscoreTextarea.setText("blubb");
+	     highscoreTextarea.setText("loading Highscore.....");
 	     highscoreTextarea.setLineWrap(true);
 	     highscoreTextarea.setBounds(400, 50, 300, 450);
 	     highscoreTextarea.setBorder(BorderFactory.createEtchedBorder());
@@ -120,14 +149,63 @@ public class HighscoreView  extends JFrame {
 	     testButton.addActionListener(listener);
 	  
 		highscorePanel.add(testButton);
+	}
+	
+	
+private void panelHSView(ActionListener listener, JPanel highscorePanel) {
+		
+		System.out.println("panelHSView()");
+		
+		headerLabel = new JLabel ();
+		headerLabel.setText("HIGHSCORE");
+		headerLabel.setVerticalAlignment(JLabel.TOP);
+		headerLabel.setFont(new Font("Arial", Font.BOLD, 50));
+		headerLabel.setForeground(new Color(51,153,255));
+		headerLabel.setLocation(300,	 25);
+		headerLabel.setSize(400, 60);
+		
+		JLabel line = new JLabel();
+		line.setBackground(new Color(51,153,255));
+		line.setLocation(200, 80);
+		line.setSize(500, 4);
+		line.setBorder(BorderFactory.createEtchedBorder());
+	    
+	     highscoreTextarea.setText("loading Highscore.....");
+	     highscoreTextarea.setLineWrap(false);
+	     highscoreTextarea.setFont(new Font("Arial", Font.BOLD, 16));
+	     highscoreTextarea.setForeground(new Color(96,96,96));
+	     highscoreTextarea.setLocation(300,	 100);
+	     highscoreTextarea.setSize(400, 480);
+	     highscoreTextarea.setCaretColor(Color.WHITE);
+	     //highscoreTextarea.setBorder(BorderFactory.createEtchedBorder());
 	     
-	     hsView.setContentPane(highscorePanel);
-	     hsView.setSize(900, 600);
-	     hsView.setTitle(this.title);
-	     hsView.setLocation(50,50);
-	     hsView.setResizable(false);
-	     hsView.setVisible(true);
-	        
+	     highscore.loadHighscoreFromServer();
+	     showDownloadedHighscoreInTextarea(highscore);
+	     
+	     
+	     JButton playButton = new JButton("jetzt spielen!");
+	     playButton.setFont(new Font("Arial", Font.BOLD, 16));
+	     playButton.setForeground(new Color(96,96,96));
+	   
+	     playButton.setLocation(625, 500);
+	     playButton.setSize(200, 50);
+	     playButton.addActionListener(listener);
+	     highscorePanel.add(playButton);
+	     
+	     
+	     JButton backButton = new JButton("zurück zum Menü");
+	     backButton.setFont(new Font("Arial", Font.BOLD, 16));
+	     backButton.setForeground(new Color(96,96,96));
+	    
+	     backButton.setLocation(25, 500);
+	     backButton.setSize(200, 50);
+	     backButton.addActionListener(listener);
+	     highscorePanel.add(backButton);
+	     
+	     highscorePanel.add(headerLabel);
+	     highscorePanel.add(highscoreTextarea);
+	     highscorePanel.add(line);
+	     
 	}
 	
 	
@@ -142,7 +220,8 @@ public class HighscoreView  extends JFrame {
 	
 	
 	public void showDownloadedHighscoreInTextarea(Highscore highscore) {
-		this.highscoreTextarea.setText(highscore.toString());
+		//this.highscoreTextarea.setText(highscore.toString());
+		this.highscoreTextarea.setText(highscore.getTop(20));
 	}
 	
 	/*

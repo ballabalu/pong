@@ -72,7 +72,7 @@ public class Highscore {
 		String highscoreString = "";
 		int i = 1;
 		for (Player s : this.getHighscore()){
-			highscoreString +=  i + ". \t" + s.toString() + "\n";
+			highscoreString +=  i + ".    " + s.toString() + "\n";
 			i++;
 		}
 		return highscoreString;
@@ -130,14 +130,7 @@ public class Highscore {
 	}
 
 	public void loadHighscoreFromServer() {
-		/*NetworkConnection networkConnection = new NetworkConnection("http://erdbeerwelt.com/mio/pongHighscore.txt");
-		try {
-			this.highscore = networkConnection.getHighscoreFromURL();
-		} catch (Exception e) {
-			
-			e.printStackTrace();
-		}
-		*/
+		System.out.println("loadHighscoreFromServer");
 		getJsonAndSetAsHighscore();
 		
 	}
@@ -155,16 +148,21 @@ public class Highscore {
 		NetworkConnection networkConnection = new NetworkConnection("http://erdbeerwelt.com/mio/paf/hs.txt");
 		try {
 			String jsonString = networkConnection.getJson();
-			//System.out.println(jsonString);
-			
+			System.out.println(jsonString);
+			if (jsonString != ""){
 			//String test = "[{\"playerName\":\"f\",\"playerScore\":5},{\"playerName\":\"e\",\"playerScore\":2},{\"playerName\":\"a\",\"playerScore\":1},{\"playerName\":\"b\",\"playerScore\":1},{\"playerName\":\"c\",\"playerScore\":1},{\"playerName\":\"d\",\"playerScore\":1}]";
-			//System.out.println(test);
+			//String test2 = "[{"playerName":"f","playerScore":5},{"playerName":"e","playerScore":2},{"playerName":"a","playerScore":1},{"playerName":"b","playerScore":1},{"playerName":"c","playerScore":1},{"playerName":"d","playerScore":1}]";
+				//System.out.println(test);
 			Gson gson = new Gson();
 			
 		    Type collectionType = new TypeToken<ArrayList<Player>>(){}.getType();
 		    ArrayList<Player> highscore = gson.fromJson(jsonString, collectionType);
 		    
 		    this.highscore = highscore;
+			}else{
+				this.highscore= new Highscore().getHighscore();
+			}
+			
 			//System.out.println(highscore);
 			
 		} catch (Exception e) {
@@ -218,6 +216,29 @@ public class Highscore {
 		
     	return jsonString;
     }
+
+	public String getTop(int top) {
+		// TODO Auto-generated method stub
+		boolean empty = this.getHighscore().isEmpty();
+		System.out.println("leer?: " +empty);
+		int anz = this.getHighscore().size();
+		String highscoreString = "";
+		
+		if (anz>top){
+			for(int i=0; i<top; i++){
+				highscoreString +=  i+1 + ".    " + this.getHighscore().get(i).toString() + "\n";
+			}
+		}else{
+			int i = 1;
+			for (Player s : this.getHighscore()){
+				highscoreString +=  i + ".    " + s.toString() + "\n";
+				i++;
+			}
+		}
+		
+		return highscoreString;
+	
+	}
 	
 	
 	
