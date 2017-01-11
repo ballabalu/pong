@@ -7,6 +7,8 @@ import java.awt.Rectangle;
 public class Paddle {
 	
 	
+
+
 	//Variablen
 	private int x;
 	private int y;
@@ -16,6 +18,7 @@ public class Paddle {
 	
 	//Konstruktor
 	public Paddle (int x, int y, int width, int height, Color color){
+		
 		this.x = x;
 		this.y = y;
 		this.width = width;
@@ -44,6 +47,22 @@ public class Paddle {
 		}
 	}
 	
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+	
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
 	//paintt
 	public void paintt(Graphics gr){
 		gr.fillRect(x, y, width, height);

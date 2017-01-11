@@ -20,9 +20,9 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 	private PongView pong;
 	private Graphics gr;
 	private Pitch pitch = new Pitch(0, 0, this);
-	private Ball ball = new Ball(100, 100, this);
 	private AutoPaddle autoPaddle = new AutoPaddle(850, 180, 25, 125, Color.LIGHT_GRAY);
 	private Paddle paddle = new Paddle(25, 180, 25, 125, Color.WHITE);
+	private Ball ball = new Ball(100, 100, this, paddle, autoPaddle);
 	
 	private boolean up;
 	private boolean down;
@@ -35,7 +35,7 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 	
 	@Override
 	public void paint(Graphics gr){
-		System.out.println("REPAINT");
+		//System.out.println("REPAINT");
 		super.paint(gr);
 		
 		BufferedImage bufferedImage = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
@@ -48,7 +48,7 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 //		System.out.println(ball.getY());
 		ball.paintt(gr);
 		//Paddle zeichnen
-		paddle.paintt(gr);
+		getPaddle().paintt(gr);
 		//AI zeichnen
 		autoPaddle.paintt(gr);
 		
@@ -56,7 +56,7 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 		g2dComponent.drawImage(bufferedImage, 0, 0, null); 
 	}
 
-	//JPAnel hinzugefÃ¼gt
+	//JPAnel hinzugefügt
 	public void init(){
 		pong = new PongView("Pong - The Game");
 		JPanel panel = new JPanel(null);
@@ -108,12 +108,12 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 //			System.out.println("ball.moveBall();");
 
 			if (up) {
-				paddle.moveUp();
+				getPaddle().moveUp();
 			} else if (down) {
-				paddle.moveDown();
+				getPaddle().moveDown();
 			}
 			
-			paddle.checkCollisionWithBall(ball);
+			getPaddle().checkCollisionWithBall(ball);
 			autoPaddle.moveAutoPaddle(ball);
 			autoPaddle.checkCollisionWithBall(ball);
 			
@@ -128,6 +128,14 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 				System.out.println("InterruptedException in Thread");
 			}
 		}
+	}
+
+	public Paddle getPaddle() {
+		return paddle;
+	}
+
+	public void setPaddle(Paddle paddle) {
+		this.paddle = paddle;
 	}
 
 }
