@@ -182,7 +182,7 @@ public class Highscore {
 		
 	}
 
-	
+	/*
     public static void main(String[] args) throws Exception {
     
     	Highscore h1 = new Highscore();
@@ -207,6 +207,7 @@ public class Highscore {
     	h1.saveHighscoreOnServer();
     	
     }
+    */
     
 	  
     public String toJson(){
