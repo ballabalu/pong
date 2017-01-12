@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import model.AutoPaddle;
@@ -60,6 +61,13 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 	public void init(){
 		pong = new PongView("Pong - The Game");
 		JPanel panel = new JPanel(null);
+		
+		JLabel lbl1 = new JLabel("Score: ");
+		pong.add(lbl1);
+		lbl1.setLocation(27, 20);
+		lbl1.setSize(86, 14);
+		pong.setComponentZOrder(lbl1,0);
+		
 		panel.setDoubleBuffered(true);
 		pong.add(panel);
 		setContentPane(panel);
