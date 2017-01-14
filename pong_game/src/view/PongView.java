@@ -11,12 +11,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import controller.GameController;
 import model.AutoPaddle;
 import model.Ball;
 import model.Paddle;
 import model.Pitch;
 
-public class PongView extends JFrame implements Runnable, KeyListener{
+public class PongView extends JFrame implements Runnable{
 	
 	private PongView pong;
 	private Graphics gr;
@@ -24,14 +25,16 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 	private AutoPaddle autoPaddle = new AutoPaddle(850, 180, 25, 125, Color.LIGHT_GRAY);
 	private Paddle paddle = new Paddle(25, 180, 25, 125, Color.WHITE);
 	private Ball ball = new Ball(100, 100, this, paddle, autoPaddle);
+	private GameController gc = new GameController();
+
 	
-	private boolean up;
-	private boolean down;
+//	private boolean up;
+//	private boolean down;
 	
 	public PongView(String title){
 		super(title);
 		this.setFocusable(true);
-		this.addKeyListener(this);
+		this.addKeyListener(gc);
 	}
 	
 	@Override
@@ -57,8 +60,8 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 		g2dComponent.drawImage(bufferedImage, 0, 0, null); 
 	}
 
-	//JPAnel hinzugefügt
-	public void init(){
+	//JPAnel hinzugefuegt
+	public void init(KeyListener keylistener){
 		pong = new PongView("Pong - The Game");
 		JPanel panel = new JPanel(null);
 		
@@ -81,31 +84,7 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 
 	}
 
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		// Pfeil nach oben = Keycode 38
-		if (e.getKeyCode() == 38) {
-			up = true;
-			down = false;
-			//Pfeil nach unten = Keycode 40
-		} else if (e.getKeyCode() == 40){
-			up = false;
-			down = true;
-		}
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		up = false;
-		down = false;
-		
-	}
 
 	@Override
 	public void run() {
@@ -115,9 +94,9 @@ public class PongView extends JFrame implements Runnable, KeyListener{
 			ball.moveBall();
 //			System.out.println("ball.moveBall();");
 
-			if (up) {
+			if (gc.getUp()) {
 				getPaddle().moveUp();
-			} else if (down) {
+			} else if (gc.getDown()) {
 				getPaddle().moveDown();
 			}
 			

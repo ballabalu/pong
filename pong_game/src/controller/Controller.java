@@ -17,7 +17,7 @@ public class Controller implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand() == "Spiel starten"){
 			PongView pong = new PongView("Pong - The Game");
-			pong.init();
+			pong.init(new GameController());
 			MenueView.pong.dispose();
         }		
         else if(e.getActionCommand() == "Highscores"){
