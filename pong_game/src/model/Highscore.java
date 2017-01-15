@@ -220,21 +220,24 @@ public class Highscore {
 	public String getTop(int top) {
 		// TODO Auto-generated method stub
 		boolean empty = this.getHighscore().isEmpty();
-		System.out.println("leer?: " +empty);
+		
 		int anz = this.getHighscore().size();
 		String highscoreString = "";
 		
-		if (anz>top){
-			for(int i=0; i<top; i++){
-				highscoreString +=  i+1 + ".    " + this.getHighscore().get(i).toString() + "\n";
-			}
-		}else{
-			int i = 1;
-			for (Player s : this.getHighscore()){
-				highscoreString +=  i + ".    " + s.toString() + "\n";
-				i++;
+		if (empty == false){
+			if (anz>top){
+				for(int i=0; i<top; i++){
+					highscoreString +=  i+1 + ".    " + this.getHighscore().get(i).toString() + "\n";
+				}
+			}else{
+				int i = 1;
+				for (Player s : this.getHighscore()){
+					highscoreString +=  i + ".    " + s.toString() + "\n";
+					i++;
+				}
 			}
 		}
+		
 		
 		return highscoreString;
 	

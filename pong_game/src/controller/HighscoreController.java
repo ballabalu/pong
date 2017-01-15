@@ -55,7 +55,7 @@ public class HighscoreController implements ActionListener{
         }
         else  */
 		
-		if( actionCommand == "in Highscore eintragen -> Server"){
+		if( actionCommand == "eintragen"){
         	System.out.println("-----> in Highscore eintragen -> Server-----------");  
         	this.highscoreView.postUpdatedHighscoreToServer(this.highscore);
          

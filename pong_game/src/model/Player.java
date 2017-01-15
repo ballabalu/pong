@@ -79,11 +79,11 @@ public class Player implements Serializable, Comparable<Player> {
 		int zeichen = name.length();
 		if (zeichen >= 15){
 			name = name.substring(0, 15);
-			spielerString = name + ": \t " + this.getScore() + " Punkte ";
-		}else if (zeichen >8){
-			spielerString = name + ": \t " + this.getScore() + " Punkte ";
+			spielerString = name + "... \t " + this.getScore() + " Punkte ";
+		}else if (zeichen >7){
+			spielerString = name + " \t " + this.getScore() + " Punkte ";
 		}else{
-			spielerString = name + ": \t \t " + this.getScore() + " Punkte ";
+			spielerString = name + " \t \t " + this.getScore() + " Punkte ";
 		}
 		
 		return spielerString;
