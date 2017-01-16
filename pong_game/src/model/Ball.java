@@ -79,11 +79,11 @@ public class Ball {
 			int autoPaddleY = 0;
 			if (velocityX > 0) {
 				paddleY = paddle.getY();
-				velocityY = ((this.y - paddleY) / 10) - 2;
+				velocityY += ((this.y - paddleY) / 10) - 2;
 				velocityX += 1;
 			} else {
 				autoPaddleY = autoPaddle.getY();
-				velocityY = ((this.y - autoPaddleY) / 10) - 2;
+				velocityY += ((this.y - autoPaddleY) / 10) - 2;
 				velocityX -= 1;
 			}
 	

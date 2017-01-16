@@ -24,11 +24,11 @@ public class AutoPaddle {
 	}
 	
 	public void moveUp(){
-		y -= 10;
+		y -= 5;
 	}
 	
 	public void moveDown(){
-		y += 10;
+		y += 5;
 	}
 	
 	public void checkCollisionWithBall(Ball ball){
@@ -43,26 +43,34 @@ public class AutoPaddle {
 	
 	public void moveAutoPaddle(Ball ball){
 		
-		int midPaddle = this.y + this.height/2;
+		int midPaddle = this.y + (this.height/2) - 30;
 		
-		if (ball.getVelocityX() > 0) {
-			if (midPaddle != ball.getY()) {
-				if (ball.getY() < midPaddle) {
-					moveUp();
-				} else if (ball.getY() > midPaddle) {
-					moveDown();
-				}
-			}
-		} else if (ball.getVelocityX() < 0) {
-			if (midPaddle != 302) {
-				if (midPaddle < 302) {
-					moveDown();
-				} else if (midPaddle > 302) {
-					moveUp();
-				}
+		if (midPaddle > ball.getY() && this.y > ball.getY()){
+			moveUp();
+		}/* else {
+			moveDown();
+		}*/
+		
+		if (midPaddle < ball.getY() || this.y + this.height < ball.getY()){
+			moveDown();
+		}
+		/*if (midPaddle != ball.getY()) {
+			if (ball.getY() < midPaddle) {
+				moveUp();
+			} else if (ball.getY() > midPaddle) {
+				moveDown();
 			}
 		}
+
+		if (midPaddle != 302) {
+			if (midPaddle < 302) {
+				moveDown();
+			} else if (midPaddle > 302) {
+				moveUp();
+			}
+		}*/
 	}
+	
 	
 	
 	
