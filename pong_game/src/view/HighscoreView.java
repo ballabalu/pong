@@ -36,6 +36,7 @@ public class HighscoreView  extends JFrame {
 	private int top= 20;
 	private JLabel info;
 	private  JPanel highscorePanel = new JPanel();
+	private boolean online;
 	
 	private Highscore highscore = new Highscore();
 	
@@ -72,72 +73,80 @@ public class HighscoreView  extends JFrame {
 	
 	public void init(ActionListener listener){
 		
-		System.out.println("-- HighscoreView  init()--");
 		try {
-			highscore.loadHighscoreFromServer();
+			this.highscore = highscore.loadHighscoreFromServer();
+			online = true;
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
-			highscore = new Highscore();
+			this.highscore = new Highscore();
+			online = false;
 		}
 		
 		hsView = new HighscoreView(" HIGHSCORE ", this.player);
 		hsView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		
-		 highscorePanel = new JPanel();
-		 highscorePanel.setOpaque(true);
-		 highscorePanel.setBackground(Color.WHITE);
-		 highscorePanel.setLayout(null);   
+		highscorePanel = new JPanel();
+		highscorePanel.setOpaque(true);
+		highscorePanel.setBackground(Color.WHITE);
+		highscorePanel.setLayout(null);   
 		 
-	     
+		/*
+		 * für unterschiedliche Ansichten bei Klick im Menü bzw nach Game Over
+		 */
 		if(this.player != null){
 			panelAddPlayer(listener, highscorePanel);
-			
 		}else{
 			panelHSView(listener, highscorePanel);
 		}
 		 
-	     
-	     hsView.setContentPane(highscorePanel);
-	     hsView.setSize(900, 600);
-	     hsView.setTitle(this.title);
-	     hsView.setLocation(50,50);
-	     hsView.setResizable(false);
-	     hsView.setVisible(true);
+	    hsView.setContentPane(highscorePanel);
+	    hsView.setSize(900, 600);
+	    hsView.setTitle(this.title);
+	    hsView.setLocation(50,50);
+	    hsView.setResizable(false);
+	    hsView.setVisible(true);
 	        
 	}
 
 	private void panelAddPlayer(ActionListener listener, JPanel highscorePanel) {
 		
-		System.out.println("panelAddPlayer");
-		
-		
 		setHeader(highscorePanel);
 	
 		/* testen mit random-punkten */
 		int randomNum = ThreadLocalRandom.current().nextInt(1, 25 + 1);
-		System.out.println("random: " + randomNum);
 		this.player.setScore(randomNum);
 		/* testen mit random-punkten */
 		
 		
+		/*
+		 * Ausgabe, je nachdem ob man in Highscore eingetragen wird oder nicht.
+		 */
 		String infoString= "";
-		int punkteLetzterInTop;
-		if(! this.highscore.getHighscore().isEmpty()){
-			punkteLetzterInTop = this.highscore.getHighscore().get(top-1).getScore();
-			System.out.println("punkteLetzterInTop: " + punkteLetzterInTop);
 		
-			if(this.player.getScore() > punkteLetzterInTop){
+		// wenn Internetverbindung besteht
+		if(online == true){
+			
+			// Punkte am letzten Platz der Liste
+			int punkteLetzterInTop;
+			if(this.highscore.getHighscore().size() < top){
+				// Punkte vom letzten Player in Liste, wenn Lister kürzer als top(20)
+				punkteLetzterInTop = this.highscore.getHighscore().get(this.highscore.getHighscore().size()-1).getScore();
+			}else{
+				// Punkte vom letzten Player in Liste, wenn Lister länger als top(20)
+				punkteLetzterInTop = this.highscore.getHighscore().get(top-1).getScore();
+			}
+		
+			
+			if(this.player.getScore() > punkteLetzterInTop){  /* Player schafft es in den Highscore */
 				 infoString = "<html>Herzlichen Glückwunsch!<br> Du hast <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkte!<br> Trag dich jetzt in den Highscore ein:</html>";
 				 
-				 //JTextField tfName = new JTextField("", 15);
+				 // Textfeld für Name setzen
 			     tfName.setForeground(Color.BLUE);
 			     tfName.setBackground(new Color(135,206,250));
 			     tfName.setLocation(70,	 200);
 			     tfName.setSize(200, 40);
 			     highscorePanel.add(tfName);
 			     
+			     // eintragen-Button setzen
 			     addPlayerToServerHighscoreButton = new JButton("eintragen");
 			     addPlayerToServerHighscoreButton.setLocation(70,	 250);
 			     addPlayerToServerHighscoreButton.setSize(200, 40);
@@ -148,25 +157,19 @@ public class HighscoreView  extends JFrame {
 			     addPlayerToServerHighscoreButton.setFont(new Font("Arial", Font.BOLD, 16));
 			     highscorePanel.add(addPlayerToServerHighscoreButton);
 			     
-			    
-			}else{
+			}else{  /* Player schafft es NICHT in den Highscore */
 				if(this.player.getScore() == 1){
 					infoString = "<html>Schade! <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkt reicht leider nicht für den Highscore. Versuchs nochmal!<br></html>";
 				}else{
 					infoString = "<html>Schade! <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkte reichen leider nicht für den Highscore. Versuchs nochmal!<br></html>";
 				}
 			}
-			
-			
+		}else if (online == false){
+			infoString = "<html>Herzlichen Glückwunsch, du hast <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkte! <br><br> Leider können im Offline-Modus deine Punkte nicht gespeichert werden.</html>";
 		}
 		
-		
-		
-		
-		
-		
+		/* Label mit Info, ob Player in Highscore kann  */
 		info = new JLabel(infoString);
-		
 		info.setVerticalAlignment(JLabel.TOP);
 		info.setFont(new Font("Arial", Font.BOLD, 18));
 		info.setForeground(Color.DARK_GRAY);
@@ -174,167 +177,88 @@ public class HighscoreView  extends JFrame {
 		info.setSize(400, 100);
 		highscorePanel.add(info);
 		
-		/*
-		nameLabel.setFont(new Font("Arial", Font.PLAIN, 12));
-		 nameLabel.setBackground((Color.blue));
-		 nameLabel.setBounds(80, 50, 200, 80);
-		 highscorePanel.add(nameLabel);
-		 */
 		
-	    
-	     
-	     
-	     
-	     /*  ******** lokale Speicherung *************
-	      
-	     addPlayerToHighscoreButton = new JButton("in Highscore eintragen");
-	     addPlayerToHighscoreButton.setBounds(100, 140, 200, 40);
-	     addPlayerToHighscoreButton.addActionListener(listener);
-	     highscorePanel.add(addPlayerToHighscoreButton);
-	     
-	     loadHighscoreButton = new JButton("Highscore laden");
-	     loadHighscoreButton.setBounds(100, 340, 200, 40);
-	     loadHighscoreButton.addActionListener(listener);
-	     highscorePanel.add(loadHighscoreButton);
-	     */
-	     
-	     
-	   
-	     
-	     setHighscoreTextarea(highscorePanel, 500, 120);
-	     setPlayAgainButton(listener, highscorePanel, 70, 380);
-	     
-	     setBackButton(listener, highscorePanel, 70, 450);
-
-	     /*testButton = new JButton("showDownloadedHighscoreInTextarea");
-	     testButton.setBounds(100, 445, 200, 40);
-	     testButton.setBackground(Color.WHITE);
-	     testButton.setFont(new Font("Arial", Font.PLAIN, 10));  
-	     testButton.addActionListener(listener);
-	  
-		highscorePanel.add(testButton);
-		*/
+	    setHighscoreTextarea(highscorePanel, 500, 120);
+	    setPlayAgainButton(listener, highscorePanel, 70, 380);
+	    setBackButton(listener, highscorePanel, 70, 450);
 	}
 	
 	
-private void panelHSView(ActionListener listener, JPanel highscorePanel) {
-		
-		System.out.println("panelHSView()");
-	
+	private void panelHSView(ActionListener listener, JPanel highscorePanel) {
 		setHeader(highscorePanel);
-		
 	    setHighscoreTextarea(highscorePanel, 300, 100);
-	     
 	    setPlayAgainButton(listener, highscorePanel, 655, 500);
 	    setBackButton(listener, highscorePanel, 25, 500);
-
 	}
 
-private void setPlayAgainButton(ActionListener listener, JPanel highscorePanel, int xLoacation, int yLoaction) {
-	JButton playButton = new JButton("jetzt spielen!");
-	 playButton.setFont(new Font("Arial", Font.BOLD, 16));
-	 playButton.setForeground(new Color(96,96,96));
-   
-	 playButton.setLocation(xLoacation, yLoaction);
-	 playButton.setSize(200, 50);
-	 playButton.addActionListener(listener);
-	 highscorePanel.add(playButton);
-}
-
-private void setBackButton(ActionListener listener, JPanel highscorePanel, int xLoacation, int yLoaction) {
-	JButton backButton = new JButton("zurück zum Menü");
-	 backButton.setFont(new Font("Arial", Font.BOLD, 16));
-	 backButton.setForeground(new Color(96,96,96));
+	private void setPlayAgainButton(ActionListener listener, JPanel highscorePanel, int xLoacation, int yLoaction) {
+		JButton playButton = new JButton("jetzt spielen!");
+		playButton.setFont(new Font("Arial", Font.BOLD, 16));
+		playButton.setForeground(new Color(96,96,96));
+		playButton.setLocation(xLoacation, yLoaction);
+		playButton.setSize(200, 50);
+		playButton.addActionListener(listener);
+		highscorePanel.add(playButton);
+	}
 	
-	 backButton.setLocation(xLoacation, yLoaction);
-	 backButton.setSize(200, 50);
-	 backButton.addActionListener(listener);
-	 highscorePanel.add(backButton);
-}
 
-private void setHeader(JPanel highscorePanel) {
-	headerLabel = new JLabel ();
-	headerLabel.setText("HIGHSCORE");
-	headerLabel.setVerticalAlignment(JLabel.TOP);
-	headerLabel.setFont(new Font("Arial", Font.BOLD, 50));
-	headerLabel.setForeground(new Color(51,153,255));
-	headerLabel.setLocation(300,	 25);
-	headerLabel.setSize(400, 60);
-	highscorePanel.add(headerLabel);
+	private void setBackButton(ActionListener listener, JPanel highscorePanel, int xLoacation, int yLoaction) {
+		JButton backButton = new JButton("zurück zum Menü");
+		backButton.setFont(new Font("Arial", Font.BOLD, 16));
+		backButton.setForeground(new Color(96,96,96));
+		backButton.setLocation(xLoacation, yLoaction);
+		backButton.setSize(200, 50);
+		backButton.addActionListener(listener);
+		highscorePanel.add(backButton);
+	}
+
+	private void setHeader(JPanel highscorePanel) {
+		headerLabel = new JLabel ();
+		headerLabel.setText("HIGHSCORE");
+		headerLabel.setVerticalAlignment(JLabel.TOP);
+		headerLabel.setFont(new Font("Arial", Font.BOLD, 50));
+		headerLabel.setForeground(new Color(51,153,255));
+		headerLabel.setLocation(300,	 25);
+		headerLabel.setSize(400, 60);
+		highscorePanel.add(headerLabel);
 	
-	JLabel line = new JLabel();
-	line.setBackground(new Color(51,153,255));
-	line.setLocation(200, 80);
-	line.setSize(500, 4);
-	line.setBorder(BorderFactory.createEtchedBorder());
-	highscorePanel.add(line);
-}
+		JLabel line = new JLabel();
+		line.setBackground(new Color(51,153,255));
+		line.setLocation(200, 80);
+		line.setSize(500, 4);
+		line.setBorder(BorderFactory.createEtchedBorder());
+		highscorePanel.add(line);
+	}
 
-private void setHighscoreTextarea(JPanel highscorePanel, int xLocation, int yLoacation) {
-	highscoreTextarea.setText("loading Highscore.....");
-	 highscoreTextarea.setLineWrap(false);
-	 highscoreTextarea.setFont(new Font("Arial", Font.BOLD, 16));
-	 highscoreTextarea.setForeground(new Color(96,96,96));
-	 highscoreTextarea.setLocation(xLocation,	 yLoacation);
-	 highscoreTextarea.setSize(350, 420);
-	 highscoreTextarea.setCaretColor(Color.WHITE);
-	 //highscoreTextarea.setBorder(BorderFactory.createEtchedBorder());
+	
+	private void setHighscoreTextarea(JPanel highscorePanel, int xLocation, int yLoacation) {
+		highscoreTextarea.setText("loading Highscore.....");
+		highscoreTextarea.setLineWrap(false);
+		highscoreTextarea.setFont(new Font("Arial", Font.BOLD, 16));
+		highscoreTextarea.setForeground(new Color(96,96,96));
+		highscoreTextarea.setLocation(xLocation,	 yLoacation);
+		highscoreTextarea.setSize(350, 420);
+		highscoreTextarea.setCaretColor(Color.WHITE);
 	 
-	 try {
-		highscore.loadHighscoreFromServer();
-		showDownloadedHighscoreInTextarea(highscore);
-		highscorePanel.add(highscoreTextarea);
-	} catch (Exception e) {
-		// TODO Auto-generated catch block
-		//e.printStackTrace();
-		highscoreTextarea.setText("Keine Verbindung zum Server möglich");
-		highscoreTextarea.setLocation(300, 120);
-		 highscorePanel.add(highscoreTextarea);
-	}
-	
-	
-}
-	
-	
-	/*
-	public void showHighscoreInTextarea(Highscore highscore) {
-		highscore.loadLocalHighscoreFile();
-		System.out.println(highscore.toString());
-		this.highscoreTextarea.setText(highscore.toString());
+		
+		if(online == true){
+			this.highscoreTextarea.setText(highscore.getTop(top));
+			highscorePanel.add(highscoreTextarea);
+		}else{
+			highscoreTextarea.setText("Keine Verbindung zum Server möglich");
+			highscorePanel.add(highscoreTextarea);
+		}
 		
 	}
-	*/
 	
 	
-	public void showDownloadedHighscoreInTextarea(Highscore highscore) {
-		//this.highscoreTextarea.setText(highscore.toString());
-		this.highscoreTextarea.setText(highscore.getTop(top));
-	}
-	
-	/*
-	public void addPlayer(Highscore highscore) {
-		String playerName = this.tfName.getText();
-		this.nameLabel.setVisible(false);
-		this.tfName.setVisible(false);
-		this.addPlayerToHighscoreButton.setVisible(false);
-		highscore.addPlayerAndSortHighscore(playerName, 3);
-		System.out.println(highscore.toString());
-		highscore.updateLocalScoreFile();
-		showHighscoreInTextarea(highscore);
-		
-	}
-	*/
 	
 	public void postUpdatedHighscoreToServer(Highscore highscore){
-		System.out.println("postUpdatedHighscoreToServer(Highscore highscore)");
-		
-		
 		String playerName = this.tfName.getText();
 		
 		if (playerName.equals("") || playerName.equals("Name eingeben!") ){
-			System.out.println("keine eingabe: playerName: " + playerName);
-			this.tfName.setText("Name eingeben!");
 		
+			this.tfName.setText("Name eingeben!");
 		}else{
 			try{
 				this.highscoreTextarea.setText("updating Highscore.....");
@@ -362,22 +286,7 @@ private void setHighscoreTextarea(JPanel highscorePanel, int xLocation, int yLoa
 			}catch (Exception e){
 				this.info.setText("Keine Internetverbindung!");
 			}
-				
-		
 		}
 	}
 	
-	
-	/*public void actionPerformed (ActionEvent ae){
-        // Die Quelle wird mit getSource() abgefragt und mit den
-        // Buttons abgeglichen. Wenn die Quelle des ActionEvents einer
-        // der Buttons ist, wird der Text des JLabels entsprechend geändert
-        if(ae.getSource() == this.loadHighscoreButton){
-            System.out.println("-----> Highscore laden!");   
-        }else if(ae.getSource() == this.eintragenButton){
-        	System.out.println("-----> in Highscore eintragen!");  
-        }
-        
-    }
-    */
 }

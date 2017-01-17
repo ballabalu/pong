@@ -21,10 +21,8 @@ public class Controller implements ActionListener {
 			MenueView.pong.dispose();
         }		
         else if(e.getActionCommand() == "Highscores"){
-        	System.out.println("highscore");
         	HighscoreView highscoreView = new HighscoreView("Highscores");
         	highscoreView.init(new HighscoreController(highscoreView));
-        	
 			MenueView.pong.dispose();
         }
 		

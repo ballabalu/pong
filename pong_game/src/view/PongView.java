@@ -30,7 +30,6 @@ public class PongView extends JFrame implements Runnable, Observer{
 	private Ball ball = new Ball(100, 100, this, paddle, autoPaddle);
 	private GameController gc = new GameController();
 	private Player player;
-
 	
 //	private boolean up;
 //	private boolean down;
@@ -135,7 +134,6 @@ public class PongView extends JFrame implements Runnable, Observer{
 	public void setPaddle(Paddle paddle) {
 		this.paddle = paddle;
 	}
-
 	@Override
 	public void update(Observable o, Object arg) {
 		// auf neuen Status reagieren
@@ -144,5 +142,4 @@ public class PongView extends JFrame implements Runnable, Observer{
 		System.out.println(newScore);
 		
 	}
-
 }

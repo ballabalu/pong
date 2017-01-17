@@ -56,29 +56,14 @@ public class NetworkConnection {
 		
 		URL url = new URL(this.url);
 	     
-	     ObjectInputStream input2 = new ObjectInputStream(url.openConnection().getInputStream());
-	     loadedHighscore = (ArrayList<Player>) input2.readObject();
-	     
-	     /* //BufferedReader inFile = new BufferedReader(new InputStreamReader(url.openStream()));
-	     System.out.println(inFile.getClass());
-	     ArrayList<Player> al = new ArrayList<Player>();
-	     String inLine; 
-	     
-	     while ((inLine = inFile.readLine()) != null) 
-	     {
-	    	// al.add(inLine);
-	    	 //highscoreArrayList.add(inLine);
-	     }
-	     inFile.close();  
-	     System.out.println(al.toString());
-	   
-	     Highscore hs = new Highscore(al); 
-	     */
-	     return loadedHighscore;
+	    ObjectInputStream input = new ObjectInputStream(url.openConnection().getInputStream());
+	    loadedHighscore = (ArrayList<Player>) input.readObject();
+	    return loadedHighscore;
 	}
 	
+	
 	public String getJson() throws Exception, UnknownHostException {
-		System.out.println("getJson");
+		
 		String json = "";
 		URL url = new URL(this.url);
 		
@@ -94,7 +79,6 @@ public class NetworkConnection {
             response.append(inputLine);
 
         in.close();
-        System.out.println("getJson 2");
         json = response.toString();
         return json;
 	}
@@ -103,7 +87,7 @@ public class NetworkConnection {
 	
 	
 	
-   public void postJson3(Highscore highscore) throws IOException {
+   public void postJson(Highscore highscore) throws IOException {
 	   
 	   String       postUrl     = this.url;
 	   HttpClient 	client 		= HttpClients.createDefault();
@@ -112,32 +96,23 @@ public class NetworkConnection {
 	   StringEntity postingString = new StringEntity(jsonString,"UTF-8");
 	   postingString.setContentType("application/json");
 	   
-	   System.out.println("jsonString: " + jsonString);
-	   
 	   List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
 	   urlParameters.add(new BasicNameValuePair("json", jsonString));
 
 	   post.setEntity(new UrlEncodedFormEntity(urlParameters));
 	   
-
 	   HttpResponse response = client.execute(post);
-	   System.out.println("\nSending 'POST' request to URL : " + url);
-	   //System.out.println("Post parameters : " + post.getEntity());
-	   System.out.println("Response Code : " +
-                                    response.getStatusLine().getStatusCode());
 
 	   BufferedReader rd = new BufferedReader(
                         new InputStreamReader(response.getEntity().getContent()));
 
-		StringBuffer result = new StringBuffer();
-		String line = "";
-		while ((line = rd.readLine()) != null) {
-			result.append(line);
-		}
-		System.out.println(result.toString());
+	   StringBuffer result = new StringBuffer();
+	   String line = "";
+	   while ((line = rd.readLine()) != null) {
+		   result.append(line);
+	   }
+	   System.out.println(result.toString());
 		
-
     }
 
-	
 }
