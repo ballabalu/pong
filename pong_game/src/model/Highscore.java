@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Type;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -126,45 +127,34 @@ public class Highscore {
 	}
 	*/
 
-	public void loadHighscoreFromServer() {
+	public void loadHighscoreFromServer() throws Exception {
 		System.out.println("loadHighscoreFromServer");
 		getJsonAndSetAsHighscore();
 	}
 	
-	public void getJsonAndSetAsHighscore(){
+	public void getJsonAndSetAsHighscore() throws Exception{
 		System.out.println("getJsonAndSetAsHighscore");
 		NetworkConnection networkConnection = new NetworkConnection("http://erdbeerwelt.com/mio/paf/hs.txt");
 		String jsonString = "";
-		try {
-			jsonString = networkConnection.getJson();
-			System.out.println("jsonString:" + jsonString);
-			if (jsonString != "" ){
+		
+		
+		jsonString = networkConnection.getJson();
+		System.out.println("jsonString:" + jsonString);
+		if (jsonString != "" ){
 				//String test = "[{\"playerName\":\"f\",\"playerScore\":5},{\"playerName\":\"e\",\"playerScore\":2},{\"playerName\":\"a\",\"playerScore\":1},{\"playerName\":\"b\",\"playerScore\":1},{\"playerName\":\"c\",\"playerScore\":1},{\"playerName\":\"d\",\"playerScore\":1}]";
 				//String test2 = "[{"playerName":"f","playerScore":5},{"playerName":"e","playerScore":2},{"playerName":"a","playerScore":1},{"playerName":"b","playerScore":1},{"playerName":"c","playerScore":1},{"playerName":"d","playerScore":1}]";
 				//System.out.println(test);
-				try{
-					Gson gson = new Gson();
-					Type collectionType = new TypeToken<ArrayList<Player>>(){}.getType();
-					ArrayList<Player> highscore = gson.fromJson(jsonString, collectionType);
+			
+				Gson gson = new Gson();
+				Type collectionType = new TypeToken<ArrayList<Player>>(){}.getType();
+				ArrayList<Player> highscore = gson.fromJson(jsonString, collectionType);
 		    
-					this.highscore = highscore;
-				}catch (IllegalStateException e) {
-				    //e.printStackTrace();
-				    this.highscore= new Highscore().getHighscore();
-				}
-			
-				
-			}else{
-				this.highscore= new Highscore().getHighscore();
-			}
+				this.highscore = highscore;
 			
 			
-		} catch (Exception e) {
-			//e.printStackTrace();
-			jsonString = "Laden nicht möglich, keine Internetverbindung";
+		}else{
 			this.highscore= new Highscore().getHighscore();
 		}
-	
 	}
 	
 	

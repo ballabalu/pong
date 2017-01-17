@@ -73,7 +73,13 @@ public class HighscoreView  extends JFrame {
 	public void init(ActionListener listener){
 		
 		System.out.println("-- HighscoreView  init()--");
-		highscore.loadHighscoreFromServer();
+		try {
+			highscore.loadHighscoreFromServer();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			highscore = new Highscore();
+		}
 		
 		hsView = new HighscoreView(" HIGHSCORE ", this.player);
 		hsView.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -115,39 +121,48 @@ public class HighscoreView  extends JFrame {
 		this.player.setScore(randomNum);
 		/* testen mit random-punkten */
 		
-	
-		int punkteLetzterInTop = this.highscore.getHighscore().get(top-1).getScore();
-		System.out.println("punkteLetzterInTop: " + punkteLetzterInTop);
 		
 		String infoString= "";
-		if(this.player.getScore() > punkteLetzterInTop){
-			 infoString = "<html>Herzlichen Glückwunsch!<br> Du hast <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkte!<br> Trag dich jetzt in den Highscore ein:</html>";
-			 
-			 //JTextField tfName = new JTextField("", 15);
-		     tfName.setForeground(Color.BLUE);
-		     tfName.setBackground(new Color(135,206,250));
-		     tfName.setLocation(70,	 200);
-		     tfName.setSize(200, 40);
-		     highscorePanel.add(tfName);
-		     
-		     addPlayerToServerHighscoreButton = new JButton("eintragen");
-		     addPlayerToServerHighscoreButton.setLocation(70,	 250);
-		     addPlayerToServerHighscoreButton.setSize(200, 40);
-		     addPlayerToServerHighscoreButton.addActionListener(listener);
-		     addPlayerToServerHighscoreButton.setBackground(new Color(135,206,250));
-		     addPlayerToServerHighscoreButton.setForeground(Color.DARK_GRAY);
-		     addPlayerToServerHighscoreButton.setOpaque(true);
-		     addPlayerToServerHighscoreButton.setFont(new Font("Arial", Font.BOLD, 16));
-		     highscorePanel.add(addPlayerToServerHighscoreButton);
-		     
-		    
-		}else{
-			if(this.player.getScore() == 1){
-				infoString = "<html>Schade! <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkt reicht leider nicht für den Highscore. Versuchs nochmal!<br></html>";
+		int punkteLetzterInTop;
+		if(! this.highscore.getHighscore().isEmpty()){
+			punkteLetzterInTop = this.highscore.getHighscore().get(top-1).getScore();
+			System.out.println("punkteLetzterInTop: " + punkteLetzterInTop);
+		
+			if(this.player.getScore() > punkteLetzterInTop){
+				 infoString = "<html>Herzlichen Glückwunsch!<br> Du hast <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkte!<br> Trag dich jetzt in den Highscore ein:</html>";
+				 
+				 //JTextField tfName = new JTextField("", 15);
+			     tfName.setForeground(Color.BLUE);
+			     tfName.setBackground(new Color(135,206,250));
+			     tfName.setLocation(70,	 200);
+			     tfName.setSize(200, 40);
+			     highscorePanel.add(tfName);
+			     
+			     addPlayerToServerHighscoreButton = new JButton("eintragen");
+			     addPlayerToServerHighscoreButton.setLocation(70,	 250);
+			     addPlayerToServerHighscoreButton.setSize(200, 40);
+			     addPlayerToServerHighscoreButton.addActionListener(listener);
+			     addPlayerToServerHighscoreButton.setBackground(new Color(135,206,250));
+			     addPlayerToServerHighscoreButton.setForeground(Color.DARK_GRAY);
+			     addPlayerToServerHighscoreButton.setOpaque(true);
+			     addPlayerToServerHighscoreButton.setFont(new Font("Arial", Font.BOLD, 16));
+			     highscorePanel.add(addPlayerToServerHighscoreButton);
+			     
+			    
 			}else{
-				infoString = "<html>Schade! <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkte reichen leider nicht für den Highscore. Versuchs nochmal!<br></html>";
+				if(this.player.getScore() == 1){
+					infoString = "<html>Schade! <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkt reicht leider nicht für den Highscore. Versuchs nochmal!<br></html>";
+				}else{
+					infoString = "<html>Schade! <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkte reichen leider nicht für den Highscore. Versuchs nochmal!<br></html>";
+				}
 			}
+			
+			
 		}
+		
+		
+		
+		
 		
 		
 		info = new JLabel(infoString);
@@ -205,21 +220,14 @@ public class HighscoreView  extends JFrame {
 private void panelHSView(ActionListener listener, JPanel highscorePanel) {
 		
 		System.out.println("panelHSView()");
-		
+	
 		setHeader(highscorePanel);
 		
-		
-	     setHighscoreTextarea(highscorePanel, 300, 100);
+	    setHighscoreTextarea(highscorePanel, 300, 100);
 	     
-	     setPlayAgainButton(listener, highscorePanel, 655, 500);
-	     
-	     
-	     setBackButton(listener, highscorePanel, 25, 500);
-	     
-	    
-	    
-	     
-	     
+	    setPlayAgainButton(listener, highscorePanel, 655, 500);
+	    setBackButton(listener, highscorePanel, 25, 500);
+
 	}
 
 private void setPlayAgainButton(ActionListener listener, JPanel highscorePanel, int xLoacation, int yLoaction) {
@@ -272,9 +280,19 @@ private void setHighscoreTextarea(JPanel highscorePanel, int xLocation, int yLoa
 	 highscoreTextarea.setCaretColor(Color.WHITE);
 	 //highscoreTextarea.setBorder(BorderFactory.createEtchedBorder());
 	 
-	 highscore.loadHighscoreFromServer();
-	 showDownloadedHighscoreInTextarea(highscore);
-	 highscorePanel.add(highscoreTextarea);
+	 try {
+		highscore.loadHighscoreFromServer();
+		showDownloadedHighscoreInTextarea(highscore);
+		highscorePanel.add(highscoreTextarea);
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		//e.printStackTrace();
+		highscoreTextarea.setText("Keine Verbindung zum Server möglich");
+		highscoreTextarea.setLocation(300, 120);
+		 highscorePanel.add(highscoreTextarea);
+	}
+	
+	
 }
 	
 	
@@ -318,39 +336,35 @@ private void setHighscoreTextarea(JPanel highscorePanel, int xLocation, int yLoa
 			this.tfName.setText("Name eingeben!");
 		
 		}else{
-			this.highscoreTextarea.setText("updating Highscore.....");
+			try{
+				this.highscoreTextarea.setText("updating Highscore.....");
+				
+				// Textfeld, Button entfernen, Infotext anzeigen
+				this.tfName.setVisible(false);
+				this.highscorePanel.remove(addPlayerToServerHighscoreButton);
+				this.info.setText("Du wurdest in den Highscore eingetragen.");
+				this.highscorePanel.validate();
+				this.highscorePanel.repaint();
+				
+				// aktuellen Highscore laden
+				highscore.loadHighscoreFromServer();
+				
+				//PlayerName setzen
+				this.player.setPlayerName(playerName);
+				
+				// Player zum Highscore hinzufügen und Highscore sortieren
+				highscore.addPlayerAndSortHighscore(player);
+				
+				//Highscore auf Server speichern
+				highscore.saveHighscoreOnServer();
 			
-			this.tfName.setVisible(false);
-			//this.info.setVisible(false);
-			this.highscorePanel.remove(addPlayerToServerHighscoreButton);
-			
-			// erfolgreich eingetragen
-			this.info.setText("Du wurdest in den Highscore eingetragen.");
-			
-			this.highscorePanel.validate();
-			this.highscorePanel.repaint();
-			
-			System.out.println("aktuellen Highscore laden");
-			highscore.loadHighscoreFromServer();
-			
-			System.out.println("addPlayerAndSortHighscore(): " + playerName );
-			this.player.setPlayerName(playerName);
-			
-			highscore.addPlayerAndSortHighscore(player);
-			System.out.println(highscore.toString());
-			
-			
-			//System.out.println("	highscore.toJson();     ");
-			//this.tfName.setVisible(false);
-			//this.info.setVisible(false);
-			//this.addPlayerToHighscoreButton.setVisible(false);
+				this.highscoreTextarea.setText(highscore.getTop(top));
+			}catch (Exception e){
+				this.info.setText("Keine Internetverbindung!");
+			}
+				
 		
-			
-			highscore.saveHighscoreOnServer();
-		
-			this.highscoreTextarea.setText(highscore.getTop(top));
-			
-					}
+		}
 	}
 	
 	

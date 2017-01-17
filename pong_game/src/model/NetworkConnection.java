@@ -77,40 +77,25 @@ public class NetworkConnection {
 	     return loadedHighscore;
 	}
 	
-	public String getJson() {
-		  System.out.println("getJson");
+	public String getJson() throws Exception, UnknownHostException {
+		System.out.println("getJson");
 		String json = "";
-		URL url;
-		try {
-			url = new URL(this.url);
-			URLConnection connection = url.openConnection();
-			BufferedReader in = new BufferedReader(
+		URL url = new URL(this.url);
+		
+		URLConnection connection = url.openConnection();
+		
+        BufferedReader in = new BufferedReader(
                                 new InputStreamReader(
                                     connection.getInputStream()));
 
-			StringBuilder response = new StringBuilder();
-			String inputLine;
-			while ((inputLine = in.readLine()) != null) 
+        StringBuilder response = new StringBuilder();
+        String inputLine;
+        while ((inputLine = in.readLine()) != null) 
             response.append(inputLine);
 
-			in.close();
-        
-			json = response.toString();
-			
-			
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			 System.out.println("getJson MalformedURLException");
-			e.printStackTrace();
-			json = "Laden nicht möglich, keine Internetverbindung: " + e.getMessage();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			 System.out.println("getJson IOException");
-			//e.printStackTrace();
-			json = "Laden nicht möglich, keine Internetverbindung" + e.getMessage();
-		}
-	
-		
+        in.close();
+        System.out.println("getJson 2");
+        json = response.toString();
         return json;
 	}
 
