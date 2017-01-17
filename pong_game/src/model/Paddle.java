@@ -3,12 +3,10 @@ package model;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Observable;
 
-public class Paddle {
+public class Paddle extends Observable{
 	
-	
-
-
 	//Variablen
 	private int x;
 	private int y;
@@ -44,6 +42,9 @@ public class Paddle {
 		
 		if (paddleRect.intersects(ballRect)) {
 			ball.collideWithPaddle(true);
+			this.setChanged();
+			this.notifyObservers();
+			
 		}
 	}
 	

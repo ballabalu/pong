@@ -11,7 +11,7 @@ import view.PongView;
  
 public class Controller implements ActionListener {
 	
-	Player player = new Player("", 8);
+	Player player = new Player();
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

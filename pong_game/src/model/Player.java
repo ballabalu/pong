@@ -1,11 +1,14 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Observable;
+import java.util.Observer;
 
-public class Player implements Serializable, Comparable<Player> {
+public class Player implements Serializable, Comparable<Player>, Observer {
  
 	private String playerName;
 	private int playerScore;
+	private Paddle paddle;
 	
 	public Player(){
 		this.playerName = "";
@@ -16,6 +19,15 @@ public class Player implements Serializable, Comparable<Player> {
 	public Player (String playerName, int playerScore){
 		this.playerName= playerName;
 		this.playerScore = playerScore;
+		
+	}
+	
+	//Observer anmelden
+	public Player(Paddle paddle){
+		this.paddle = paddle;
+		
+		//Durchfuehrung der Rigistrierung beim uebergebenden Subjekt
+		this.paddle.addObserver(this);
 		
 	}
 	
@@ -87,6 +99,15 @@ public class Player implements Serializable, Comparable<Player> {
 		}
 		
 		return spielerString;
+	}
+
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// bei Observerupdate Punktestand increasen
+		System.out.println("Der Observer hat getroffen - Nachricht aus Player");
+		this.increaseScore();
+		
 	}
 	
 }

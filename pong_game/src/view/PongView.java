@@ -6,6 +6,8 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,8 +18,9 @@ import model.AutoPaddle;
 import model.Ball;
 import model.Paddle;
 import model.Pitch;
+import model.Player;
 
-public class PongView extends JFrame implements Runnable{
+public class PongView extends JFrame implements Runnable, Observer{
 	
 	private PongView pong;
 	private Graphics gr;
@@ -26,6 +29,7 @@ public class PongView extends JFrame implements Runnable{
 	private Paddle paddle = new Paddle(25, 180, 25, 125, Color.WHITE);
 	private Ball ball = new Ball(100, 100, this, paddle, autoPaddle);
 	private GameController gc = new GameController();
+	private Player player;
 
 	
 //	private boolean up;
@@ -35,6 +39,13 @@ public class PongView extends JFrame implements Runnable{
 		super(title);
 		this.setFocusable(true);
 		this.addKeyListener(gc);
+	}
+	
+	public PongView(Paddle paddle){
+		this.paddle = paddle;
+		
+		//Durchfuehrung der Registrierung beim uebergebenden Subjekt
+		this.paddle.addObserver(this);
 	}
 	
 	@Override
@@ -123,6 +134,15 @@ public class PongView extends JFrame implements Runnable{
 
 	public void setPaddle(Paddle paddle) {
 		this.paddle = paddle;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// auf neuen Status reagieren
+		int newScore = player.getScore();
+		System.out.println("Observer hat getroffen - Nachricht aus PongView");
+		System.out.println(newScore);
+		
 	}
 
 }
