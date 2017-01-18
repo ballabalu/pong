@@ -69,6 +69,13 @@ public class PongView extends JFrame implements Runnable, Observer{
 		//Score Text zeichnen
 		gr.setColor(Color.WHITE);
 		gr.setFont(new Font("Arial", Font.PLAIN, 30)); 
+		
+		
+		//************* Test für Observer *********************
+		scoreInt = this.player.getScore();
+		//************* Test für Observer *********************
+		
+		
 		score = String.valueOf(scoreInt);
 		gr.drawString("Score: " + score, 20, 70);
 		
