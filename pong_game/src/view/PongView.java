@@ -1,9 +1,9 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.Observable;
@@ -11,7 +11,6 @@ import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import controller.GameController;
 import model.AutoPaddle;
@@ -30,6 +29,8 @@ public class PongView extends JFrame implements Runnable, Observer{
 	private Ball ball = new Ball(100, 100, this, paddle, autoPaddle);
 	private GameController gc = new GameController();
 	private Player player;
+	private int scoreInt = 0;
+	private String score = "0";
 	
 //	private boolean up;
 //	private boolean down;
@@ -49,49 +50,50 @@ public class PongView extends JFrame implements Runnable, Observer{
 	
 	@Override
 	public void paint(Graphics gr){
-		//System.out.println("REPAINT");
-		super.paint(gr);
-		
-		BufferedImage bufferedImage = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
-		
-		
+		super.paint(gr);			
 		//Spielfeld zeichnen
 		pitch.paintt(gr);
 		//Ball zeichnen
-//		System.out.println(ball.getX());
-//		System.out.println(ball.getY());
 		ball.paintt(gr);
 		//Paddle zeichnen
 		getPaddle().paintt(gr);
 		//AI zeichnen
 		autoPaddle.paintt(gr);
+		//Score Text zeichnen
+		gr.setColor(Color.WHITE);
+		gr.setFont(new Font("Arial", Font.PLAIN, 30)); 
+		score = String.valueOf(scoreInt);
+		gr.drawString("Score: " + score, 20, 70);
 		
+		//bufferedImage gegen das flackern
+		BufferedImage bufferedImage = new BufferedImage(WIDTH,HEIGHT,BufferedImage.TYPE_INT_RGB);
 		Graphics2D g2dComponent = (Graphics2D) gr;
 		g2dComponent.drawImage(bufferedImage, 0, 0, null); 
 	}
 
-	//JPAnel hinzugefuegt
+	/**
+	 * Initiert das JSwing Fenster
+
+	 * @param keylistener listener für den GameController
+	 */
 	public void init(KeyListener keylistener){
+		//Fenster erstellen
 		pong = new PongView("Pong - The Game");
-		JPanel panel = new JPanel(null);
-		
+
+		//Anti-flacker Label :D
 		JLabel lbl1 = new JLabel("Score: ");
 		pong.add(lbl1);
-		lbl1.setLocation(27, 20);
-		lbl1.setSize(86, 14);
 		pong.setComponentZOrder(lbl1,0);
 		
-		panel.setDoubleBuffered(true);
-		pong.add(panel);
-		setContentPane(panel);
+		//Thread starten
 		new Thread(pong).start();
+		
+		//Parameter für das Fenster setzen
 		pong.setSize(900, 600);
 		pong.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pong.setLocation(50,50);
 		pong.setResizable(false);
 		pong.setVisible(true);
-
-
 	}
 
 
@@ -100,23 +102,26 @@ public class PongView extends JFrame implements Runnable, Observer{
 	public void run() {
 		//Endlosschleife
 		while (true) {
-//			System.out.println("run-Methode startet.");
+			//Ball bewegen
 			ball.moveBall();
-//			System.out.println("ball.moveBall();");
 
-			if (gc.getUp()) {
+			//Spieler-Paddle bewegen
+			if (gc.getUp() && getPaddle().getY() > 20) {		
 				getPaddle().moveUp();
-			} else if (gc.getDown()) {
+			} else if (gc.getDown() && getPaddle().getY() < 475) {
 				getPaddle().moveDown();
 			}
 			
-			getPaddle().checkCollisionWithBall(ball);
+			//KI-Paddle bewegen
 			autoPaddle.moveAutoPaddle(ball);
+			
+			//Spiler- und KI-Paddle auf Kollision mit Ball prüfen
+			getPaddle().checkCollisionWithBall(ball);
 			autoPaddle.checkCollisionWithBall(ball);
 			
+			//Nächstes Frame zeichnen				
 			repaint();
 
-//			System.out.println("repaint");
 			try {
 				//Pause der Endlosschleife
 				Thread.sleep(20);
@@ -134,6 +139,7 @@ public class PongView extends JFrame implements Runnable, Observer{
 	public void setPaddle(Paddle paddle) {
 		this.paddle = paddle;
 	}
+	
 	@Override
 	public void update(Observable o, Object arg) {
 		// auf neuen Status reagieren
