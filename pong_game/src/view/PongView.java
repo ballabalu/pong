@@ -39,6 +39,13 @@ public class PongView extends JFrame implements Runnable, Observer{
 		super(title);
 		this.setFocusable(true);
 		this.addKeyListener(gc);
+		
+	
+		//************* Test fÃ¼r Observer *********************
+		this.paddle = new Paddle(25, 180, 25, 125, Color.WHITE);
+		this.player = new Player();
+		this.paddle.addObserver(this.player);
+		//************* Test fÃ¼r Observer *********************
 	}
 	
 	public PongView(Paddle paddle){
@@ -74,7 +81,7 @@ public class PongView extends JFrame implements Runnable, Observer{
 	/**
 	 * Initiert das JSwing Fenster
 
-	 * @param keylistener listener für den GameController
+	 * @param keylistener listener fï¿½r den GameController
 	 */
 	public void init(KeyListener keylistener){
 		//Fenster erstellen
@@ -88,7 +95,7 @@ public class PongView extends JFrame implements Runnable, Observer{
 		//Thread starten
 		new Thread(pong).start();
 		
-		//Parameter für das Fenster setzen
+		//Parameter fï¿½r das Fenster setzen
 		pong.setSize(900, 600);
 		pong.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		pong.setLocation(50,50);
@@ -115,11 +122,11 @@ public class PongView extends JFrame implements Runnable, Observer{
 			//KI-Paddle bewegen
 			autoPaddle.moveAutoPaddle(ball);
 			
-			//Spiler- und KI-Paddle auf Kollision mit Ball prüfen
+			//Spiler- und KI-Paddle auf Kollision mit Ball prï¿½fen
 			getPaddle().checkCollisionWithBall(ball);
 			autoPaddle.checkCollisionWithBall(ball);
 			
-			//Nächstes Frame zeichnen				
+			//Nï¿½chstes Frame zeichnen				
 			repaint();
 
 			try {

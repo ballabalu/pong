@@ -105,8 +105,12 @@ public class Player implements Serializable, Comparable<Player>, Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		// bei Observerupdate Punktestand increasen
-		System.out.println("Der Observer hat getroffen - Nachricht aus Player");
+		System.out.println("Der Observer hat getroffen - Nachricht aus Player: " + arg);
 		this.increaseScore();
+		
+		//************* Test für Observer *********************
+		System.out.println("Punkte: " + this.playerScore);
+		//************* Test für Observer *********************
 		
 	}
 	

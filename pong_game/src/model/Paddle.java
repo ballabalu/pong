@@ -22,6 +22,7 @@ public class Paddle extends Observable{
 		this.width = width;
 		this.height = height;
 		this.color = color;
+		
 	}
 	
 	public void moveUp(){
@@ -42,8 +43,10 @@ public class Paddle extends Observable{
 		
 		if (paddleRect.intersects(ballRect)) {
 			ball.collideWithPaddle(true);
-			this.setChanged();
-			this.notifyObservers();
+			
+			System.out.println("Treffer");
+			setChanged();
+			notifyObservers();
 			
 		}
 	}

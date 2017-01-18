@@ -74,7 +74,7 @@ public class HighscoreView  extends JFrame {
 	public void init(ActionListener listener){
 		
 		try {
-			this.highscore = highscore.loadHighscoreFromServer();
+			this.highscore = highscore.getHighscoreFromServer();
 			online = true;
 		} catch (Exception e) {
 			this.highscore = new Highscore();
@@ -171,7 +171,7 @@ public class HighscoreView  extends JFrame {
 		/* Label mit Info, ob Player in Highscore kann  */
 		info = new JLabel(infoString);
 		info.setVerticalAlignment(JLabel.TOP);
-		info.setFont(new Font("Arial", Font.BOLD, 18));
+		info.setFont(new Font("Arial", Font.BOLD, 16));
 		info.setForeground(Color.DARK_GRAY);
 		info.setLocation(70,	 120);
 		info.setSize(400, 100);
@@ -271,7 +271,7 @@ public class HighscoreView  extends JFrame {
 				this.highscorePanel.repaint();
 				
 				// aktuellen Highscore laden
-				highscore.loadHighscoreFromServer();
+				highscore.getHighscoreFromServer();
 				
 				//PlayerName setzen
 				this.player.setPlayerName(playerName);
