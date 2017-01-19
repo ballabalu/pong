@@ -43,8 +43,7 @@ public class Paddle extends Observable{
 		
 		if (paddleRect.intersects(ballRect)) {
 			ball.collideWithPaddle(true);
-			
-			System.out.println("Treffer");
+			//Observer informieren und 1 uebergeben
 			setChanged();
 			notifyObservers(1);
 			

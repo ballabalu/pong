@@ -4,10 +4,9 @@ package model;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Toolkit;
+import java.util.Observable;
 
-import view.PongView;
-
-public class Ball {
+public class Ball extends Observable{
 	
 	
 	private int x;
@@ -52,11 +51,17 @@ public class Ball {
 		if (x + 50 > 875) {
 			velocityX = 5;
 			velocityY = 2;
+			x = 100;
+			y = 100;
+			setChanged();
+			notifyObservers(10);
+			
 		} else if (x < 0){
 			velocityX = 5;
 			velocityY = 2;
 			x = 100;
 			y = 100;
+			// GAME OVER
 		}
 		
 		//Bewegung des Balls begrenzt durch das Spielfeld auf der y-Achse

@@ -42,18 +42,12 @@ public class PongView extends JFrame implements Runnable, Observer{
 		
 	
 		//************* Test für Observer *********************
-		this.paddle = new Paddle(25, 180, 25, 125, Color.WHITE);
 		this.player = new Player();
 		this.paddle.addObserver(this.player);
+		this.ball.addObserver(this.player);
 		//************* Test für Observer *********************
 	}
 	
-	public PongView(Paddle paddle){
-		this.paddle = paddle;
-		
-		//Durchfuehrung der Registrierung beim uebergebenden Subjekt
-		this.paddle.addObserver(this);
-	}
 	
 	@Override
 	public void paint(Graphics gr){

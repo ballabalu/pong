@@ -9,6 +9,7 @@ public class Player implements Serializable, Comparable<Player>, Observer {
 	private String playerName;
 	private int playerScore;
 	private Paddle paddle;
+	private Ball ball;
 	
 	public Player(){
 		this.playerName = "";
@@ -19,15 +20,6 @@ public class Player implements Serializable, Comparable<Player>, Observer {
 	public Player (String playerName, int playerScore){
 		this.playerName= playerName;
 		this.playerScore = playerScore;
-		
-	}
-	
-	//Observer anmelden
-	public Player(Paddle paddle){
-		this.paddle = paddle;
-		
-		//Durchfuehrung der Rigistrierung beim uebergebenden Subjekt
-		this.paddle.addObserver(this);
 		
 	}
 	
@@ -114,5 +106,7 @@ public class Player implements Serializable, Comparable<Player>, Observer {
 		//************* Test für Observer *********************
 		
 	}
+
+
 	
 }
