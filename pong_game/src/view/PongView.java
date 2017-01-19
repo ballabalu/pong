@@ -41,11 +41,11 @@ public class PongView extends JFrame implements Runnable, Observer{
 		this.addKeyListener(gc);
 		
 	
-		//************* Test für Observer *********************
+		//************* Observer anmelden *********************
 		this.player = new Player();
 		this.paddle.addObserver(this.player);
 		this.ball.addObserver(this.player);
-		//************* Test für Observer *********************
+		//************* Observer anmelden *********************
 	}
 	
 	
