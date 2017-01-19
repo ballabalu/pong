@@ -48,8 +48,8 @@ public class Player implements Serializable, Comparable<Player>, Observer {
 		this.playerName = playerName;
 	}
 	
-	public void increaseScore(){
-		this.playerScore = this.playerScore +1;
+	public void increaseScore(int punkte){
+		this.playerScore = this.playerScore + punkte;
 	}
 	
 	
@@ -106,7 +106,8 @@ public class Player implements Serializable, Comparable<Player>, Observer {
 	public void update(Observable o, Object arg) {
 		// bei Observerupdate Punktestand increasen
 		System.out.println("Der Observer hat getroffen - Nachricht aus Player: " + arg);
-		this.increaseScore();
+		int p = (Integer) arg;
+		this.increaseScore(p);
 		
 		//************* Test für Observer *********************
 		System.out.println("Punkte: " + this.playerScore);

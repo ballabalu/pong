@@ -46,7 +46,7 @@ public class Paddle extends Observable{
 			
 			System.out.println("Treffer");
 			setChanged();
-			notifyObservers();
+			notifyObservers(1);
 			
 		}
 	}
