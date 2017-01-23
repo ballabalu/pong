@@ -73,11 +73,14 @@ public class HighscoreView  extends JFrame {
 	
 	public void init(ActionListener listener){
 		
+		System.out.println("init hsview");
 		try {
 			this.highscore = highscore.getHighscoreFromServer();
+			System.out.println("-------> online: " + online);
 			online = true;
 		} catch (Exception e) {
 			this.highscore = new Highscore();
+			System.out.println("-------> online: " + online);
 			online = false;
 		}
 		
@@ -234,7 +237,7 @@ public class HighscoreView  extends JFrame {
 	private void setHighscoreTextarea(JPanel highscorePanel, int xLocation, int yLoacation) {
 		highscoreTextarea.setText("loading Highscore.....");
 		highscoreTextarea.setLineWrap(false);
-		highscoreTextarea.setFont(new Font("Arial", Font.BOLD, 16));
+		highscoreTextarea.setFont(new Font("Courier", Font.BOLD, 16));
 		highscoreTextarea.setForeground(new Color(96,96,96));
 		highscoreTextarea.setLocation(xLocation,	 yLoacation);
 		highscoreTextarea.setSize(350, 420);
@@ -273,12 +276,13 @@ public class HighscoreView  extends JFrame {
 				// aktuellen Highscore laden
 				highscore.getHighscoreFromServer();
 				
+				System.out.println("--1---------------");
 				//PlayerName setzen
 				this.player.setPlayerName(playerName);
-				
+				System.out.println("--2---------------");
 				// Player zum Highscore hinzufügen und Highscore sortieren
 				highscore.addPlayerAndSortHighscore(player);
-				
+				System.out.println("--3---------------");
 				//Highscore auf Server speichern
 				highscore.saveHighscoreOnServer();
 			

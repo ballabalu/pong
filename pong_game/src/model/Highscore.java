@@ -1,13 +1,21 @@
 package model;
  
+import java.io.IOException;
+import java.io.StringReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
  
@@ -105,6 +113,7 @@ public class Highscore {
 	 * @return	Highscore-Objekt mit heruntergeladenen Daten
 	 */
 	public Highscore getHighscoreFromServer() throws Exception {
+		System.out.println("getHighscoreFromServer");
 		return getJsonAndSetAsHighscore();
 	}
 	
@@ -122,20 +131,45 @@ public class Highscore {
 		
 		jsonString = networkConnection.getJson();
 
+		
+		System.out.println("getJsonAndSetAsHighscore: " + jsonString);
 		if (jsonString != "" ){
 				//String test2 = "[{"playerName":"f","playerScore":5},{"playerName":"e","playerScore":2},{"playerName":"a","playerScore":1},{"playerName":"b","playerScore":1},{"playerName":"c","playerScore":1},{"playerName":"d","playerScore":1}]";
 				Gson gson = new Gson();
+				System.out.println("1");
+				
 				Type collectionType = new TypeToken<ArrayList<Player>>(){}.getType();
-				ArrayList<Player> highscore = gson.fromJson(jsonString, collectionType);
+				System.out.println("2: " + collectionType);
+				
+				//ArrayList<Player> highscore = gson.fromJson(jsonString, collectionType);
 		    
-				this.highscoreList = highscore;
+				// ArrayList<Player> highscore = (ArrayList<Player>) new Gson().fromJson(jsonString, collectionType);
+				
+				//Player[] mcArray = gson.fromJson(jsonString, Player[].class);
+				//List<Player> mcList = Arrays.asList(mcArray);
+				
+				// JsonParser parser = new JsonParser();
+				// JsonElement element = parser.parse(jsonString);
+				// JsonArray jsonArray = element.getAsJsonArray();
+				 
+				JSONArray jsonArray = new JSONArray(jsonString);
+				 
+				System.out.println("JSONArray: " + jsonArray.toString());
+				
+				for (int i = 0; i < jsonArray.length(); i++) {
+			            JSONObject jsonObj = jsonArray.getJSONObject(i);
+			            String tmpName = (String) jsonObj.get("playerName");
+			            int tmpScore = (Integer) jsonObj.get("score");
+			            Player tempPlayer = new Player(tmpName, tmpScore);
+			            this.highscoreList.add(tempPlayer);
+			    }
 		}else{
 			this.highscoreList= new Highscore().getHighscore();
 		}
 		return this;
 	}
 	
-	
+	 
 	
 	/**
 	 * Erzeugt Netzwerk-Verbindung und ruft dort Methode auf, die Highscore als JSON abspeichert
@@ -143,6 +177,7 @@ public class Highscore {
 	public void saveHighscoreOnServer(){
 		NetworkConnection networkConnection = new NetworkConnection("http://erdbeerwelt.com/mio/paf/upload.php");
 		try {
+			System.out.println("--saveHighscoreOnServer-------");
 			networkConnection.postJson(this);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -155,10 +190,14 @@ public class Highscore {
 	 * Verwandelt ArrayList<Player> (this.highscoreList) in String im JSON-Format
 	 * @return	String, der gesamte highscoreList im JSON-Format enthält
 	 */
-    public String toJson(){
-		Gson gson = new GsonBuilder().create();
-		JsonArray jsonArray = gson.toJsonTree(this.highscoreList).getAsJsonArray();
-		String jsonString = jsonArray.toString();
+    public String getJsonString(){
+   
+    	// this.highscoreList in neues JSONArray umwandeln
+    	JSONArray arr_strJson = new JSONArray(this.highscoreList);
+    	
+    	// JSONArray in String umwandeln
+    	String jsonString = arr_strJson.toString();
+    	
     	return jsonString;
     }
 
@@ -173,16 +212,27 @@ public class Highscore {
 		boolean empty = this.getHighscore().isEmpty();
 		int anz = this.getHighscore().size();
 		String highscoreString = "";
+		String space = " ";
 		
 		if (empty == false){
 			if (anz>x){
 				for(int i=0; i<x; i++){
-					highscoreString +=  i+1 + ".    " + this.getHighscore().get(i).toString() + "\n";
+					int position = i+1;
+					if(i<9){
+						highscoreString +=  space + position + ". " + this.getHighscore().get(i).toString() + "\n";
+					}else{
+						highscoreString +=  position + ". " + this.getHighscore().get(i).toString() + "\n";
+					}
+					
 				}
 			}else{
 				int i = 1;
 				for (Player s : this.getHighscore()){
-					highscoreString +=  i + ".    " + s.toString() + "\n";
+					if(i<10){
+						highscoreString +=  space + i + ". " + s.toString() + "\n";
+					}else{
+						highscoreString +=  i + ". " + s.toString() + "\n";
+					}
 					i++;
 				}
 			}

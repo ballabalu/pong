@@ -6,6 +6,10 @@ import java.util.Observer;
 
 public class Player implements Serializable, Comparable<Player>, Observer {
  
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String playerName;
 	private int playerScore;
 	private Paddle paddle;
@@ -81,13 +85,16 @@ public class Player implements Serializable, Comparable<Player>, Observer {
 		String spielerString = "";
 		String name = this.getPlayerName();
 		int zeichen = name.length();
-		if (zeichen >= 15){
-			name = name.substring(0, 15);
+		if (zeichen >= 13){
+			name = name.substring(0, 13);
 			spielerString = name + "... \t " + this.getScore() + " Punkte ";
-		}else if (zeichen >7){
+		// 1-11 Zeichen
+		}else if (zeichen >10){
 			spielerString = name + " \t " + this.getScore() + " Punkte ";
-		}else{
-			spielerString = name + " \t \t " + this.getScore() + " Punkte ";
+		}else if (zeichen >3){
+			spielerString = name + "\t \t " + this.getScore() + " Punkte ";
+		}else {
+			spielerString = name + "\t \t \t " + this.getScore() + " Punkte ";
 		}
 		
 		return spielerString;

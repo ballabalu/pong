@@ -64,6 +64,7 @@ public class NetworkConnection {
 	
 	public String getJson() throws Exception, UnknownHostException {
 		
+		System.out.println("getJson");
 		String json = "";
 		URL url = new URL(this.url);
 		
@@ -80,6 +81,7 @@ public class NetworkConnection {
 
         in.close();
         json = response.toString();
+        System.out.println("getJson: " +json);
         return json;
 	}
 
@@ -89,10 +91,17 @@ public class NetworkConnection {
 	
    public void postJson(Highscore highscore) throws IOException {
 	   
+	   System.out.println("postJson");
+	   System.out.println(highscore.toString());
+	   
+	   
 	   String       postUrl     = this.url;
 	   HttpClient 	client 		= HttpClients.createDefault();
 	   HttpPost     post        = new HttpPost(postUrl);
-	   String jsonString = highscore.toJson();
+	   
+	   String jsonString = highscore.getJsonString();
+	   
+	   
 	   StringEntity postingString = new StringEntity(jsonString,"UTF-8");
 	   postingString.setContentType("application/json");
 	   
@@ -102,10 +111,9 @@ public class NetworkConnection {
 	   post.setEntity(new UrlEncodedFormEntity(urlParameters));
 	   
 	   HttpResponse response = client.execute(post);
-
+	  
 	   BufferedReader rd = new BufferedReader(
                         new InputStreamReader(response.getEntity().getContent()));
-
 	   StringBuffer result = new StringBuffer();
 	   String line = "";
 	   while ((line = rd.readLine()) != null) {
