@@ -2,42 +2,31 @@ package model;
 
 import java.net.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import java.io.*;
 
 public class NetworkConnection {
     private String url;
-    private final String USER_AGENT = "Mozilla/5.0";
 	
-	public NetworkConnection(String url){
+	/**
+	 * Konstruktor für neue NetworkConnection
+	 * @param url	String der URL, zu der eine Verbindung aufgebaut werden soll
+	 */
+    public NetworkConnection(String url){
 		this.url = url;
 	}
 	
-	public NetworkConnection(){
-	
-	}
-	
+	/*
 	public String getTextFromURL() throws Exception{
 		 URL url = new URL(this.url);
 	     BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
@@ -60,11 +49,15 @@ public class NetworkConnection {
 	    loadedHighscore = (ArrayList<Player>) input.readObject();
 	    return loadedHighscore;
 	}
+	*/
 	
-	
+    /**
+     * ließt JSON-Daten ein und gibt sie als String zurück
+     * @return	String mit JSON-Daten
+     * @throws Exception
+     * @throws UnknownHostException
+     */
 	public String getJson() throws Exception, UnknownHostException {
-		
-		System.out.println("getJson");
 		String json = "";
 		URL url = new URL(this.url);
 		
@@ -78,22 +71,17 @@ public class NetworkConnection {
         String inputLine;
         while ((inputLine = in.readLine()) != null) 
             response.append(inputLine);
-
         in.close();
         json = response.toString();
-        System.out.println("getJson: " +json);
         return json;
 	}
 
-	
-	
-	
-	
+	/**
+	 * überträgt den übergebenen Highscore an eine php-Datei, diese speichert den Highscore als JsonString
+	 * @param highscore
+	 * @throws IOException
+	 */
    public void postJson(Highscore highscore) throws IOException {
-	   
-	   System.out.println("postJson");
-	   System.out.println(highscore.toString());
-	   
 	   
 	   String       postUrl     = this.url;
 	   HttpClient 	client 		= HttpClients.createDefault();
@@ -112,6 +100,9 @@ public class NetworkConnection {
 	   
 	   HttpResponse response = client.execute(post);
 	  
+	   
+	   // Response-Ausgabe
+	   /* 
 	   BufferedReader rd = new BufferedReader(
                         new InputStreamReader(response.getEntity().getContent()));
 	   StringBuffer result = new StringBuffer();
@@ -120,7 +111,7 @@ public class NetworkConnection {
 		   result.append(line);
 	   }
 	   System.out.println(result.toString());
-		
+		*/
     }
 
 }
