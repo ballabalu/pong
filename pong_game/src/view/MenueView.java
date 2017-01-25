@@ -3,23 +3,30 @@ package view;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
 public class MenueView extends JFrame{
 
-	private Graphics gr;
 	private JButton newGame, highscore, exitGame, highscore2;
 	public static MenueView pong;
-	
+
 	public MenueView(String title){
 		super(title);
 	}	
 
+	public void drawimg(Graphics gr){
+		
+	}
+	
 	public void init(ActionListener listener){
 		pong = new MenueView("Pong - The Game - Menü");
 		pong.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -27,7 +34,12 @@ public class MenueView extends JFrame{
         JPanel contentPane = new JPanel();
         contentPane.setOpaque(true);
         contentPane.setBackground(Color.WHITE);
-        contentPane.setLayout(null);       
+        contentPane.setLayout(null); 
+        
+        Image myPicture = Toolkit.getDefaultToolkit().getImage("img/menue.png");
+        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
+        picLabel.setBounds(185, 105, 526, 189);
+        contentPane.add(picLabel);
 
         newGame = new JButton("Spiel starten");
         highscore = new JButton("Highscores");
