@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.Observable;
@@ -13,6 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import controller.GameController;
+import controller.HighscoreController;
 import model.AutoPaddle;
 import model.Ball;
 import model.Paddle;
@@ -21,7 +23,7 @@ import model.Player;
 
 public class PongView extends JFrame implements Runnable, Observer{
 	
-	private PongView pong;
+	private static PongView pong;
 	private Graphics gr;
 	private Pitch pitch = new Pitch(0, 0, this);
 	private AutoPaddle autoPaddle = new AutoPaddle(850, 180, 25, 125, Color.LIGHT_GRAY);
@@ -31,6 +33,7 @@ public class PongView extends JFrame implements Runnable, Observer{
 	private Player player;
 	private int scoreInt = 0;
 	private String score = "0";
+	private PongView ping;
 	
 //	private boolean up;
 //	private boolean down;
@@ -43,12 +46,22 @@ public class PongView extends JFrame implements Runnable, Observer{
 	
 		//************* Observer anmelden *********************
 		this.player = new Player();
+		this.ping = new PongView();
+		
 		this.paddle.addObserver(this.player);
 		this.ball.addObserver(this.player);
+		this.ball.addObserver(this.ping);
+	
+		
 		//************* Observer anmelden *********************
 	}
 	
 	
+	public PongView() {
+	// Fuer Observer ohne Stringuebergabe
+}
+
+
 	@Override
 	public void paint(Graphics gr){
 		super.paint(gr);			
@@ -123,7 +136,7 @@ public class PongView extends JFrame implements Runnable, Observer{
 			//KI-Paddle bewegen
 			autoPaddle.moveAutoPaddle(ball);
 			
-			//Spiler- und KI-Paddle auf Kollision mit Ball prï¿½fen
+			//Spieler- und KI-Paddle auf Kollision mit Ball prï¿½fen
 			getPaddle().checkCollisionWithBall(ball);
 			autoPaddle.checkCollisionWithBall(ball);
 			
@@ -148,12 +161,26 @@ public class PongView extends JFrame implements Runnable, Observer{
 		this.paddle = paddle;
 	}
 	
+	
+		
+
+
 	@Override
 	public void update(Observable o, Object arg) {
-		// auf neuen Status reagieren
-		int newScore = player.getScore();
-		System.out.println("Observer hat getroffen - Nachricht aus PongView");
-		System.out.println(newScore);
+		int p = (Integer) arg;
+		System.out.println("Pongview emfängt");
+		
+		if (p == 0 ){
+			
+			//Layer
+			//Sleep
+			
+			HighscoreView highscoreView = new HighscoreView("Highscores");
+	    	highscoreView.init(new HighscoreController(highscoreView));
+			PongView.pong.dispose();
+			
+		}
+		
 		
 	}
 }

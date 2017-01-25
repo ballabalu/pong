@@ -59,9 +59,8 @@ public class Ball extends Observable{
 		} else if (x < 0){
 			velocityX = 5;
 			velocityY = 2;
-			x = 100;
-			y = 100;
-			// GAME OVER
+			setChanged();
+			notifyObservers(0);
 		}
 		
 		//Bewegung des Balls begrenzt durch das Spielfeld auf der y-Achse

@@ -106,11 +106,16 @@ public class Player implements Serializable, Comparable<Player>, Observer {
 		// bei Observerupdate Punktestand increasen
 		System.out.println("Der Observer hat getroffen - Nachricht aus Player: " + arg);
 		int p = (Integer) arg;
-		this.increaseScore(p);
-		
-		//************* Test für Observer *********************
-		System.out.println("Punkte: " + this.playerScore);
-		//************* Test für Observer *********************
+		if (p != 0){
+			
+			this.increaseScore(p);
+			
+			//************* Test für Observer *********************
+			System.out.println("Punkte: " + this.playerScore);
+			//************* Test für Observer *********************
+			
+		}
+
 		
 	}
 
