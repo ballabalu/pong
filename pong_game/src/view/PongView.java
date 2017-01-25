@@ -168,16 +168,16 @@ public class PongView extends JFrame implements Runnable, Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		int p = (Integer) arg;
-		System.out.println("Pongview emfängt");
+		System.out.println("Pongview empfängt");
 		
 		if (p == 0 ){
 			
 			//Layer
 			//Sleep
-			
+			PongView.pong.dispose();
 			HighscoreView highscoreView = new HighscoreView("Highscores");
 	    	highscoreView.init(new HighscoreController(highscoreView));
-			PongView.pong.dispose();
+			
 			
 		}
 		

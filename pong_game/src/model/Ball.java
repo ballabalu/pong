@@ -91,7 +91,7 @@ public class Ball extends Observable{
 				velocityX -= 1;
 			}
 	
-			//System.out.println(this.y + " - " + paddleY + "/10 = " + velocityY);
+			System.out.println(this.y + " - " + paddleY + "/10 = " + velocityY);
 		} else if (collision) {
 			//NICHTS
 		}

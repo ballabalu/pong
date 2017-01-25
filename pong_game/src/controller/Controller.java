@@ -28,7 +28,7 @@ public class Controller implements ActionListener {
 		
 		//******** zum Testen ************
         else if(e.getActionCommand() == "Highscores (aus PongView)"){
-        	System.out.println("highscore");
+        	
         	HighscoreView highscoreView = new HighscoreView("Highscores", player);
         	highscoreView.init(new HighscoreController(highscoreView));
         	
