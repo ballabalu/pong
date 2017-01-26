@@ -1,3 +1,11 @@
+/**
+ * Klasse HighscoreController: enthällt Konstruktoren und ActionListener für HighscoreView
+ * 
+ * @author Enrico Barig, Steven Kranhold, Naamah Richter, Stefanie Schwanke
+ * @version 1.0, Stand: 17/01/26
+ * 
+ */
+
 package controller;
 
 import java.awt.event.ActionEvent;
@@ -8,22 +16,19 @@ import view.HighscoreView;
 import view.MenueView;
 import view.PongView;
 
-/**
- * Klasse HighscoreController: enthällt Konstruktoren und ActionListener für HighscoreView
- * 
- */
+
 public class HighscoreController implements ActionListener{
 	
-	/** zugehöriger Highscore*/
+	/** 
+	 * Instanzen der Klassen Highscore und HighscoreView werden erzeugt
+	 */
 	private Highscore highscore = new Highscore();
-	
-	/** zugehörige HighscoreView*/
 	private HighscoreView highscoreView;
 	
 	
 	
 	/**
-	 * Konstuktor für HighscoreController
+	 * Parameterloser Konstuktor für den HighscoreController
 	 * erzeugt neuen Highscore
 	 */
 	public HighscoreController(){
@@ -33,7 +38,7 @@ public class HighscoreController implements ActionListener{
 	
 	
 	/**
-	 * Konstuktor für HighscoreController
+	 * Konstuktor für den HighscoreController mit Parameterübergabe
 	 * erzeugt neuen Highscore und nimmt übergebene HighscoreView entgegen
 	 * @param highscoreview 	HighscoreView mit der der HighscoreController arbeitet
 	 */

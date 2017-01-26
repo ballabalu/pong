@@ -1,3 +1,11 @@
+/**
+ * AutoPaddle ist das KI-Paddle
+ * 
+ * @author Enrico Barig, Steven Kranhold, Naamah Richter, Stefanie Schwanke
+ * @version 1.0, Stand: 17/01/26
+ * 
+ */
+
 package model;
 
 import java.awt.Color;
@@ -6,15 +14,21 @@ import java.awt.Rectangle;
 
 public class AutoPaddle {
 	
-	
-	//Variablen
+
 	private int x;
 	private int y;
 	private int width;
 	private int height;
 	private Color color;
 	
-	//Konstruktor
+	/**
+	 * Konstruktor der Klasse AutoPaddle
+	 * @param x
+	 * @param y
+	 * @param width
+	 * @param height
+	 * @param color
+	 */
 	public AutoPaddle (int x, int y, int width, int height, Color color){
 		this.x = x;
 		this.y = y;
@@ -23,16 +37,27 @@ public class AutoPaddle {
 		this.color = color;
 	}
 	
+	/**
+	 * Methode, die das AutoPaddle nach oben bewegt
+	 * um immer 10 Pixel entlang der y-Achse hin zum Nullpunkt des Koordinatensystems
+	 */
 	public void moveUp(){
-		//y -= 5;
 		y -= 10;
 	}
 	
+	/**
+	 * Methode, die das AutoPaddle nach unten bewegt
+	 * um immer 10 Pixel entlang der y-Achse weg vom Nullpunkt des Koordinatensystems
+	 */
 	public void moveDown(){
-		//y += 5;
 		y += 10;
 	}
 	
+	/**
+	 * Methode, die überprüft, ob sich Ball und AutoPaddle beruehren.
+	 * Ist dies der Fall, wir die collideWithPaddle-Methode aus der Klasse Ball aufgerufen
+	 * @param ball
+	 */
 	public void checkCollisionWithBall(Ball ball){
 		Rectangle ballRect = new Rectangle(ball.getX(), ball.getY(), 50,50);
 		Rectangle paddleRect = new Rectangle(this.x, this.y, this.width, this.height);
@@ -42,40 +67,29 @@ public class AutoPaddle {
 		}
 	}
 	
-	
+	/**
+	 * Methode, die für die Bewegung des AutoPaddle verantwortlich ist.
+	 * @param ball
+	 */
 	public void moveAutoPaddle(Ball ball){
 		
 		int midPaddle = this.y + (this.height/2) - 30;
 		
 		if (midPaddle > ball.getY() && this.y > ball.getY()){
 			moveUp();
-		}/* else {
-			moveDown();
-		}*/
+		}
 		
 		if (midPaddle < ball.getY() || this.y + this.height < ball.getY()){
 			moveDown();
 		}
-		/*if (midPaddle != ball.getY()) {
-			if (ball.getY() < midPaddle) {
-				moveUp();
-			} else if (ball.getY() > midPaddle) {
-				moveDown();
-			}
-		}
-
-		if (midPaddle != 302) {
-			if (midPaddle < 302) {
-				moveDown();
-			} else if (midPaddle > 302) {
-				moveUp();
-			}
-		}*/
 	}
 	
 	
 	
-	
+	/**
+	 * Getter und Setter fuer x
+	 * @return
+	 */
 	public int getX() {
 		return x;
 	}
@@ -84,6 +98,10 @@ public class AutoPaddle {
 		this.x = x;
 	}
 
+	/**
+	 * Getter und Setter fuer y
+	 * @return
+	 */
 	public int getY() {
 		return y;
 	}
@@ -92,7 +110,10 @@ public class AutoPaddle {
 		this.y = y;
 	}
 
-	// paintt
+	/**
+	 * Paintt-Methode ist für die optische Erscheinung des AutoPaddle verantwortlich.
+	 * @return
+	 */
 	public void paintt(Graphics gr){
 		gr.fillRect(x, y, width, height);
 		gr.setColor(color);

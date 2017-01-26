@@ -1,3 +1,12 @@
+/**
+ * Ball.java wird um die Schnittstelle Observable erweitert und 
+ * ist somit ein zu beobachtendes Objekt.
+ * 
+ * @author Enrico Barig, Steven Kranhold, Naamah Richter, Stefanie Schwanke
+ * @version 1.0, Stand: 17/01/26
+ * 
+ */
+
 package model;
 
 
@@ -17,7 +26,14 @@ public class Ball extends Observable{
 	private Paddle paddle;
 	private AutoPaddle autoPaddle;
 	
-	//Konstruktor
+	/**
+	 * Konstruktor der Ball-Klasse
+	 * @param x
+	 * @param y
+	 * @param comp
+	 * @param paddle
+	 * @param autoPaddle
+	 */
 	public Ball (int x, int y, Component comp, Paddle paddle, AutoPaddle autoPaddle){
 		this.paddle = paddle;
 		this.autoPaddle = autoPaddle;
@@ -28,6 +44,10 @@ public class Ball extends Observable{
 		this.velocityY = 2;
 	}
 	
+	/**
+	 * Getter für alle benötigten Attribute
+	 * @return
+	 */
 	public int getX(){
 		return x;
 	}
@@ -44,10 +64,15 @@ public class Ball extends Observable{
 		return velocityY;
 	}
 	
+	/**
+	 * Methode, die für die Bewegung des Balls auf dem Spielfeld verantwortlich ist.
+	 */
 	public void moveBall(){
-
-		
-		//Bewegung des Balls begrenzt durch das Spielfeld auf der x-Achse
+		/**
+		 * Bewegung des Balls begrenzt durch das Spielfeld auf der x-Achse
+		 * Observable-Methoden, die die Bewegung des Balls überprüfen und 
+		 * Änderungen an abhängige Strukturen übergeben.
+		 */
 		if (x + 50 > 875) {
 			velocityX = 5;
 			velocityY = 2;
@@ -63,7 +88,10 @@ public class Ball extends Observable{
 			notifyObservers(0);
 		}
 		
-		//Bewegung des Balls begrenzt durch das Spielfeld auf der y-Achse
+		/**
+		 * Bewegung des Balls begrenzt durch das Spielfeld auf der y-Achse
+		 * 
+		 */
 		if (y + 50 > 575) {
 			velocityY = velocityY * -1;
 //			System.out.println("Ball geht nach oben.");
@@ -76,7 +104,15 @@ public class Ball extends Observable{
 		y+= velocityY;
 	}
 	
+	/**
+	 * Methode, die definiert, wie der Ball reagiert, sobald er eines der Paddle beruehrt
+	 * @param collision
+	 */
 	public void collideWithPaddle(boolean collision){
+		/**
+		 * Findet eine Kollision statt,
+		 * aendert der Ball seine Richtung
+		 */
 		if (collision) {
 			velocityX = velocityX * -1;
 			int paddleY = 0;
@@ -91,13 +127,17 @@ public class Ball extends Observable{
 				velocityX -= 1;
 			}
 	
-			System.out.println(this.y + " - " + paddleY + "/10 = " + velocityY);
+//			System.out.println(this.y + " - " + paddleY + "/10 = " + velocityY);
 		} else if (collision) {
 			//NICHTS
 		}
 	}
 	
-	//paintt
+
+	/**
+	 * Paintt-Methode ist für die optische Erscheinung des Balls verantwortlich.
+	 * @return
+	 */
 	public void paintt(Graphics gr){
 		gr.drawImage(Toolkit.getDefaultToolkit().getImage("img/ball.png"), x, y, comp);
 	}
