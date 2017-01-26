@@ -36,22 +36,14 @@ public class Controller implements ActionListener {
 			PongView pong = new PongView("Pong - The Game");
 			pong.init(new GameController());
 			MenueView.pong.dispose();
-        }		
+        }	
+		
         else if(e.getActionCommand() == "Highscores"){
         	HighscoreView highscoreView = new HighscoreView("Highscores");
         	highscoreView.init(new HighscoreController(highscoreView));
 			MenueView.pong.dispose();
         }
 		
-//		//******** zum Testen ************
-//        else if(e.getActionCommand() == "Highscores (aus PongView)"){
-//        	
-//        	HighscoreView highscoreView = new HighscoreView("Highscores", player);
-//        	highscoreView.init(new HighscoreController(highscoreView));
-//        	
-//			MenueView.pong.dispose();
-//        }
-//		//******** zum Testen ************
 		
         else if(e.getActionCommand() == "Spiel beenden"){
         	System.exit(0);

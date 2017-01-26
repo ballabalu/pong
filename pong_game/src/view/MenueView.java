@@ -28,7 +28,6 @@ public class MenueView extends JFrame{
 	private JButton newGame, highscore, exitGame, highscore2;
 	public static MenueView pong;
 
-	//Konstruktor
 	public MenueView(String title){
 		super(title);
 	}	

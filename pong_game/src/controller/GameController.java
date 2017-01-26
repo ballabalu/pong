@@ -1,3 +1,13 @@
+/**
+ * GameController.java implementiert die Schnittstelle KeyListener und
+ * muss somit alle vererbten Methoden beinhalten, von denen allerdings nur zwei
+ * benutzt bzw. definiert werden.
+ * 
+ * @author Enrico Barig, Steven Kranhold, Naamah Richter, Stefanie Schwanke
+ * @version 1.0, Stand: 17/01/26
+ * 
+ */
+
 package controller;
 
 import java.awt.event.KeyEvent;
