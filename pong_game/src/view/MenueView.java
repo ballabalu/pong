@@ -28,6 +28,10 @@ public class MenueView extends JFrame{
 	private JButton newGame, highscore, exitGame, highscore2;
 	public static MenueView pong;
 
+	/**
+	 * Konstruktor der Klasse MenueView
+	 * @param String title
+	 */
 	public MenueView(String title){
 		super(title);
 	}	

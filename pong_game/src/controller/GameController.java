@@ -44,6 +44,10 @@ public class GameController implements KeyListener {
         
     }
     
+    /**
+     * Getter fuer die Attribute up und down
+     * @return
+     */
     public boolean getUp() {
         return up;
     }
