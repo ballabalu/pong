@@ -1,3 +1,11 @@
+/**
+ * Pitch.java
+ * 
+ * @author Enrico Barig, Steven Kranhold, Naamah Richter, Stefanie Schwanke
+ * @version 1.0, Stand: 17/01/26
+ * 
+ */
+
 package model;
 
 import java.awt.Color;

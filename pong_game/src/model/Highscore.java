@@ -1,3 +1,11 @@
+/**
+ * Highscore.java
+ * 
+ * @author Enrico Barig, Steven Kranhold, Naamah Richter, Stefanie Schwanke
+ * @version 1.0, Stand: 17/01/26
+ * 
+ */
+
 package model;
  
 import java.util.ArrayList;
@@ -19,7 +27,7 @@ public class Highscore {
 	
 	
 	/**
-	 * Konstruktor für neues Hoghscore-Objekt, legt neue highscoreList an
+	 * Parameterfreier Konstruktor für neues Hoghscore-Objekt, legt neue highscoreList an
 	 */
 	public Highscore(){
 		highscoreList = new ArrayList<Player>();
@@ -28,6 +36,7 @@ public class Highscore {
 	
 	
 	/**
+	 * Konstruktor mit Parameterübergabe
 	 * Speichert übergebene ArrayList<Player> als highscoreList ab
 	 * @param al	ArrayList<Player>: ArrayList mit Player-Objekten
 	 */
