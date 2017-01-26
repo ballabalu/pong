@@ -15,6 +15,9 @@ import org.apache.http.message.BasicNameValuePair;
 
 import java.io.*;
 
+/**
+ * Klasse NetworkConnection: ermöglicht Abrufen und Senden von (Highscore-)Daten an einen Server
+ */
 public class NetworkConnection {
     private String url;
 	
@@ -58,16 +61,15 @@ public class NetworkConnection {
      * @throws UnknownHostException
      */
 	public String getJson() throws Exception, UnknownHostException {
-		String json = "";
-		URL url = new URL(this.url);
+		String 			json 		= "";
+		URL 			url 		= new URL(this.url);
+		URLConnection 	connection 	= url.openConnection();
 		
-		URLConnection connection = url.openConnection();
-		
-        BufferedReader in = new BufferedReader(
-                                new InputStreamReader(
-                                    connection.getInputStream()));
+        BufferedReader 	in 			= new BufferedReader(
+        								new InputStreamReader(
+        										connection.getInputStream()));
 
-        StringBuilder response = new StringBuilder();
+        StringBuilder 	response 	= new StringBuilder();
         String inputLine;
         while ((inputLine = in.readLine()) != null) 
             response.append(inputLine);
@@ -76,6 +78,7 @@ public class NetworkConnection {
         return json;
 	}
 
+	
 	/**
 	 * überträgt den übergebenen Highscore an eine php-Datei, diese speichert den Highscore als JsonString
 	 * @param highscore
@@ -88,7 +91,6 @@ public class NetworkConnection {
 	   HttpPost     post        = new HttpPost(postUrl);
 	   
 	   String jsonString = highscore.getJsonString();
-	   
 	   
 	   StringEntity postingString = new StringEntity(jsonString,"UTF-8");
 	   postingString.setContentType("application/json");
