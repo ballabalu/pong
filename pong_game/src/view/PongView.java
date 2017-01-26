@@ -47,6 +47,7 @@ public class PongView extends JFrame implements Runnable, Observer{
 	private int scoreInt = 0;
 	private String score = "0";
 	private PongView ping;
+	private boolean breakLoop = false; 
 
 	
 	/**
@@ -163,6 +164,19 @@ public class PongView extends JFrame implements Runnable, Observer{
 			getPaddle().checkCollisionWithBall(ball);
 			autoPaddle.checkCollisionWithBall(ball);
 			
+			
+			
+			if (breakLoop == true){
+				
+				//Thread.currentThread().interrupt();
+				try {
+					Thread.sleep(200000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
 			//Aufruf der paint-Methode				
 			repaint();
 
@@ -173,7 +187,9 @@ public class PongView extends JFrame implements Runnable, Observer{
 			} catch (InterruptedException e) {
 				System.out.println("InterruptedException in Thread");
 			}
+			
 		}
+		
 	}
 
 	/**
@@ -198,19 +214,17 @@ public class PongView extends JFrame implements Runnable, Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		int p = (Integer) arg;
-		System.out.println("Pongview empfaengt");
 		
-		if (p == 0 ){
+		if (p == 0){
 			
-			//Layer
-			//Sleep
-			PongView.pong.dispose();
-			HighscoreView highscoreView = new HighscoreView("Highscores");
-	    	highscoreView.init(new HighscoreController(highscoreView));
-			
+			breakLoop = true;
 			
 		}
+		System.out.println("Pongview empfaengt" + breakLoop);
 		
+		HighscoreView highscoreView = new HighscoreView("Highscores");
+    	highscoreView.init(new HighscoreController(highscoreView));
+    	PongView.pong.dispose();
 		
 	}
 }
