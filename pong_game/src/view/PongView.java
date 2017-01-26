@@ -220,8 +220,7 @@ public class PongView extends JFrame implements Runnable, Observer{
 			breakLoop = true;
 			
 		}
-		System.out.println("Pongview empfaengt" + breakLoop);
-		System.out.println("this.player " + this.player);
+
 		HighscoreView highscoreView = new HighscoreView("Highscores", this.player);
     	highscoreView.init(new HighscoreController(highscoreView));
     	PongView.pong.dispose();
