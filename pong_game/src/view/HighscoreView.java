@@ -97,9 +97,7 @@ public class HighscoreView  extends JFrame {
 		highscorePanel.setBackground(Color.WHITE);
 		highscorePanel.setLayout(null);   
 		 
-		/**
-		 * fuer unterschiedliche Ansichten bei Klick im Menue bzw nach Game Over
-		 */
+		/* für unterschiedliche Ansichten bei Klick im Menue bzw nach Game Over */
 		if(this.player != null){
 			panelAddPlayer(listener, highscorePanel);
 		}else{
@@ -127,7 +125,11 @@ public class HighscoreView  extends JFrame {
 		
 		setHeader(highscorePanel);
 	
-		
+		/* testen mit random-punkten */
+		//int randomNum = ThreadLocalRandom.current().nextInt(1, 25 + 1);
+		//this.player.setScore(1);
+		/* testen mit random-punkten */
+
 		/**
 		 * Ausgabe, je nachdem ob man in Highscore eingetragen wird oder nicht.
 		 */
@@ -148,7 +150,7 @@ public class HighscoreView  extends JFrame {
 		
 			
 			// Player schafft es in den Highscore 
-			if(this.player.getScore() > punkteLetzterInTop){  
+			if(this.player.getScore() > punkteLetzterInTop | this.highscore.getHighscore().size() < top){  
 				 infoString = "<html>Herzlichen Glückwunsch!<br> Du hast <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkte!<br> Trag dich jetzt in den Highscore ein:</html>";
 				 
 				 // Textfeld für Name setzen
@@ -274,15 +276,14 @@ public class HighscoreView  extends JFrame {
 	 * @param xLocation		x-Position der Textarea
 	 * @param yLoaction		y-Position der Textarea
 	 */
-	private void setHighscoreTextarea(JPanel highscorePanel, int xLocation, int yLoacation) {
+	private void setHighscoreTextarea(JPanel highscorePanel, int xLocation, int yLocation) {
 		highscoreTextarea.setText("loading Highscore.....");
 		highscoreTextarea.setLineWrap(false);
 		highscoreTextarea.setFont(new Font("Courier", Font.BOLD, 16));
 		highscoreTextarea.setForeground(new Color(96,96,96));
-		highscoreTextarea.setLocation(xLocation,	 yLoacation);
+		highscoreTextarea.setLocation(xLocation, yLocation);
 		highscoreTextarea.setSize(350, 420);
 		highscoreTextarea.setCaretColor(Color.WHITE);
-	 
 		
 		if(online == true){
 			this.highscoreTextarea.setText(highscore.getTop(top));
@@ -304,7 +305,6 @@ public class HighscoreView  extends JFrame {
 		String playerName = this.tfName.getText();
 		
 		if (playerName.equals("") || playerName.equals("Name eingeben!") ){
-		
 			this.tfName.setText("Name eingeben!");
 		}else{
 			try{

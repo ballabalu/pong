@@ -64,7 +64,7 @@ public class PongView extends JFrame implements Runnable, Observer{
 		this.ping = new PongView();
 		this.paddle.addObserver(this.player);
 		this.ball.addObserver(this.player);
-		this.ball.addObserver(this.ping);
+		this.ball.addObserver(this);
 	}
 	
 	/**
@@ -221,8 +221,8 @@ public class PongView extends JFrame implements Runnable, Observer{
 			
 		}
 		System.out.println("Pongview empfaengt" + breakLoop);
-		
-		HighscoreView highscoreView = new HighscoreView("Highscores");
+		System.out.println("this.player " + this.player);
+		HighscoreView highscoreView = new HighscoreView("Highscores", this.player);
     	highscoreView.init(new HighscoreController(highscoreView));
     	PongView.pong.dispose();
 		

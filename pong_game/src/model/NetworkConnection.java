@@ -110,7 +110,6 @@ public class NetworkConnection {
 	   
 	   HttpResponse response = client.execute(post);
 	  
-	   
 	   // Response-Ausgabe
 	   /* 
 	   BufferedReader rd = new BufferedReader(

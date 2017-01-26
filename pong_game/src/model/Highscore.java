@@ -117,13 +117,6 @@ public class Highscore {
 		return getJsonAndSetAsHighscore();
 	}
 	
-	
-	
-	/**
-	 * Erzeugt Netzwerk-Verbingung, erhält von dort JSON-formatierten String und speichert ihn als highscoreList ab
-	 * @return	Highscore-Objekt mit heruntergeladenen Daten
-	 * @throws Exception	bei Verbindungsproblemen mit dem Server, z.B. Offline-Modus
-	 */
 	private Highscore getJsonAndSetAsHighscore() throws Exception{
 		NetworkConnection networkConnection = new NetworkConnection(downloadUrl);
 		
@@ -131,9 +124,7 @@ public class Highscore {
 		String jsonString = networkConnection.getJson();
 		
 		// Speichern als highscoreList, wenn der String nicht leer ist
-		if (jsonString != "" ){
-			//String test2 = "[{"playerName":"f","playerScore":5},{"playerName":"e","playerScore":2},{"playerName":"a","playerScore":1},{"playerName":"b","playerScore":1},{"playerName":"c","playerScore":1},{"playerName":"d","playerScore":1}]";
-				 
+		if (jsonString != "" ){	 
 			// neues JSONArray aus jsonString
 			JSONArray jsonArray = new JSONArray(jsonString);
 			
