@@ -1,3 +1,12 @@
+/**
+ * MenuView.java zeigt den Startbildschirm unseres Spiels und
+ * basiert auf der GUI-Klasse JFrame (Swing Framework).
+ * 
+ * @author Enrico Barig, Steven Kranhold, Naamah Richter, Stefanie Schwanke
+ * @version 1.0, Stand: 17/01/26
+ * 
+ */
+
 package view;
 
 import java.awt.Color;
@@ -19,14 +28,21 @@ public class MenueView extends JFrame{
 	private JButton newGame, highscore, exitGame, highscore2;
 	public static MenueView pong;
 
+	//Konstruktor
 	public MenueView(String title){
 		super(title);
 	}	
 
 	public void drawimg(Graphics gr){
-		
 	}
 	
+	/**
+	 * init-Methode
+	 * @param listener
+	 * 
+	 * "Zeichnet" den Screen
+	 * beinhaltet alle Buttons, die dann weiterführende Aktionen aktivieren
+	 */
 	public void init(ActionListener listener){
 		pong = new MenueView("Pong - The Game - Menü");
 		pong.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
