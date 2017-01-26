@@ -135,7 +135,8 @@ public class Player implements Serializable, Comparable<Player>, Observer {
 
 	@Override
 	/**
-	 * 
+	 * definiert wie der "Zuhörer" Player auf Veränderungen reagieren soll
+	 * erhöht score um übergebenen Wert
 	 */
 	public void update(Observable o, Object arg) {
 		// bei Observerupdate Punktestand increasen

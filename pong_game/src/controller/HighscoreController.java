@@ -1,9 +1,5 @@
 package controller;
- 
-/**
- * ActionListener für HighscoreView
- * 
- */
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,7 +8,10 @@ import view.HighscoreView;
 import view.MenueView;
 import view.PongView;
 
-
+/**
+ * Klasse HighscoreController: enthällt Konstruktoren und ActionListener für HighscoreView
+ * 
+ */
 public class HighscoreController implements ActionListener{
 	
 	/** zugehöriger Highscore*/
@@ -21,9 +20,17 @@ public class HighscoreController implements ActionListener{
 	/** zugehörige HighscoreView*/
 	private HighscoreView highscoreView;
 	
+	
+	
+	/**
+	 * Konstuktor für HighscoreController
+	 * erzeugt neuen Highscore
+	 */
 	public HighscoreController(){
 		this.highscore = new Highscore();
 	}
+	
+	
 	
 	/**
 	 * Konstuktor für HighscoreController
@@ -35,6 +42,7 @@ public class HighscoreController implements ActionListener{
 		this.highscoreView = highscoreview;
 	}
 
+	
 	
 	/**
 	 * nimmt ActionEvent entgegen und reagiert so auf Button-Klicks
@@ -51,12 +59,10 @@ public class HighscoreController implements ActionListener{
         }else if(actionCommand == "jetzt spielen!"){
         	PongView pong = new PongView("Pong - The Game");
 			pong.init(new GameController());
-			//this.highscoreView.dispose();
 			HighscoreView.hsView.dispose();
         }else if(actionCommand == "zurück zum Menü"){
         	MenueView pong = new MenueView("Pong - The Game");
     		pong.init(new Controller());
-			//this.highscoreView.dispose();
 			HighscoreView.hsView.dispose();
         }
 	}

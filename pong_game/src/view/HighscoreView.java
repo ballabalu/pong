@@ -1,11 +1,8 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.geom.Line2D;
 import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.BorderFactory;
@@ -15,43 +12,45 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
 
 import model.Highscore;
 import model.Player;
 
-public class HighscoreView  extends JFrame {
 
+/**
+ * Klasse HighscoreView: realisiert die Darstellung einer Highscore-Liste.
+ * Je nach gewähltem Konstruktor wird auch eine Ansicht dargestellt, die es dem Nutzer 
+ * ermöglicht, sich in den Highscore einzutragen, falls er genügend Punkte hat.
+ */
+public class HighscoreView  extends JFrame {
 	
-	private String title;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	public static HighscoreView hsView;
-	private JButton loadHighscoreButton;
-	private JButton addPlayerToHighscoreButton;
-	private JButton addPlayerToServerHighscoreButton;
-	private JButton testButton;
-	private JTextArea highscoreTextarea ;
-	private JTextField tfName;
-	private JLabel nameLabel, headerLabel;
+	private Highscore highscore = new Highscore();
 	private Player player;
 	private int top= 20;
-	private JLabel info;
-	private  JPanel highscorePanel = new JPanel();
-	private boolean online;
 	
-	private Highscore highscore = new Highscore();
+	private String title;
+	private  JPanel highscorePanel = new JPanel();
+	private JLabel headerLabel;
+	private JTextArea highscoreTextarea ;
+	private JLabel info;
+	private JTextField tfName;
+	private JButton addPlayerToServerHighscoreButton;
+	private boolean online;
+
 	
 	
 	public HighscoreView(String title, Player player){
 		this.title = title;
 		this.player = player;
-		this.loadHighscoreButton = loadHighscoreButton;
-		this.testButton = testButton;
 		this.highscore = new Highscore();
-		this.highscoreTextarea = highscoreTextarea = new JTextArea(12,30);
+		this.highscoreTextarea = new JTextArea(12,30);
 		this.tfName = new JTextField("", 15);
-		this.nameLabel = new JLabel("Trag dich hier in die Highscore-Liste ein:");
 		this.info = new JLabel();
-		this.addPlayerToHighscoreButton = new JButton();
 		this.highscorePanel = new JPanel();
 		
 	}
@@ -59,17 +58,12 @@ public class HighscoreView  extends JFrame {
 	public HighscoreView(String title){
 		this.title = title;
 		this.player = null;
-		this.loadHighscoreButton = loadHighscoreButton;
-		this.testButton = testButton;
 		this.highscore = new Highscore();
-		this.highscoreTextarea = highscoreTextarea = new JTextArea(12,30);
+		this.highscoreTextarea = new JTextArea(12,30);
 		this.tfName = new JTextField("", 15);
-		this.nameLabel = new JLabel("Trag dich hier in die Highscore-Liste ein:");
 	}
 	
-	public HighscoreView(){
-		
-	}
+	
 	
 	public void init(ActionListener listener){
 		
@@ -98,6 +92,9 @@ public class HighscoreView  extends JFrame {
 			panelHSView(listener, highscorePanel);
 		}
 		 
+		/*
+		 * Aussehen und Position
+		 */
 	    hsView.setContentPane(highscorePanel);
 	    hsView.setSize(900, 600);
 	    hsView.setTitle(this.title);
@@ -107,13 +104,18 @@ public class HighscoreView  extends JFrame {
 	        
 	}
 
+	/**
+	 * realisiert Ansicht "Player in Highscore eintragen"
+	 * @param listener
+	 * @param highscorePanel
+	 */
 	private void panelAddPlayer(ActionListener listener, JPanel highscorePanel) {
 		
 		setHeader(highscorePanel);
 	
 		/* testen mit random-punkten */
-		int randomNum = ThreadLocalRandom.current().nextInt(1, 25 + 1);
-		this.player.setScore(randomNum);
+		//int randomNum = ThreadLocalRandom.current().nextInt(1, 25 + 1);
+		//this.player.setScore(randomNum);
 		/* testen mit random-punkten */
 		
 		
@@ -136,7 +138,8 @@ public class HighscoreView  extends JFrame {
 			}
 		
 			
-			if(this.player.getScore() > punkteLetzterInTop){  /* Player schafft es in den Highscore */
+			/* Player schafft es in den Highscore */
+			if(this.player.getScore() > punkteLetzterInTop){  
 				 infoString = "<html>Herzlichen Glückwunsch!<br> Du hast <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkte!<br> Trag dich jetzt in den Highscore ein:</html>";
 				 
 				 // Textfeld für Name setzen
@@ -184,6 +187,11 @@ public class HighscoreView  extends JFrame {
 	}
 	
 	
+	/**
+	 * realisiert Darstellung der Highscore-Liste
+	 * @param listener
+	 * @param highscorePanel
+	 */
 	private void panelHSView(ActionListener listener, JPanel highscorePanel) {
 		setHeader(highscorePanel);
 	    setHighscoreTextarea(highscorePanel, 270, 100);
@@ -191,6 +199,14 @@ public class HighscoreView  extends JFrame {
 	    setBackButton(listener, highscorePanel, 25, 500);
 	}
 
+	
+	/** 
+	 * erzeugt Button "jetzt spielen!"
+	 * @param listener
+	 * @param highscorePanel
+	 * @param xLoacation	x-Position des Buttons
+	 * @param yLoaction		y-Position des Buttons
+	 */
 	private void setPlayAgainButton(ActionListener listener, JPanel highscorePanel, int xLoacation, int yLoaction) {
 		JButton playButton = new JButton("jetzt spielen!");
 		playButton.setFont(new Font("Arial", Font.BOLD, 16));
@@ -201,7 +217,13 @@ public class HighscoreView  extends JFrame {
 		highscorePanel.add(playButton);
 	}
 	
-
+	/** 
+	 * erzeugt Button "zurück zum Menü"
+	 * @param listener
+	 * @param highscorePanel
+	 * @param xLoacation	x-Position des Buttons
+	 * @param yLoaction		y-Position des Buttons
+	 */
 	private void setBackButton(ActionListener listener, JPanel highscorePanel, int xLoacation, int yLoaction) {
 		JButton backButton = new JButton("zurück zum Menü");
 		backButton.setFont(new Font("Arial", Font.BOLD, 16));
@@ -212,6 +234,10 @@ public class HighscoreView  extends JFrame {
 		highscorePanel.add(backButton);
 	}
 
+	/**
+	 * erzeugt Header "HIGHSCORE"
+	 * @param highscorePanel
+	 */
 	private void setHeader(JPanel highscorePanel) {
 		headerLabel = new JLabel ();
 		headerLabel.setText("HIGHSCORE");
@@ -231,6 +257,14 @@ public class HighscoreView  extends JFrame {
 	}
 
 	
+	
+	/**
+	 * erzeugt Textarea und zeigt dort online geladene Highscore-Liste, wenn Internetverbindung besteht; 
+	 * ansonsten Meldung, dass keine Verbindung besteht.
+	 * @param highscorePanel
+	 * @param xLocation		x-Position der Textarea
+	 * @param yLoaction		y-Position der Textarea
+	 */
 	private void setHighscoreTextarea(JPanel highscorePanel, int xLocation, int yLoacation) {
 		highscoreTextarea.setText("loading Highscore.....");
 		highscoreTextarea.setLineWrap(false);
@@ -252,7 +286,11 @@ public class HighscoreView  extends JFrame {
 	}
 	
 	
-	
+	/**
+	 * Trägt eingegabenen Namen und erspielte Punkte des Players in den Highscore ein und 
+	 * speichert neue Highscore-Liste auf Server
+	 * @param highscore
+	 */
 	public void postUpdatedHighscoreToServer(Highscore highscore){
 		String playerName = this.tfName.getText();
 		
