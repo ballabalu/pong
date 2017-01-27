@@ -149,22 +149,10 @@ public class Player implements Serializable, Comparable<Player>, Observer {
 	public void update(Observable o, Object arg) {
 		// bei Observerupdate Punktestand increasen
 		int p = (Integer) arg;
-
 		if (p != 0){
-			
 			this.increaseScore(p);
-			
-			//************* Test für Observer *********************
-			System.out.println("Punkte: " + this.playerScore);
-			//************* Test für Observer *********************
-			
 		}
-
-		
-
-
 	}
-
 
 	
 }
