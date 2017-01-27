@@ -46,7 +46,6 @@ public class PongView extends JFrame implements Runnable, Observer{
 	private Player player;
 	private int scoreInt = 0;
 	private String score = "0";
-	private PongView ping;
 	private boolean breakLoop = false; 
 
 	
@@ -61,7 +60,6 @@ public class PongView extends JFrame implements Runnable, Observer{
 		this.setFocusable(true);
 		this.addKeyListener(gc);
 		this.player = new Player();
-		this.ping = new PongView();
 		this.paddle.addObserver(this.player);
 		this.ball.addObserver(this.player);
 		this.ball.addObserver(this);
