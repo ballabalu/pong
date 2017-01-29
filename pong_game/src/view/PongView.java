@@ -15,11 +15,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -34,7 +37,7 @@ import model.Player;
 public class PongView extends JFrame implements Runnable, Observer{
 	
 	/**
-	 * Instanzen der allerbenÃ¶tigten Klassen werden erzeugt
+	 * Instanzen der aller benötigten Klassen werden erzeugt
 	 * und Variablen definiert.
 	 */
 	private static PongView pong;
@@ -111,7 +114,7 @@ public class PongView extends JFrame implements Runnable, Observer{
 	/**
 	 * init-Methode initiiert den JFrame/ das Swing-Fenster
 	 * @param KeyListener keylistener
-	 * KeyListener wird benÃ¶tigt, damit der GameController auf die Tasteneingaben
+	 * KeyListener wird benötigt, damit der GameController auf die Tasteneingaben
 	 * des Spielers reagieren kann.
 	 */
 	public void init(KeyListener keylistener){
@@ -207,8 +210,8 @@ public class PongView extends JFrame implements Runnable, Observer{
 	
 	/**
 	 * update-Methode, die beim Gebrauch der Observer-Klasse/-Schnittstelle
-	 * definiert bzw. Ã¼berschrieben werden muss.
-	 * Das hier Ã¼bergebene Argument, sind die erreichten Punkte.
+	 * definiert bzw. überschrieben werden muss.
+	 * Das hier übergebene Argument, sind die erreichten Punkte.
 	 * Hier: 0Punkte = Gameover = Aufruf der HighscoreView
 	 */
 	@Override
@@ -222,10 +225,8 @@ public class PongView extends JFrame implements Runnable, Observer{
 			//Spielverlauf verlassen und HighscoreView aufrufen
 			HighscoreView highscoreView = new HighscoreView("Highscores", this.player);
 	    	highscoreView.init(new HighscoreController(highscoreView));
-	    	//PongVview beenden
+	    	//PongView beenden
 	    	PongView.pong.dispose();
-			
-			
 			
 		}
 
