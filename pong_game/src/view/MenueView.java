@@ -75,14 +75,6 @@ public class MenueView extends JFrame{
 		highscore.setBackground(Color.WHITE);
 		highscore.setFont(new Font("Arial", Font.PLAIN, 18));
 		
-		// *******zum Testen********
-		highscore2 = new JButton("Highscores (aus PongView)");
-		highscore2.setBounds(600, 395, 200, 40);
-		highscore2.setBackground(Color.WHITE);
-		highscore2.setFont(new Font("Arial", Font.PLAIN, 18));
-		highscore2.addActionListener(listener);
-		contentPane.add(highscore2);
-		//****************
 		
 		exitGame.setBackground(Color.WHITE);
 		exitGame.setFont(new Font("Arial", Font.PLAIN, 18));
