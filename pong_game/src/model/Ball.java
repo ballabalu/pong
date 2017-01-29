@@ -85,6 +85,7 @@ public class Ball extends Observable{
 			velocityX = 5;
 			velocityY = 2;
 			setChanged();
+			// Wert 0 steht für Game Over
 			notifyObservers(0);
 		}
 		

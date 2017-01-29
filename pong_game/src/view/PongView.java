@@ -1,12 +1,13 @@
 /**
  * PongView.java beinhaltet alle Objekte und Controller,
- * die für das eigentliche Spiel benötigt werden.
- * Für diese Klasse werden die Schnittstellen JFrame, Runnable und Observer implementiert.
+ * die fÃ¼r das eigentliche Spiel benÃ¶tigt werden.
+ * FÃ¼r diese Klasse werden die Schnittstellen JFrame, Runnable und Observer implementiert.
  * 
  * @author Enrico Barig, Steven Kranhold, Naamah Richter, Stefanie Schwanke
  * @version 1.0, Stand: 17/01/26
  * 
  */
+
 
 package view;
 
@@ -33,7 +34,7 @@ import model.Player;
 public class PongView extends JFrame implements Runnable, Observer{
 	
 	/**
-	 * Instanzen der allerbenötigten Klassen werden erzeugt
+	 * Instanzen der allerbenÃ¶tigten Klassen werden erzeugt
 	 * und Variablen definiert.
 	 */
 	private static PongView pong;
@@ -66,14 +67,14 @@ public class PongView extends JFrame implements Runnable, Observer{
 	}
 	
 	/**
-	 * Parameterfreier Konstruktor für den Observer
+	 * Parameterfreier Konstruktor fÃ¼r den Observer
 	 */
 	public PongView() {
 	}
 
 	/**
-	 * Überschriebene paint-Methode der Java AWT-Klasse Graphics
-	 * Alle benötigten, bereits generierten Objekte werden gezeichtnet.
+	 * Ãœberschriebene paint-Methode der Java AWT-Klasse Graphics
+	 * Alle benÃ¶tigten, bereits generierten Objekte werden gezeichtnet.
 	 * @param Graphics gr
 	 */
 	@Override
@@ -93,9 +94,9 @@ public class PongView extends JFrame implements Runnable, Observer{
 		gr.setFont(new Font("Arial", Font.PLAIN, 30)); 
 		
 		
-		//************* Test für Observer *********************
+		//************* Test fÃ¼r Observer *********************
 		scoreInt = this.player.getScore();
-		//************* Test für Observer *********************
+		//************* Test fÃ¼r Observer *********************
 		
 		score = String.valueOf(scoreInt);
 		gr.drawString("Score: " + score, 20, 70);
@@ -110,7 +111,7 @@ public class PongView extends JFrame implements Runnable, Observer{
 	/**
 	 * init-Methode initiiert den JFrame/ das Swing-Fenster
 	 * @param KeyListener keylistener
-	 * KeyListener wird benötigt, damit der GameController auf die Tasteneingaben
+	 * KeyListener wird benÃ¶tigt, damit der GameController auf die Tasteneingaben
 	 * des Spielers reagieren kann.
 	 */
 	public void init(KeyListener keylistener){
@@ -147,7 +148,7 @@ public class PongView extends JFrame implements Runnable, Observer{
 			ball.moveBall();
 
 			// Spieler-Paddle bewegen
-			// Spieler-Paddle wird nach oben bewegt, sobald Y-Wert größer als 20 ist.
+			// Spieler-Paddle wird nach oben bewegt, sobald Y-Wert grÃ¶ÃŸer als 20 ist.
 			if (gc.getUp() && getPaddle().getY() > 20) {		
 				getPaddle().moveUp();
 				// Spieler-Paddle wird nach unten bewegt, sobald Y-Wert kleiner als 475 ist.
@@ -163,12 +164,13 @@ public class PongView extends JFrame implements Runnable, Observer{
 			autoPaddle.checkCollisionWithBall(ball);
 			
 			
-			
+			//Stoppt die Console, da sie auch ohne bestehendes Grafikinterfaces weiterläuft
 			if (breakLoop == true){
 				
 				//Thread.currentThread().interrupt();
 				try {
 					Thread.sleep(200000);
+					
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -191,7 +193,7 @@ public class PongView extends JFrame implements Runnable, Observer{
 	}
 
 	/**
-	 * Getter und setter für Paddle
+	 * Getter und setter fÃ¼r Paddle
 	 * @return
 	 */
 	public Paddle getPaddle() {
@@ -205,8 +207,8 @@ public class PongView extends JFrame implements Runnable, Observer{
 	
 	/**
 	 * update-Methode, die beim Gebrauch der Observer-Klasse/-Schnittstelle
-	 * definiert bzw. überschrieben werden muss.
-	 * Das hier übergebene Argument, sind die erreichten Punkte.
+	 * definiert bzw. Ã¼berschrieben werden muss.
+	 * Das hier Ã¼bergebene Argument, sind die erreichten Punkte.
 	 * Hier: 0Punkte = Gameover = Aufruf der HighscoreView
 	 */
 	@Override
@@ -217,11 +219,16 @@ public class PongView extends JFrame implements Runnable, Observer{
 			
 			breakLoop = true;
 			
+			//Spielverlauf verlassen und HighscoreView aufrufen
+			HighscoreView highscoreView = new HighscoreView("Highscores", this.player);
+	    	highscoreView.init(new HighscoreController(highscoreView));
+	    	//PongVview beenden
+	    	PongView.pong.dispose();
+			
+			
+			
 		}
 
-		HighscoreView highscoreView = new HighscoreView("Highscores", this.player);
-    	highscoreView.init(new HighscoreController(highscoreView));
-    	PongView.pong.dispose();
 		
 	}
 }
