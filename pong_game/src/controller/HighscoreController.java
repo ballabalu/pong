@@ -65,7 +65,7 @@ public class HighscoreController implements ActionListener{
         	PongView pong = new PongView("Pong - The Game");
 			pong.init(new GameController());
 			HighscoreView.hsView.dispose();
-        }else if(actionCommand == "zurück zum Menü"){
+        }else if(actionCommand == "zurueck zum Menue"){
         	MenueView pong = new MenueView("Pong - The Game");
     		pong.init(new Controller());
 			HighscoreView.hsView.dispose();

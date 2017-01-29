@@ -1,7 +1,7 @@
 /**
  * Klasse HighscoreView: realisiert die Darstellung einer Highscore-Liste.
- * Je nach gewähltem Konstruktor wird auch eine Ansicht dargestellt, die es dem Nutzer 
- * ermöglicht, sich in den Highscore einzutragen, falls er genügend Punkte hat.
+ * Je nach gewaehltem Konstruktor wird auch eine Ansicht dargestellt, die es dem Nutzer 
+ * ermöglicht, sich in den Highscore einzutragen, falls er genuegend Punkte hat.
  * 
  * @author Enrico Barig, Steven Kranhold, Naamah Richter, Stefanie Schwanke
  * @version 1.0, Stand: 17/01/26
@@ -47,7 +47,7 @@ public class HighscoreView  extends JFrame {
 
 	
 	/**
-	 * Konstruktor der Klasse HighscoreView mit zwei zu übergebenden Pararmetern.
+	 * Konstruktor der Klasse HighscoreView mit zwei zu uebergebenden Pararmetern.
 	 * @param title
 	 * @param player
 	 */
@@ -63,7 +63,7 @@ public class HighscoreView  extends JFrame {
 	}
 	
 	/**
-	 * Konstruktor der Klasse HighscoreView mit einem zu übergebenden Pararmeter.
+	 * Konstruktor der Klasse HighscoreView mit einem zu uebergebenden Pararmeter.
 	 * @param title
 	 */
 	public HighscoreView(String title){
@@ -81,6 +81,7 @@ public class HighscoreView  extends JFrame {
 	 */
 	public void init(ActionListener listener){
 		
+		/* Highscore laden. Bei Fehler online = false*/
 		try {
 			this.highscore = highscore.getHighscoreFromServer();
 			online = true;
@@ -97,7 +98,7 @@ public class HighscoreView  extends JFrame {
 		highscorePanel.setBackground(Color.WHITE);
 		highscorePanel.setLayout(null);   
 		 
-		/* für unterschiedliche Ansichten bei Klick im Menue bzw nach Game Over */
+		/* fuer unterschiedliche Ansichten bei Klick im Menue bzw nach Game Over */
 		if(this.player != null){
 			panelAddPlayer(listener, highscorePanel);
 		}else{
@@ -141,19 +142,19 @@ public class HighscoreView  extends JFrame {
 			// Punkte am letzten Platz der Liste
 			int punkteLetzterInTop;
 			if(this.highscore.getHighscore().size() < top){
-				// Punkte vom letzten Player in Liste, wenn Lister kürzer als top(20)
+				// Punkte vom letzten Player in Liste, wenn Lister kuerzer als top(20)
 				punkteLetzterInTop = this.highscore.getHighscore().get(this.highscore.getHighscore().size()-1).getScore();
 			}else{
-				// Punkte vom letzten Player in Liste, wenn Lister länger als top(20)
+				// Punkte vom letzten Player in Liste, wenn Lister laenger als top(20)
 				punkteLetzterInTop = this.highscore.getHighscore().get(top-1).getScore();
 			}
 		
 			
 			// Player schafft es in den Highscore 
 			if(this.player.getScore() > punkteLetzterInTop | this.highscore.getHighscore().size() < top){  
-				 infoString = "<html>Herzlichen Glückwunsch!<br> Du hast <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkte!<br> Trag dich jetzt in den Highscore ein:</html>";
+				 infoString = "<html>Herzlichen Glueckwunsch!<br> Du hast <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkte!<br> Trag dich jetzt in den Highscore ein:</html>";
 				 
-				 // Textfeld für Name setzen
+				 // Textfeld fuer Name setzen
 			     tfName.setForeground(Color.BLUE);
 			     tfName.setBackground(new Color(135,206,250));
 			     tfName.setLocation(70,	 200);
@@ -173,13 +174,13 @@ public class HighscoreView  extends JFrame {
 			     
 			}else{  // Player schafft es NICHT in den Highscore
 				if(this.player.getScore() == 1){
-					infoString = "<html>Schade! <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkt reicht leider nicht für den Highscore. Versuchs nochmal!<br></html>";
+					infoString = "<html>Schade! <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkt reicht leider nicht fuer den Highscore. Versuchs nochmal!<br></html>";
 				}else{
-					infoString = "<html>Schade! <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkte reichen leider nicht für den Highscore. Versuchs nochmal!<br></html>";
+					infoString = "<html>Schade! <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkte reichen leider nicht fuer den Highscore. Versuchs nochmal!<br></html>";
 				}
 			}
 		}else if (online == false){
-			infoString = "<html>Herzlichen Glückwunsch, du hast <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkte! <br><br> Leider können im Offline-Modus deine Punkte nicht gespeichert werden.</html>";
+			infoString = "<html>Herzlichen Glueckwunsch, du hast <font color='#1E90FF'>" +this.player.getScore() + " </font> Punkte! <br><br> Leider können im Offline-Modus deine Punkte nicht gespeichert werden.</html>";
 		}
 		
 		// Label mit Info, ob Player in Highscore kann 
@@ -236,7 +237,7 @@ public class HighscoreView  extends JFrame {
 	 * @param yLoaction		y-Position des Buttons
 	 */
 	private void setBackButton(ActionListener listener, JPanel highscorePanel, int xLoacation, int yLoaction) {
-		JButton backButton = new JButton("zurück zum Menü");
+		JButton backButton = new JButton("zurueck zum Menue");
 		backButton.setFont(new Font("Arial", Font.BOLD, 16));
 		backButton.setForeground(new Color(96,96,96));
 		backButton.setLocation(xLoacation, yLoaction);
@@ -323,7 +324,7 @@ public class HighscoreView  extends JFrame {
 				//PlayerName setzen
 				this.player.setPlayerName(playerName);
 				
-				// Player zum Highscore hinzufügen und Highscore sortieren
+				// Player zum Highscore hinzufuegen und Highscore sortieren
 				highscore.addPlayerAndSortHighscore(player);
 		
 				//Highscore auf Server speichern
