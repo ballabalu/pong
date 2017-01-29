@@ -56,9 +56,9 @@ public class MenueView extends JFrame{
         contentPane.setBackground(Color.WHITE);
         contentPane.setLayout(null); 
         
-        Image myPicture = Toolkit.getDefaultToolkit().getImage("img/menue.png");
+        Image myPicture = Toolkit.getDefaultToolkit().getImage("img/pong_startscreen.png");
         JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-        picLabel.setBounds(185, 105, 526, 189);
+        picLabel.setBounds(0, 0, 900, 340);
         contentPane.add(picLabel);
 
         newGame = new JButton("Spiel starten");
